@@ -60,6 +60,7 @@ if [ ! -d "${BUILD_DIR}/${tmp}" ];then
 	expect "Password for 'https://Luojiaxing1991@github.com':"
 	send "ljxfyjh1321\r"
 	expect "checking connectivity"
+	send "fuck"
 	expect eof
 	exit 0
 	'
