@@ -59,10 +59,7 @@ if [ ! -d "${BUILD_DIR}/${tmp}" ];then
 	send "Luojiaxing1991\r"
 	expect "Password for"
 	send "ljxfyjh1321\r"	
-	expect eof
-	exit 0
 	'
-
 else
 	echo "The kernel repo have been found!"
 fi
