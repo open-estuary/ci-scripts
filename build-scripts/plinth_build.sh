@@ -62,6 +62,7 @@ if [ ! -d "${BUILD_DIR}/${tmp}" ];then
 	expect eof
 	exit 0
 	'
+
 else
 	echo "The kernel repo have been found!"
 fi
