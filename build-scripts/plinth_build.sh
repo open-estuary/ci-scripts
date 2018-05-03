@@ -43,23 +43,35 @@ if [ -d "${BUILD_DIR}/${tmp}" ];then
 	fi
 fi
 
+#copy ira
+if [ ! -f "~/.ssh/id_rsa.pub" ];then
+	cp ${PRE_TOP_DIR}/id_rsa.pub ~/.ssh/
+else
+	mv ~/.ssh/id_rsa.pub ~/.ssh/id_rsa.pub.bk
+	cp ${PRE_TOP_DIR}/id_rsa.pub ~/.ssh/
+fi
+
 #checkout if kernel repo is exit or not!
 if [ ! -d "${BUILD_DIR}/${tmp}" ];then
 	echo "The kernel dir is not exit! Begin to clone repo!"
         #mkdir ${BUILD_DIR}/${tmp}
        	#cd ${BUILD_DIR}
-        #git clone ${KERNEL_GITADDR}
-
+        git clone ${KERNEL_GITADDR}
+	sleep 10
 	expect -c '
-	
-	spawn git clone https://github.com/Luojiaxing1991/kernel-dev.git
-	expect "Username for"
-	send "Luojiaxing1991\r"
-	expect "Password for"
-	send "ljxfyjh1321\r"
-	expect eof
-	exit 0
+		send "yes/r"
+		exit
 	'
+#	
+#	spawn git clone https://github.com/Luojiaxing1991/kernel-dev.git
+#	expect "Username for"
+#	send "Luojiaxing1991\r"
+#	expect "Password for"
+#	send "ljxfyjh1321\r"
+#	expect eof
+#	exit 0
+#	'
+	
 else
 	echo "The kernel repo have been found!"
 fi
