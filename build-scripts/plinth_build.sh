@@ -64,6 +64,7 @@ if [ ! -d "${BUILD_DIR}/${tmp}" ];then
 		"Receiving" continue
 		"Resolving" continue
 		"Checking connectivity" break
+	}
 	expect eof
 	exit 0
 	'
