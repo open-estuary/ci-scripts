@@ -59,8 +59,12 @@ if [ ! -d "${BUILD_DIR}/${tmp}" ];then
 	send "Luojiaxing1991\r"
 	expect "Password for 'https://Luojiaxing1991@github.com':"
 	send "ljxfyjh1321\r"
+	expect{
+		"remote" continue
+		"Receiving" continue
+		"Resolving" continue
+		"Checking connectivity" break
 	expect eof
-	sleep 60
 	exit 0
 	'
 else
