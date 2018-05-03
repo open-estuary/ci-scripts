@@ -51,14 +51,14 @@ if [ ! -d "${BUILD_DIR}/${tmp}" ];then
         #git clone ${KERNEL_GITADDR}
 
 	expect -c '
-
-	set tmpaddr '${EXP_KERGIT}'
 	
-	spawn git clone $tmpaddr
+	spawn git clone https://github.com/Luojiaxing1991/kernel-dev.git
 	expect "Username for"
 	send "Luojiaxing1991\r"
 	expect "Password for"
-	send "ljxfyjh1321\r"	
+	send "ljxfyjh1321\r"
+	expect eof
+	exit 0
 	'
 else
 	echo "The kernel repo have been found!"
