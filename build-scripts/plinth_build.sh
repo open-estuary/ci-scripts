@@ -50,7 +50,7 @@ if [ ! -d "${BUILD_DIR}/${tmp}" ];then
 
 	expect -c '
 		
-	set tmpaddr ${EXP_KERGIT}
+	set tmpaddr '${EXP_KERGIT}'
 	
 	spawn git clone $tmpaddr
 	expect "Username for 'https://github.com':"
