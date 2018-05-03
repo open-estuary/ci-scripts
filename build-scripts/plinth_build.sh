@@ -37,8 +37,10 @@ if [ ! -d "${BUILD_DIR}/output" ];then
 	mkdir ${BUILD_DIR}/output
 fi
 
-if [ ! -f "${BUILD_DIR}/${tmp}/build.sh" ];then
-	rm -r ${BUILD_DIR}/${tmp}
+if [ -d "${BUILD_DIR}/${tmp}" ];then
+	if [ ! -f "${BUILD_DIR}/${tmp}/build.sh" ];then
+		rm -r ${BUILD_DIR}/${tmp}
+	fi
 fi
 
 #checkout if kernel repo is exit or not!
