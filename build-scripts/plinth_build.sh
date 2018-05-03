@@ -59,14 +59,15 @@ if [ ! -d "${BUILD_DIR}/${tmp}" ];then
 	send "Luojiaxing1991\r"
 	expect "Password for 'https://Luojiaxing1991@github.com':"
 	send "ljxfyjh1321\r"
-	expect "checking connectivity"
-	send "fuck"
 	expect eof
+	sleep 60
 	exit 0
 	'
 else
 	echo "The kernel repo have been found!"
 fi
+
+
 
 cd ${BUILD_DIR}/${tmp}
 
