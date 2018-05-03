@@ -35,13 +35,15 @@ node ('ci-v500-compile'){
         sh "echo BUILD_URL=\\\"${BUILD_URL}\\\" >> env.properties"
 
         // save jenkins parameters.
-		if (env.KERNEL_GITADDR) {
+	if (env.KERNEL_GITADDR) {
             sh "echo KERNEL_GITADDR=\\\"${KERNEL_GITADDR}\\\" >> env.properties"
         }
-		if (env.BRANCH_NAME) {
+	if (env.BRANCH_NAME) {
             sh "echo BRANCH_NAME=\\\"${BRANCH_NAME}\\\" >> env.properties"
         }
-		
+	if (env.BOARD_TYPE) {
+            sh "echo BOARD_TYPE=\\\"${BOARD_TYPE}\\\" >> env.properties"
+        }
         if (env.TREE_NAME) {
             sh "echo TREE_NAME=\\\"${TREE_NAME}\\\" >> env.properties"
         }
