@@ -37,11 +37,15 @@ if [ ! -d "${BUILD_DIR}/output" ];then
 	mkdir ${BUILD_DIR}/output
 fi
 
+if [ ! -f "${BUILD_DIR}/${tmp}/build.sh" ];then
+	rm -r ${BUILD_DIR}/${tmp}
+fi
+
 #checkout if kernel repo is exit or not!
 if [ ! -d "${BUILD_DIR}/${tmp}" ];then
 	echo "The kernel dir is not exit! Begin to clone repo!"
-        mkdir ${BUILD_DIR}/${tmp}
-       	cd ${BUILD_DIR}
+        #mkdir ${BUILD_DIR}/${tmp}
+       	#cd ${BUILD_DIR}
         #git clone ${KERNEL_GITADDR}
 
 	expect -c '
