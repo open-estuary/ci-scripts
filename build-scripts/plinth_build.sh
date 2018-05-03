@@ -56,7 +56,7 @@ if [ ! -d "${BUILD_DIR}/${tmp}" ];then
 	echo "The kernel dir is not exit! Begin to clone repo!"
         #mkdir ${BUILD_DIR}/${tmp}
        	#cd ${BUILD_DIR}
-        git clone ${KERNEL_GITADDR}
+        git clone https://github.com/Luojiaxing1991/kernel-dev.git
 	sleep 10
 	expect -c '
 		send "yes/r"
