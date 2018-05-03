@@ -11,6 +11,8 @@ PRE_TOP_DIR=$(cd "`dirname $0`" ; pwd)
 
 #KERNEL_GITADDR="https://github.com/hisilicon/kernel-dev.git"
 
+EXP_KERGIT=${KERNEL_GITADDR}
+
 BUILD_DIR="/home/plinth"
 
 envok=0
@@ -44,7 +46,7 @@ if [ ! -d "${BUILD_DIR}/${tmp}" ];then
 
 	expect -c '
 		
-	set tmpaddr ${KERNEL_GITADDR}
+	set tmpaddr ${EXP_KERGIT}
 	
 	spawn git clone $tmpaddr
 	expect "Username for 'https://github.com':"
