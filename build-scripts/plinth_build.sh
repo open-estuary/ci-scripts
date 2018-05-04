@@ -53,15 +53,16 @@ fi
 
 #checkout if kernel repo is exit or not!
 if [ ! -d "${BUILD_DIR}/${tmp}" ];then
-	echo "The kernel dir is not exit! Begin to clone repo!"
+	echo "The kernel dir is not exit! return!"
         #mkdir ${BUILD_DIR}/${tmp}
        	#cd ${BUILD_DIR}
-        git clone git@github.com:Luojiaxing1991/kernel-dev.git
-	sleep 10
-	expect -c '
-		send "yes/r"
-		exit
-	'
+        #git clone git@github.com:hisilicon/kernel-dev.git
+	#sleep 10
+	exit 0
+	#expect -c '
+#		send "yes/r"
+#		exit
+#	'
 #	
 #	spawn git clone https://github.com/Luojiaxing1991/kernel-dev.git
 #	expect "Username for"
@@ -86,17 +87,17 @@ tmp_patch=`git format-patch -1 b4e84aac21e48fcccc964216be5c7f8530db7b32`
 cp ${tmp_patch}  ${BUILD_DIR}/output
 
 #before checkout branch,update the remote branch list
-expect -c '
-spawn git remote update origin --prune
-expect "Username for 'https://github.com':"
-send "Luojiaxing1991\r"
-expect "Password for 'https://Luojiaxing1991@github.com':"
-send "ljxfyjh1321\r"
-expect eof
-exit 0
-'
+#expect -c '
+#spawn git remote update origin --prune
+#expect "Username for 'https://github.com':"
+#send "Luojiaxing1991\r"
+#expect "Password for 'https://Luojiaxing1991@github.com':"
+#send "ljxfyjh1321\r"
+#expect eof
+#exit 0
+#'
 
-#git remote update origin --prune
+git remote update origin --prune
 
 #checkout specified branch and build keinel
 git branch | grep ${BRANCH_NAME}
