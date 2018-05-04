@@ -44,7 +44,7 @@ if [ ! -d "${BUILD_DIR}/${tmp}" ];then
        	#cd ${BUILD_DIR}
         #git clone git@github.com:hisilicon/kernel-dev.git
 	#sleep 10
-	./gitclone.sh
+	.${PRE_TOP_DIR}/gitclone.sh
 fi	
 #else
 #	echo "The kernel repo have not been found!"
