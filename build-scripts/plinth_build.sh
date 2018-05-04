@@ -41,8 +41,8 @@ fi
 ls -a
 
 pwd
-git remote -v
-git branch -a
+cd ${PRE_TOP_DIR}
+
 ls
 
 if [ ! -f "${PRE_TOP_DIR}/gitclone.sh" ];then
@@ -57,7 +57,7 @@ if [ ! -d "${BUILD_DIR}/${tmp}" ];then
         #git clone git@github.com:hisilicon/kernel-dev.git
 	#sleep 10
 	#pushd ${BUILD_DIR}
-	${PRE_TOP_DIR}/gitclone.sh ${KERNEL_GITADDR} ${BUILD_DIR}
+	./gitclone.sh ${KERNEL_GITADDR} ${BUILD_DIR}
 	#popd 
 fi	
 #else
