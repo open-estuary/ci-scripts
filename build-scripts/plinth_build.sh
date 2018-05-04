@@ -33,26 +33,12 @@ if [ ! -d "${BUILD_DIR}" ];then
 fi
 
 #checkout if build dir output dir is exit or not!
-if [ ! -d "${BUILD_DIR}/output" ];then
+if [ ! -d "${BUILD_DIR}/output/" ];then
 	mkdir ${BUILD_DIR}/output
 fi
 
-if [ -d "${BUILD_DIR}/${tmp}" ];then
-	if [ ! -f "${BUILD_DIR}/${tmp}/build.sh" ];then
-		rm -r ${BUILD_DIR}/${tmp}
-	fi
-fi
-
-#copy ira
-if [ ! -f "~/.ssh/id_rsa.pub" ];then
-	cp ${PRE_TOP_DIR}/id_rsa.pub ~/.ssh/
-else
-	mv ~/.ssh/id_rsa.pub ~/.ssh/id_rsa.pub.bk
-	cp ${PRE_TOP_DIR}/id_rsa.pub ~/.ssh/
-fi
-
 #checkout if kernel repo is exit or not!
-if [ ! -d "${BUILD_DIR}/${tmp}" ];then
+if [ ! -d "${BUILD_DIR}/${tmp}/" ];then
 	echo "The kernel dir is not exit! return!"
         #mkdir ${BUILD_DIR}/${tmp}
        	#cd ${BUILD_DIR}
