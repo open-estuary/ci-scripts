@@ -7,8 +7,9 @@
 
 #!/bin/bash
 
-PRE_TOP_DIR=$(cd "`dirname $0`" ; pwd)
-
+#PRE_TOP_DIR=$(cd "`dirname $0`" ; pwd)
+PRE_TOP_DIR=$0
+PRE_TOP_DIR=`echo ${PRE_TOP_DIR%/*}`
 #KERNEL_GITADDR="https://github.com/hisilicon/kernel-dev.git"
 
 EXP_KERGIT=${KERNEL_GITADDR}
@@ -41,7 +42,7 @@ ls -a
 
 pwd
 
-if [ ! -f "$0/gitclone.sh" ];then
+if [ ! -f "${PRE_TOP_DIR}/gitclone.sh" ];then
 	echo "no git"
 fi
 
@@ -52,7 +53,9 @@ if [ ! -d "${BUILD_DIR}/${tmp}" ];then
        	#cd ${BUILD_DIR}
         #git clone git@github.com:hisilicon/kernel-dev.git
 	#sleep 10
-	$0/gitclone.sh
+	pushd ${BUILD_DIR}
+	${PRE_TOP_DIR}/gitclone.sh ${KERNEL_GITADDR} 
+	popd 
 fi	
 #else
 #	echo "The kernel repo have not been found!"
