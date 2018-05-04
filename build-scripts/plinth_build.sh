@@ -38,27 +38,31 @@ if [ ! -d "${BUILD_DIR}/output" ];then
 fi
 
 #checkout if kernel repo is exit or not!
-#if [ -d "${BUILD_DIR}/${tmp}" ];then
-#	echo "The kernel dir is exit!"
+if [ ! -d "${BUILD_DIR}/${tmp}" ];then
+	echo "The kernel dir is not exit!"
         #mkdir ${BUILD_DIR}/${tmp}
        	#cd ${BUILD_DIR}
         #git clone git@github.com:hisilicon/kernel-dev.git
 	#sleep 10
 	
-	#expect -c '
-#		send "yes/r"
-#		exit
-#	'
-#	
-#	spawn git clone https://github.com/Luojiaxing1991/kernel-dev.git
-#	expect "Username for"
-#	send "Luojiaxing1991\r"
-#	expect "Password for"
-#	send "ljxfyjh1321\r"
-#	expect eof
-#	exit 0
-#	'
+	expect -c '
 	
+	spawn git clone https://github.com/Luojiaxing1991/kernel-dev.git
+	expect "Username for"
+	send "Luojiaxing1991\r"
+	expect "Password for"
+	send "ljxfyjh1321\r"
+	expect "remote"
+	expect "remote"
+	expect "remote"
+	expect "Receiving"
+	expect "Resolving"
+	expect "Checking connectivity"
+	expect "Checking out"
+	expect eof
+	exit 0
+	'
+fi	
 #else
 #	echo "The kernel repo have not been found!"
 #	exit 0
