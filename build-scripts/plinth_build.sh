@@ -44,36 +44,7 @@ if [ ! -d "${BUILD_DIR}/${tmp}" ];then
        	#cd ${BUILD_DIR}
         #git clone git@github.com:hisilicon/kernel-dev.git
 	#sleep 10
-
-        spawn git clone https://github.com/Luojiaxing1991/kernel-dev.git
-	expect {
-		"Username"	{send "Luojiaxing1991\r";exp_continue}
-		"Password"	{send "ljxfyjh1321\r";exp_continue}
-		"remote"	{exp_continue}
-		"Receiving"	{exp_continue}
-		"Resolving"	{exp_continue}
-		default		{exit}
-	}
-
-
-	expect -c '
-	
-	spawn git clone https://github.com/Luojiaxing1991/kernel-dev.git
-	expect "Username for"
-	send "Luojiaxing1991\r"
-	expect "Password for"
-	send "ljxfyjh1321\r"
-	expect "remote"
-	expect "remote"
-	expect "remote"
-	expect "Receiving"
-	expect "Receiving"
-	expect "Resolving"
-	expect "Checking connectivity"
-	expect "Checking out"
-	expect eof
-	exit 0
-	'
+	./gitclone.sh
 fi	
 #else
 #	echo "The kernel repo have not been found!"
