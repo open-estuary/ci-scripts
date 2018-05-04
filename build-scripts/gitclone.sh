@@ -1,5 +1,4 @@
 #!/usr/bin/expect
-
 #para [1] the git addr to be clone
 
 set addr [lindex $argv 0]
