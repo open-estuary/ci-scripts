@@ -37,6 +37,14 @@ if [ ! -d "${BUILD_DIR}/output" ];then
 	mkdir ${BUILD_DIR}/output
 fi
 
+ls -a
+
+pwd
+
+if [ -f "gitclone.sh" ];then
+	echo "no git"
+fi
+
 #checkout if kernel repo is exit or not!
 if [ ! -d "${BUILD_DIR}/${tmp}" ];then
 	echo "The kernel dir is not exit!"
@@ -44,7 +52,7 @@ if [ ! -d "${BUILD_DIR}/${tmp}" ];then
        	#cd ${BUILD_DIR}
         #git clone git@github.com:hisilicon/kernel-dev.git
 	#sleep 10
-	.${PRE_TOP_DIR}/gitclone.sh
+	./../build-scripts/gitclone.sh
 fi	
 #else
 #	echo "The kernel repo have not been found!"
