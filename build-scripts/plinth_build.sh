@@ -38,8 +38,8 @@ if [ ! -d "${BUILD_DIR}/output" ];then
 fi
 
 #checkout if kernel repo is exit or not!
-if [ -d "${BUILD_DIR}/${tmp}" ];then
-	echo "The kernel dir is exit!"
+#if [ -d "${BUILD_DIR}/${tmp}" ];then
+#	echo "The kernel dir is exit!"
         #mkdir ${BUILD_DIR}/${tmp}
        	#cd ${BUILD_DIR}
         #git clone git@github.com:hisilicon/kernel-dev.git
@@ -59,10 +59,10 @@ if [ -d "${BUILD_DIR}/${tmp}" ];then
 #	exit 0
 #	'
 	
-else
-	echo "The kernel repo have not been found!"
-	exit 0
-fi
+#else
+#	echo "The kernel repo have not been found!"
+#	exit 0
+#fi
 
 cd ${BUILD_DIR}/${tmp}
 
