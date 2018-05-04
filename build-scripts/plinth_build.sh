@@ -44,7 +44,18 @@ if [ ! -d "${BUILD_DIR}/${tmp}" ];then
        	#cd ${BUILD_DIR}
         #git clone git@github.com:hisilicon/kernel-dev.git
 	#sleep 10
-	
+
+        spawn git clone https://github.com/Luojiaxing1991/kernel-dev.git
+	expect {
+		"Username"	{send "Luojiaxing1991\r";exp_continue}
+		"Password"	{send "ljxfyjh1321\r";exp_continue}
+		"remote"	{exp_continue}
+		"Receiving"	{exp_continue}
+		"Resolving"	{exp_continue}
+		default		{exit}
+	}
+
+
 	expect -c '
 	
 	spawn git clone https://github.com/Luojiaxing1991/kernel-dev.git
