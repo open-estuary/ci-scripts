@@ -3,9 +3,6 @@
 #para [1] the git addr to be clone
 
 set addr [lindex $argv 0]
-set path [lindex $argv 1]
-
-cd ${path}
 
 spawn git clone ${addr}
 

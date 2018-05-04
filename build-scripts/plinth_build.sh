@@ -57,7 +57,11 @@ if [ ! -d "${BUILD_DIR}/${tmp}" ];then
         #git clone git@github.com:hisilicon/kernel-dev.git
 	#sleep 10
 	#pushd ${BUILD_DIR}
-	./gitclone.sh ${KERNEL_GITADDR} ${BUILD_DIR}
+
+	cp gitclone.sh ${BUILD_DIR}
+	cd ${BUILD_DIR}
+	pwd
+	./gitclone.sh ${KERNEL_GITADDR}
 	#popd 
 fi	
 #else
