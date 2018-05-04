@@ -41,7 +41,7 @@ ls -a
 
 pwd
 
-if [ -f "gitclone.sh" ];then
+if [ ! -f "$0/gitclone.sh" ];then
 	echo "no git"
 fi
 
@@ -52,7 +52,7 @@ if [ ! -d "${BUILD_DIR}/${tmp}" ];then
        	#cd ${BUILD_DIR}
         #git clone git@github.com:hisilicon/kernel-dev.git
 	#sleep 10
-	./../build-scripts/gitclone.sh
+	$0/gitclone.sh
 fi	
 #else
 #	echo "The kernel repo have not been found!"
