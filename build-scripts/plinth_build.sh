@@ -56,6 +56,7 @@ if [ ! -d "${BUILD_DIR}/${tmp}" ];then
 	expect "remote"
 	expect "remote"
 	expect "Receiving"
+	expect "Receiving"
 	expect "Resolving"
 	expect "Checking connectivity"
 	expect "Checking out"
