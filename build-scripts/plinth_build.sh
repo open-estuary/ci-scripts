@@ -33,18 +33,18 @@ if [ ! -d "${BUILD_DIR}" ];then
 fi
 
 #checkout if build dir output dir is exit or not!
-if [ ! -d "${BUILD_DIR}/output/" ];then
+if [ ! -d "${BUILD_DIR}/output" ];then
 	mkdir ${BUILD_DIR}/output
 fi
 
 #checkout if kernel repo is exit or not!
-if [ ! -d "${BUILD_DIR}/${tmp}/" ];then
-	echo "The kernel dir is not exit! return!"
+if [ -d "${BUILD_DIR}/${tmp}" ];then
+	echo "The kernel dir is exit!"
         #mkdir ${BUILD_DIR}/${tmp}
        	#cd ${BUILD_DIR}
         #git clone git@github.com:hisilicon/kernel-dev.git
 	#sleep 10
-	exit 0
+	
 	#expect -c '
 #		send "yes/r"
 #		exit
@@ -60,7 +60,8 @@ if [ ! -d "${BUILD_DIR}/${tmp}/" ];then
 #	'
 	
 else
-	echo "The kernel repo have been found!"
+	echo "The kernel repo have not been found!"
+	exit 0
 fi
 
 cd ${BUILD_DIR}/${tmp}
@@ -119,6 +120,8 @@ echo "Begin to build the kernel!"
 bash build.sh ${BOARD_TYPE} > ${BUILD_DIR}/output/ok.log
 
 echo "Finish the kernel build!"
+
+cd ${PRE_TOP_DIR}
 
 #********
 #****END : Clone kernel repo and build it
