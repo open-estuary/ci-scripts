@@ -125,7 +125,6 @@ git stash
 #fi
 git branch
 
-git branch -D cs300
 #git checkout -b mybranch origin/release-plinth-4.16.1
 git checkout -b ${BRANCH_NAME} remotes/origin/${BRANCH_NAME}
 
