@@ -123,7 +123,9 @@ git stash
 #	git checkout -b tmp_luo origin/${BRANCH_NAME}
 #	git branch -D ${BRANCH_NAME}
 #fi
-git checkout -b mybranch origin/release-plinth-4.16.1
+git branch
+
+#git checkout -b mybranch origin/release-plinth-4.16.1
 git checkout -b ${BRANCH_NAME} origin/${BRANCH_NAME}
 
 #git branch -D tmp_luo
