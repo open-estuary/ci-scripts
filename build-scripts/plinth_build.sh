@@ -46,7 +46,7 @@ fi
 
 ls -a ${BUILD_DIR}
 
-ls -a ${BUILD_DIR}/${tmp}
+#ls -a ${BUILD_DIR}/${tmp}
 
 #Enter the current scripts's dir
 cd ${PRE_TOP_DIR}
