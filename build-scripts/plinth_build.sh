@@ -78,10 +78,10 @@ cd ${BUILD_DIR}/${tmp}
 #cp ${BUILD_DIR}/fetchbranch.sh .
 
 #./fetchbranch.sh
-#o="url = https://github.com/hisilicon/kernel-dev.git"
+o="url = https://github.com/hisilicon/kernel-dev.git"
 #a="url = https://Luojiaxing1991:ljxfyjh1321@github.com/hisilicon/kernel-dev.git"
-cat .git/config | grep '//github.com'
-if [ $? -ne 1 ];then
+cat .git/config | grep 'github.com'
+if [ x"$1" == x"${o}" ];then
 	sed -i 's/github.com/Luojiaxing1991:ljxfyjh1321@github.com/g' .git/config
 fi
 
@@ -112,39 +112,44 @@ ls -a
 git remote update origin --prune
 
 #checkout specified branch and build keinel
-git stash 2>&1
+git stash
 
-git branch | grep ${BRANCH_NAME} 2>&1
+#git branch | grep ${BRANCH_NAME} 2>&1
 
 
-if [ $? -eq 0 ];then
+#if [ $? -eq 0 ];then
 	#The same name of branch is exit
 	#git stash
-	git checkout -b tmp_luo origin/${BRANCH_NAME}
-	git branch -D ${BRANCH_NAME}
-fi
-
+#	git checkout -b tmp_luo origin/${BRANCH_NAME}
+#	git branch -D ${BRANCH_NAME}
+#fi
+git checkout -b mybranch origin/${BRANCH_NAME}
 git checkout -b ${BRANCH_NAME} origin/${BRANCH_NAME}
-git branch -D tmp_luo
+
+#git branch -D tmp_luo
 
 #before any change,patch the PMU patch to support D05
-git am --abort
-git am ${BUILD_DIR}/output/${tmp_patch}
-sleep 20
-git branch -D svm-4.15
+#git am --abort
+#git am ${BUILD_DIR}/output/${tmp_patch}
+#sleep 20
+#git branch -D svm-4.15
 
 #before building,change some build cfg
 
 #HNS VLAN build option
-sed -i 's/CONFIG_VLAN_8021Q=m/CONFIG_VLAN_8021Q=y/g' arch/arm64/configs/defconfig
+#sed -i 's/CONFIG_VLAN_8021Q=m/CONFIG_VLAN_8021Q=y/g' arch/arm64/configs/defconfig
 
 #
 #sed -i '$a\CONFIG_IXGBE_DCB=y' arch/arm64/configs/plinth-config
 
-cat arch/arm64/configs/defconfig | grep  CONFIG_VLAN_8021Q
+#cat arch/arm64/configs/defconfig | grep  CONFIG_VLAN_8021Q
 
 echo "Begin to build the kernel!"
 bash build.sh ${BOARD_TYPE} > ${BUILD_DIR}/output/ok.log
+
+git stash
+git checkout mybranch
+git branch -D ${BRANCH_NAME}
 
 echo "Finish the kernel build!"
 
