@@ -80,7 +80,7 @@ cd ${BUILD_DIR}/${tmp}
 #./fetchbranch.sh
 #o="url = https://github.com/hisilicon/kernel-dev.git"
 #a="url = https://Luojiaxing1991:ljxfyjh1321@github.com/hisilicon/kernel-dev.git"
-cat .git/config | grep 'Luojiaxing1991'
+cat .git/config | grep 'Luojiaxing1991' 2>&1
 if [ $? -eq 1 ];then
 	sed -i 's/github.com/Luojiaxing1991:ljxfyjh1321@github.com/g' .git/config
 fi
@@ -112,9 +112,9 @@ ls -a
 git remote update origin --prune
 
 #checkout specified branch and build keinel
-git stash
+git stash 2>&1
 
-git branch | grep ${BRANCH_NAME}
+git branch | grep ${BRANCH_NAME} 2>&1
 
 
 if [ $? -eq 0 ];then
