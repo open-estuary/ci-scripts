@@ -52,7 +52,7 @@ ls -a ${BUILD_DIR}
 
 #Enter the current scripts's dir
 cd ${PRE_TOP_DIR}
-
+cp fetchbranch.sh ${BUILD_DIR}
 #checkout if kernel repo is exit or not!
 if [ ! -d "${BUILD_DIR}/${tmp}" ];then
 	echo "The kernel dir is not exit!"
@@ -63,7 +63,7 @@ if [ ! -d "${BUILD_DIR}/${tmp}" ];then
 	#pushd ${BUILD_DIR}
 
 	cp gitclone.sh ${BUILD_DIR}
-	cp fetchbranch.sh ${BUILD_DIR}
+#	cp fetchbranch.sh ${BUILD_DIR}
 	cd ${BUILD_DIR}
 	pwd
 	./gitclone.sh ${KERNEL_GITADDR}	
