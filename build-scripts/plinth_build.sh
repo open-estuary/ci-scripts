@@ -44,7 +44,7 @@ if [ ! -d "${BUILD_DIR}/output" ];then
 	mkdir ${BUILD_DIR}/output
 fi
 
-rm -rf ${BUILD_DIR}/${tmp}
+#rm -rf ${BUILD_DIR}/${tmp}
 
 ls -a ${BUILD_DIR}
 
