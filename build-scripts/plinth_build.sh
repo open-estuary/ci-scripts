@@ -80,8 +80,8 @@ cd ${BUILD_DIR}/${tmp}
 #./fetchbranch.sh
 #o="url = https://github.com/hisilicon/kernel-dev.git"
 #a="url = https://Luojiaxing1991:ljxfyjh1321@github.com/hisilicon/kernel-dev.git"
-cat .git/config | grep 'Luojiaxing1991' 2>&1
-if [ $? -eq 1 ];then
+cat .git/config | grep '//github.com'
+if [ $? -ne 1 ];then
 	sed -i 's/github.com/Luojiaxing1991:ljxfyjh1321@github.com/g' .git/config
 fi
 
