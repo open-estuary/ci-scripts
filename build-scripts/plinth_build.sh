@@ -44,6 +44,10 @@ if [ ! -d "${BUILD_DIR}/output" ];then
 	mkdir ${BUILD_DIR}/output
 fi
 
+ls -a ${BUILD_DIR}
+
+ls -a ${BUILD_DIR}/${tmp}
+
 #Enter the current scripts's dir
 cd ${PRE_TOP_DIR}
 
@@ -67,6 +71,8 @@ fi
 
 #enter the kernel code dir
 cd ${BUILD_DIR}/${tmp}
+
+ls -a
 
 #generate the patch of pmu v2 to make perf support in D05
 #git stash
