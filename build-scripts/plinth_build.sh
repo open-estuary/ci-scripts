@@ -8,23 +8,29 @@
 #!/bin/bash
 
 #PRE_TOP_DIR=$(cd "`dirname $0`" ; pwd)
+
+
+#record the path of parent script,we need to return this dir after build is over
+CUR_TOP_DIR=`pwd`
+
+
+#The CI Build use VM to run build job,
+#so I should used relational path to find the build git 
 PRE_TOP_DIR=$0
 PRE_TOP_DIR=`echo ${PRE_TOP_DIR%/*}`
-#KERNEL_GITADDR="https://github.com/hisilicon/kernel-dev.git"
 
-EXP_KERGIT=${KERNEL_GITADDR}
-
+#The local path which to locate my kernel code
 BUILD_DIR="/home/plinth"
 
+#build result variable
 envok=0
 
-#****Check cmd support before running prepare actions for plinth test*****#
 
 #********
 #****Start : Clone kernel repo and build it
 #********
 
-#cd into the repo
+#get the name of git,the name is used to find the dir
 tmp=`echo ${KERNEL_GITADDR} | awk -F'.' '{print $2}' | awk -F'/' '{print $NF}'`
 echo "The name of kernel repo is "$tmp
 
@@ -38,16 +44,8 @@ if [ ! -d "${BUILD_DIR}/output" ];then
 	mkdir ${BUILD_DIR}/output
 fi
 
-ls -a
-
-pwd
+#Enter the current scripts's dir
 cd ${PRE_TOP_DIR}
-
-ls
-
-if [ ! -f "${PRE_TOP_DIR}/gitclone.sh" ];then
-	echo "no git"
-fi
 
 #checkout if kernel repo is exit or not!
 if [ ! -d "${BUILD_DIR}/${tmp}" ];then
@@ -61,35 +59,34 @@ if [ ! -d "${BUILD_DIR}/${tmp}" ];then
 	cp gitclone.sh ${BUILD_DIR}
 	cd ${BUILD_DIR}
 	pwd
-	./gitclone.sh ${KERNEL_GITADDR}
-	#popd 
-fi	
-#else
-#	echo "The kernel repo have not been found!"
+	./gitclone.sh ${KERNEL_GITADDR}	
+else
+	echo "The kernel repo have been found!"
 #	exit 0
-#fi
+fi
 
+#enter the kernel code dir
 cd ${BUILD_DIR}/${tmp}
 
 #generate the patch of pmu v2 to make perf support in D05
-git stash
-git checkout -b svm-4.15 remotes/origin/release-plinth-4.15.0
-tmp_patch=`git format-patch -1 b4e84aac21e48fcccc964216be5c7f8530db7b32`
+#git stash
+#git checkout -b svm-4.15 remotes/origin/release-plinth-4.15.0
+#tmp_patch=`git format-patch -1 b4e84aac21e48fcccc964216be5c7f8530db7b32`
 
-cp ${tmp_patch}  ${BUILD_DIR}/output
+#cp ${tmp_patch}  ${BUILD_DIR}/output
 
 #before checkout branch,update the remote branch list
-#expect -c '
-#spawn git remote update origin --prune
-#expect "Username for 'https://github.com':"
-#send "Luojiaxing1991\r"
-#expect "Password for 'https://Luojiaxing1991@github.com':"
-#send "ljxfyjh1321\r"
-#expect eof
-#exit 0
-#'
+expect -c '
+spawn git remote update origin --prune
+expect "Username for 'https://github.com':"
+send "Luojiaxing1991\r"
+expect "Password for 'https://Luojiaxing1991@github.com':"
+send "ljxfyjh1321\r"
+expect eof
+exit 0
+'
 
-git remote update origin --prune
+#git remote update origin --prune
 
 #checkout specified branch and build keinel
 git branch | grep ${BRANCH_NAME}
@@ -126,7 +123,7 @@ bash build.sh ${BOARD_TYPE} > ${BUILD_DIR}/output/ok.log
 
 echo "Finish the kernel build!"
 
-cd ${PRE_TOP_DIR}
+cd ${CUR_TOP_DIR}
 
 #********
 #****END : Clone kernel repo and build it
