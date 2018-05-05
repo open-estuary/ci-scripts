@@ -15,5 +15,6 @@ expect {
 	"Resolving"	{exp_continue}
 	"Checking connectivity"	{exp_continue}
 	"Checking out"	{exit}
+	default		{exp_continue}
 }
 
