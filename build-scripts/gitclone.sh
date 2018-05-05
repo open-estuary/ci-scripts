@@ -5,7 +5,7 @@ set addr [lindex $argv 0]
 
 spawn git clone ${addr}
 
-set timeout 60
+set timeout 120
 
 expect {
 	"Username"	{send "Luojiaxing1991\r";exp_continue}
