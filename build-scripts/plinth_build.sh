@@ -63,6 +63,7 @@ if [ ! -d "${BUILD_DIR}/${tmp}" ];then
 	#pushd ${BUILD_DIR}
 
 	cp gitclone.sh ${BUILD_DIR}
+	cp fetchbranch.sh ${BUILD_DIR}
 	cd ${BUILD_DIR}
 	pwd
 	./gitclone.sh ${KERNEL_GITADDR}	
@@ -74,6 +75,10 @@ fi
 #enter the kernel code dir
 cd ${BUILD_DIR}/${tmp}
 
+cp ${BUILD_DIR}/fetchbranch.sh .
+
+./fetchbranch.sh
+
 ls -a
 
 #generate the patch of pmu v2 to make perf support in D05
@@ -84,21 +89,25 @@ ls -a
 #cp ${tmp_patch}  ${BUILD_DIR}/output
 
 #before checkout branch,update the remote branch list
-expect -c '
-spawn git remote update origin --prune
-expect "Username for 'https://github.com':"
-send "Luojiaxing1991\r"
-expect "Password for 'https://Luojiaxing1991@github.com':"
-send "ljxfyjh1321\r"
-expect eof
-exit 0
-'
+#expect -c '
+#spawn git remote update origin --prune
+#expect "Username for 'https://github.com':"
+#send "Luojiaxing1991\r"
+#expect "Password for 'https://Luojiaxing1991@github.com':"
+#send "ljxfyjh1321\r"
+#expect eof
+#exit 0
+#'
+
+
 
 #git remote update origin --prune
 
 #checkout specified branch and build keinel
-git branch | grep ${BRANCH_NAME}
 git stash
+
+git branch | grep ${BRANCH_NAME}
+
 
 if [ $? -eq 0 ];then
 	#The same name of branch is exit
