@@ -72,7 +72,7 @@ else
 #	exit 0
 fi
 
-cp build.sh ${BUILD_DIR}/${tmp}
+cp build.sh ${BUILD_DIR}/output
 
 #enter the kernel code dir
 cd ${BUILD_DIR}/${tmp}
@@ -149,6 +149,8 @@ git checkout -b ${BRANCH_NAME} remotes/origin/${BRANCH_NAME}
 #cat arch/arm64/configs/defconfig | grep  CONFIG_VLAN_8021Q
 
 echo "Begin to build the kernel!"
+cp ${BUILD_DIR}/output/build.sh .
+
 bash build.sh ${BOARD_TYPE} > ${BUILD_DIR}/output/ok.log
 
 git stash
