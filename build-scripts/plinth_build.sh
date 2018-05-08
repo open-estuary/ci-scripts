@@ -151,8 +151,6 @@ git checkout -b ${BRANCH_NAME} remotes/origin/${BRANCH_NAME}
 echo "Begin to build the kernel!"
 #cp ${BUILD_DIR}/output/build.sh .
 
-aarch64-linux-gnu-gcc -v
-
 bash build.sh ${BOARD_TYPE} > ${BUILD_DIR}/output/ok.log
 
 git stash
