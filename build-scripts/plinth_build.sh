@@ -149,7 +149,9 @@ git checkout -b ${BRANCH_NAME} remotes/origin/${BRANCH_NAME}
 #cat arch/arm64/configs/defconfig | grep  CONFIG_VLAN_8021Q
 
 echo "Begin to build the kernel!"
-cp ${BUILD_DIR}/output/build.sh .
+#cp ${BUILD_DIR}/output/build.sh .
+
+aarch64-linux-gnu-gcc -v
 
 bash build.sh ${BOARD_TYPE} > ${BUILD_DIR}/output/ok.log
 
