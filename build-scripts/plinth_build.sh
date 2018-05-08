@@ -72,6 +72,8 @@ else
 #	exit 0
 fi
 
+cp build.sh ${BUILD_DIR}/${tmp}
+
 #enter the kernel code dir
 cd ${BUILD_DIR}/${tmp}
 
