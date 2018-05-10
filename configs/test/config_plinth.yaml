@@ -76,3 +76,13 @@ REPORT:
     
 Kernel_dev:
     Image_dir: arch/arm64/boot/Image
+    
+Mail:
+    SUCCESS_LIST:
+        - luojiaxing@huawei.com
+    SUCCESS_CC_LIST:
+        - 1191097880@qq.com
+    FAILED_LIST:
+        - luojiaxing@huawei.com
+    FAILED_CC_LIST:
+        - 1191097880@qq.com

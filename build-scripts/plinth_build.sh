@@ -34,14 +34,14 @@ function parse_params() {
 
 #    : ${FTP_SERVER:=`python configs/parameter_parser.py -f config.yaml -s Ftpinfo -k ftpserver`}
     : ${FTP_DIR:=`python configs/parameter_parser.py -f config_plinth.yaml -s Ftpinfo -k FTP_DIR`}
-#    : ${FTPSERVER_DISPLAY_URL:=`python configs/parameter_parser.py -f config.yaml -s Ftpinfo -k FTPSERVER_DISPLAY_URL`}
+    : ${FTPSERVER_DISPLAY_URL:=`python configs/parameter_parser.py -f config_plinth.yaml -s Ftpinfo -k FTPSERVER_DISPLAY_URL`}
 
 #    : ${ARCH_MAP:=`python configs/parameter_parser.py -f config.yaml -s Arch`}
 
-#    : ${SUCCESS_MAIL_LIST:=`python configs/parameter_parser.py -f config.yaml -s Mail -k SUCCESS_LIST`}
-#    : ${SUCCESS_MAIL_CC_LIST:=`python configs/parameter_parser.py -f config.yaml -s Mail -k SUCCESS_CC_LIST`}
-#    : ${FAILED_MAIL_LIST:=`python configs/parameter_parser.py -f config.yaml -s Mail -k FAILED_LIST`}
-#    : ${FAILED_MAIL_CC_LIST:=`python configs/parameter_parser.py -f config.yaml -s Mail -k FAILED_CC_LIST`}
+    : ${SUCCESS_MAIL_LIST:=`python configs/parameter_parser.py -f config_plinth.yaml -s Mail -k SUCCESS_LIST`}
+    : ${SUCCESS_MAIL_CC_LIST:=`python configs/parameter_parser.py -f config_plinth.yaml -s Mail -k SUCCESS_CC_LIST`}
+    : ${FAILED_MAIL_LIST:=`python configs/parameter_parser.py -f config_plinth.yaml -s Mail -k FAILED_LIST`}
+    : ${FAILED_MAIL_CC_LIST:=`python configs/parameter_parser.py -f config_plinth.yaml -s Mail -k FAILED_CC_LIST`}
 
     : ${BUILD_REPORT_DIR:=`python configs/parameter_parser.py -f config_plinth.yaml -s REPORT -k BUILD_DIR`}
 	: ${IMAGE_DIR:=`python configs/parameter_parser.py -f config_plinth.yaml -s Kernel_dev -k Image_dir`}
@@ -49,7 +49,40 @@ function parse_params() {
     popd    # restore current work directory
 }
 
+function generate_failed_mail(){
+    echo "${FAILED_MAIL_LIST}" > ${CUR_TOP_DIR}/MAIL_LIST.txt
+    echo "${FAILED_MAIL_CC_LIST}" > ${CUR_TOP_DIR}/MAIL_CC_LIST.txt
+    echo "Estuary CI Build - ${GIT_DESCRIBE} - Failed" > ${CUR_TOP_DIR}/MAIL_SUBJECT.txt
+    cat > ${CUR_TOP_DIR}/MAIL_CONTENT.txt <<EOF
+( This mail is send by Jenkins automatically, don't reply )<br>
+Project Name: ${TREE_NAME}<br>
+Version: ${GIT_DESCRIBE}<br>
+Build Status: failed<br>
+Build Log Address: ${BUILD_URL}console<br>
+Build Project Address: $BUILD_URL<br>
+Build and Generated Binaries Address: NONE<br>
+<br>
+The build is failed unexpectly. Please check the log and fix it.<br>
+Build report Address:${FTPSERVER_DISPLAY_URL}/${TREE_NAME}/${BUILD_REPORT_DIR}<br>
+<br>
+EOF
+}
 
+
+function generate_success_mail(){
+    echo "${SUCCESS_MAIL_LIST}" > ${BUILD_DIR}/MAIL_LIST.txt
+    echo "${SUCCESS_MAIL_CC_LIST}" > ${BUILD_DIR}/MAIL_CC_LIST.txt
+    echo "Estuary CI - ${GIT_DESCRIBE} - Result" > ${BUILD_DIR}/MAIL_SUBJECT.txt
+    cat > ${BUILD_DIR}/MAIL_CONTENT.txt <<EOF
+( This mail is send by Jenkins automatically, don't reply )<br>
+Project Name: ${TREE_NAME}<br>
+Version: ${GIT_DESCRIBE}<br>
+Build Status: success<br>
+Build Log Address: ${BUILD_URL}console<br>
+Build Project Address: $BUILD_URL<br>
+Build report Address:${FTPSERVER_DISPLAY_URL}/${TREE_NAME}/${BUILD_REPORT_DIR}<br>
+EOF
+}
 #PRE_TOP_DIR=$(cd "`dirname $0`" ; pwd)
 parse_params
 
@@ -82,6 +115,8 @@ fi
 if [ ! -d "${BUILD_DIR}/output" ];then
 	mkdir ${BUILD_DIR}/output
 fi
+
+generate_failed_mail
 
 #rm -rf ${BUILD_DIR}/${tmp}
 
@@ -169,12 +204,12 @@ git pull
 
 echo "Begin to build the kernel!"
 #cp ${BUILD_DIR}/output/build.sh .
-ls -l ${MAGE_DIR}
+ls -l ${IMAGE_DIR}
 
 DATE=`date +%Y-%m-%d`
 
 bash build.sh ${BOARD_TYPE} > ${BUILD_DIR}/output/build_${BRANCH_NAME}_${DATE}.log
-ls -l ${MAGE_DIR}
+ls -l ${IMAGE_DIR}
 
 echo "Finish Build Image"
 
@@ -199,6 +234,7 @@ git stash
 git checkout test
 git branch -D ${BRANCH_NAME}
 
+generate_success_mail
 
 cd ${CUR_TOP_DIR}
 
