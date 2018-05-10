@@ -6,13 +6,52 @@
 # only works on centos
 
 #!/bin/bash
-
-#PRE_TOP_DIR=$(cd "`dirname $0`" ; pwd)
-
-
 #record the path of parent script,we need to return this dir after build is over
 CUR_TOP_DIR=`pwd`
+CI_SCRIPTS_DIR=${CUR_TOP_DIR}/local/ci-scripts/
 
+function parse_params() {
+    pushd ${CI_SCRIPTS_DIR}
+	
+	pwd
+	
+#    : ${SHELL_PLATFORM:=`python configs/parameter_parser.py -f config.yaml -s Build -k Platform`}
+#    : ${ALL_SHELL_PLATFORM:=`python configs/parameter_parser.py -f config.yaml -s Build -k Platform`}
+#    : ${SHELL_DISTRO:=`python configs/parameter_parser.py -f config.yaml -s Build -k Distro`}
+#    : ${ALL_SHELL_DISTRO:=`python configs/parameter_parser.py -f config.yaml -s Build -k Distro`}
+
+#    : ${BOOT_PLAN:=`python configs/parameter_parser.py -f config.yaml -s Jenkins -k Boot`}
+
+#    : ${TEST_PLAN:=`python configs/parameter_parser.py -f config.yaml -s Test -k Plan`}
+#    : ${TEST_SCOPE:=`python configs/parameter_parser.py -f config.yaml -s Test -k Scope`}
+#    : ${TEST_REPO:=`python configs/parameter_parser.py -f config.yaml -s Test -k Repo`}
+#    : ${TEST_LEVEL:=`python configs/parameter_parser.py -f config.yaml -s Test -k Level`}
+
+#    : ${LAVA_SERVER:=`python configs/parameter_parser.py -f config.yaml -s LAVA -k lavaserver`}
+#    : ${LAVA_USER:=`python configs/parameter_parser.py -f config.yaml -s LAVA -k lavauser`}
+#    : ${LAVA_STREAM:=`python configs/parameter_parser.py -f config.yaml -s LAVA -k lavastream`}
+#    : ${LAVA_TOKEN:=`python configs/parameter_parser.py -f config.yaml -s LAVA -k TOKEN`}
+
+#    : ${FTP_SERVER:=`python configs/parameter_parser.py -f config.yaml -s Ftpinfo -k ftpserver`}
+    : ${FTP_DIR:=`python configs/parameter_parser.py -f config_plinth.yaml -s Ftpinfo -k FTP_DIR`}
+#    : ${FTPSERVER_DISPLAY_URL:=`python configs/parameter_parser.py -f config.yaml -s Ftpinfo -k FTPSERVER_DISPLAY_URL`}
+
+#    : ${ARCH_MAP:=`python configs/parameter_parser.py -f config.yaml -s Arch`}
+
+#    : ${SUCCESS_MAIL_LIST:=`python configs/parameter_parser.py -f config.yaml -s Mail -k SUCCESS_LIST`}
+#    : ${SUCCESS_MAIL_CC_LIST:=`python configs/parameter_parser.py -f config.yaml -s Mail -k SUCCESS_CC_LIST`}
+#    : ${FAILED_MAIL_LIST:=`python configs/parameter_parser.py -f config.yaml -s Mail -k FAILED_LIST`}
+#    : ${FAILED_MAIL_CC_LIST:=`python configs/parameter_parser.py -f config.yaml -s Mail -k FAILED_CC_LIST`}
+
+    : ${BUILD_REPORT_DIR:=`python configs/parameter_parser.py -f config_plinth.yaml -s REPORT -k BUILD_DIR`}
+	: ${IMAGE_DIR:=`python configs/parameter_parser.py -f config_plinth.yaml -s Kernel_dev -k Image_dir`}
+	
+    popd    # restore current work directory
+}
+
+
+#PRE_TOP_DIR=$(cd "`dirname $0`" ; pwd)
+parse_params
 
 #The CI Build use VM to run build job,
 #so I should used relational path to find the build git 
@@ -87,26 +126,6 @@ if [ x"${tmp_url}" == x"${o}" ];then
 	sed -i 's/github.com/Luojiaxing1991:ljxfyjh1321@github.com/g' .git/config
 fi
 
-#url = https://github.com/hisilicon/kernel-dev.git
-
-#generate the patch of pmu v2 to make perf support in D05
-#git stash
-#git checkout -b svm-4.15 remotes/origin/release-plinth-4.15.0
-#tmp_patch=`git format-patch -1 b4e84aac21e48fcccc964216be5c7f8530db7b32`
-
-#cp ${tmp_patch}  ${BUILD_DIR}/output
-
-#before checkout branch,update the remote branch list
-#expect -c '
-#spawn git remote update origin --prune
-#expect "Username for 'https://github.com':"
-#send "Luojiaxing1991\r"
-#expect "Password for 'https://Luojiaxing1991@github.com':"
-#send "ljxfyjh1321\r"
-#expect eof
-#exit 0
-#'
-
 git remote update origin --prune
 
 #checkout specified branch and build keinel
@@ -150,14 +169,36 @@ git pull
 
 echo "Begin to build the kernel!"
 #cp ${BUILD_DIR}/output/build.sh .
+ls -l ${MAGE_DIR}
 
-bash build.sh ${BOARD_TYPE} > ${BUILD_DIR}/output/ok.log
+DATE=`date +%Y-%m-%d`
+
+bash build.sh ${BOARD_TYPE} > ${BUILD_DIR}/output/build_${BRANCH_NAME}_${DATE}.log
+ls -l ${MAGE_DIR}
+
+echo "Finish Build Image"
+
+
+##########
+##Copy the Image to FTP document##
+##########
+[ ! -d ${FTP_DIR}/${TREE_NAME} ] && mkdir ${FTP_DIR}/${TREE_NAME}
+
+[ ! -d ${FTP_DIR}/${TREE_NAME}/${BRANCH_NAME} ] && mkdir ${FTP_DIR}/${TREE_NAME}/${BRANCH_NAME}
+
+[ ! -d ${FTP_DIR}/${TREE_NAME}/${BUILD_REPORT_DIR} ] && mkdir ${FTP_DIR}/${TREE_NAME}/${BUILD_REPORT_DIR}
+
+cp ${IMAGE_DIR} ${FTP_DIR}/${TREE_NAME}/${BRANCH_NAME}
+
+cp ${BUILD_DIR}/output/build_${BRANCH_NAME}_${DATE}.log ${FTP_DIR}/${TREE_NAME}/${BUILD_REPORT_DIR}
+
+echo "Finish the kernel build!"
+
 
 git stash
 git checkout test
 git branch -D ${BRANCH_NAME}
 
-echo "Finish the kernel build!"
 
 cd ${CUR_TOP_DIR}
 
