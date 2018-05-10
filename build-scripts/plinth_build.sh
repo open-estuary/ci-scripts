@@ -82,14 +82,12 @@ cd ${BUILD_DIR}/${tmp}
 #./fetchbranch.sh
 o="url = https://github.com/hisilicon/kernel-dev.git"
 #a="url = https://Luojiaxing1991:ljxfyjh1321@github.com/hisilicon/kernel-dev.git"
-cat .git/config | grep 'github.com'
-if [ x"$1" == x"${o}" ];then
+tmp_url=`cat .git/config | grep 'github.com/'`
+if [ x"${tmp_url}" == x"${o}" ];then
 	sed -i 's/github.com/Luojiaxing1991:ljxfyjh1321@github.com/g' .git/config
 fi
 
 #url = https://github.com/hisilicon/kernel-dev.git
-
-ls -a
 
 #generate the patch of pmu v2 to make perf support in D05
 #git stash
@@ -109,8 +107,6 @@ ls -a
 #exit 0
 #'
 
-
-
 git remote update origin --prune
 
 #checkout specified branch and build keinel
@@ -129,6 +125,10 @@ git branch
 
 #git checkout -b mybranch origin/release-plinth-4.16.1
 git checkout -b ${BRANCH_NAME} remotes/origin/${BRANCH_NAME}
+
+
+git pull
+
 
 #git branch -D tmp_luo
 
@@ -154,7 +154,7 @@ echo "Begin to build the kernel!"
 bash build.sh ${BOARD_TYPE} > ${BUILD_DIR}/output/ok.log
 
 git stash
-git checkout mybranch
+git checkout test
 git branch -D ${BRANCH_NAME}
 
 echo "Finish the kernel build!"
