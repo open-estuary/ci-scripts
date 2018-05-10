@@ -70,10 +70,10 @@ EOF
 
 
 function generate_success_mail(){
-    echo "${SUCCESS_MAIL_LIST}" > ${BUILD_DIR}/MAIL_LIST.txt
-    echo "${SUCCESS_MAIL_CC_LIST}" > ${BUILD_DIR}/MAIL_CC_LIST.txt
-    echo "Estuary CI - ${GIT_DESCRIBE} - Result" > ${BUILD_DIR}/MAIL_SUBJECT.txt
-    cat > ${BUILD_DIR}/MAIL_CONTENT.txt <<EOF
+    echo "${SUCCESS_MAIL_LIST}" > ${CUR_TOP_DIR}/MAIL_LIST.txt
+    echo "${SUCCESS_MAIL_CC_LIST}" > ${CUR_TOP_DIR}/MAIL_CC_LIST.txt
+    echo "Estuary CI - ${GIT_DESCRIBE} - Result" > ${CUR_TOP_DIR}/MAIL_SUBJECT.txt
+    cat > ${CUR_TOP_DIR}/MAIL_CONTENT.txt <<EOF
 ( This mail is send by Jenkins automatically, don't reply )<br>
 Project Name: ${TREE_NAME}<br>
 Version: ${GIT_DESCRIBE}<br>
