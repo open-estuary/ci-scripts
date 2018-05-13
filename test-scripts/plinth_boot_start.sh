@@ -18,7 +18,7 @@ function init_build_option() {
 function init_workspace() {
     #WORKSPACE=${WORKSPACE:-/home/ts/jenkins/workspace/plinth-ci}
 	WORKSPACE="/home/ts/jenkins/workspace/plinth-ci"
-    [ ! -d /home/ts/jenkins/workspace/plinth-ci ] && mkdir -p ${WORKSPACE}
+    #[ ! -d /home/ts/jenkins/workspace/plinth-ci ] && mkdir -p ${WORKSPACE}
 }
 
 function init_input_params() {
