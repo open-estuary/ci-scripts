@@ -194,6 +194,12 @@ git pull
 
 #before building,change some build cfg
 
+#HNS3 build into kernel option
+sed -i 's/CONFIG_HNS3=m/CONFIG_HNS3=y/g' arch/arm64/configs/defconfig
+sed -i 's/CONFIG_HNS3_HCLGE=m/CONFIG_HNS3_HCLGE=y/g' arch/arm64/configs/defconfig
+sed -i 's/CONFIG_HNS3_ENET=m/CONFIG_HNS3_ENET=y/g' arch/arm64/configs/defconfig
+
+
 #HNS VLAN build option
 #sed -i 's/CONFIG_VLAN_8021Q=m/CONFIG_VLAN_8021Q=y/g' arch/arm64/configs/defconfig
 
@@ -211,6 +217,8 @@ DATE=`date +%Y-%m-%d`
 bash build.sh ${BOARD_TYPE} > ${BUILD_DIR}/output/build_${BRANCH_NAME}_${DATE}.log
 ls -l ${IMAGE_DIR}
 
+cat .config
+
 echo "Finish Build Image"
 
 
@@ -224,6 +232,8 @@ echo "Finish Build Image"
 [ ! -d ${FTP_DIR}/${TREE_NAME}/${BUILD_REPORT_DIR} ] && mkdir ${FTP_DIR}/${TREE_NAME}/${BUILD_REPORT_DIR}
 
 cp ${IMAGE_DIR} ${FTP_DIR}/${TREE_NAME}/${GIT_DESCRIBE}/${SHELL_PLATFORM}-arm64/Image_${SHELL_PLATFORM}
+
+cp ${IMAGE_DIR} /root/estuary/tftp_nfs_data/plinth/Image
 
 cp ${BUILD_DIR}/output/build_${BRANCH_NAME}_${DATE}.log ${FTP_DIR}/${TREE_NAME}/${BUILD_REPORT_DIR}
 
