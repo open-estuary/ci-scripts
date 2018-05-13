@@ -367,6 +367,8 @@ def generate_job_file(cwd,
                             if len(distro_list):
                                 nfs_url = ""
                                 for distro_url in distro_list:
+                                    print "NFS rootfs url using distro %s" % distro
+                                    print "NFS rootfs url is %s" % distro_url
                                     if distro in distro_url:
                                         nfs_url = distro_url
                                 tmp = line.replace('{nfs_url}', nfs_url)
