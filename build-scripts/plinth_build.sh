@@ -233,7 +233,7 @@ echo "Finish Build Image"
 
 cp ${IMAGE_DIR} ${FTP_DIR}/${TREE_NAME}/${GIT_DESCRIBE}/${SHELL_PLATFORM}-arm64/Image_${SHELL_PLATFORM}
 
-cp ${IMAGE_DIR} /root/estuary/tftp_nfs_data/plinth/Image
+#cp ${IMAGE_DIR} /root/estuary/tftp_nfs_data/plinth/Image
 
 cp ${BUILD_DIR}/output/build_${BRANCH_NAME}_${DATE}.log ${FTP_DIR}/${TREE_NAME}/${BUILD_REPORT_DIR}
 
