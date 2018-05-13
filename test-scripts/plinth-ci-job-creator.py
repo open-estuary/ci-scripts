@@ -419,7 +419,8 @@ def walk_url(url, distro_url, plans, arch, targets,
                 kernel = url + name
                 print 'Found image url as: %s' % kernel
                 base_url = url
-                print 'Add platform message as %s %s' % name.partition('_')[2] % device_map
+                print 'Add platform message as %s' % name.partition('_')[2]
+                print 'Add platform message as %s' % device_map['D06']
             if name.startswith('Image') and name.partition('_')[2] in device_map:
                 platform_list.append(url + name)
                 print 'Add platform message as %s' % platform_list
