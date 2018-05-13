@@ -273,7 +273,7 @@ def create_jobs(base_url, kernel, plans, platform_list, targets, priority,
 
                     number = 1
                     for definitions in test_definitions:
-                        print 'Beging to generate job file!'
+                        print 'Begin to generate job file!'
                         generate_job_file(cwd, defconfig, device_type,
                                           distro, distro_url, image_url, kernel,
                                           kernel_version, plan, platform, platform_name, priority,
@@ -308,7 +308,7 @@ def generate_job_file(cwd,
             job_json = cwd + '/jobs/' + job_name + '.yaml'
         template_file = cwd + '/templates/' + plan + '/' + str(template)
         if os.path.exists(template_file):
-            print 'Begin to generate yaml file at $s' % job_json
+            print 'Begin to generate yaml file'
             with open(job_json, 'wt') as fout:
                 with open(template_file, "rt") as fin:
                     for line in fin:
@@ -372,6 +372,7 @@ def generate_job_file(cwd,
                                 exit(1)
 
                         fout.write(tmp)
+                        print 'Finished generate yaml file'
     return distro_url
 
 
