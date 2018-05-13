@@ -85,7 +85,7 @@ def get_nfs_url(distro_url, device_type):
 def generate_test_definition(test_path, name, test_case_definition_url):
     test_definition = "      - repository: \"" + test_case_definition_url +"\"\n"
     test_definition += "        from: git\n"
-    test_definition += "        path: \"" + common.TEST_DIR_BASE_NAME + "/" + test_path + "\"\n"
+    test_definition += "        path: \"" + common_pl.TEST_DIR_BASE_NAME + "/" + test_path + "\"\n"
     test_definition += "        name: \"" + name + "\"\n"
     return test_definition
 
@@ -149,7 +149,7 @@ def create_jobs2(plans, platform_name, targets, priority, distro, scope, level,
                 config_plan.read(cwd + '/templates/' + plan + '/' + plan + '.ini')
                 # TODO : think filter the test job by platform, distro, device type, level, scope
                 test_definitions = generate_test_definitions(
-                    common.filter_test_definitions(distro, device_type, scope, level,
+                    common_pl.filter_test_definitions(distro, device_type, scope, level,
                                                    test_case_definition_dir, test_case_definition_file_list), test_case_definition_url)
 
                 number = 1
@@ -262,7 +262,7 @@ def create_jobs(base_url, kernel, plans, platform_list, targets, priority,
 
                     # TODO : think filter the test job by platform, distro, device type, level, scope
                     test_definitions = generate_test_definitions(
-                        common.filter_test_definitions(distro, device_type, scope, level, test_case_definition_dir, test_case_definition_file_list), test_case_definition_url)
+                        common_pl.filter_test_definitions(distro, device_type, scope, level, test_case_definition_dir, test_case_definition_file_list), test_case_definition_url)
 
                     number = 1
                     for definitions in test_definitions:
@@ -440,9 +440,9 @@ def main(args):
 
     CONFIG = configuration.get_config(args)
 
-    test_case_definition_dir = CONFIG.get("testDir") + "/" + common.TEST_DIR_BASE_NAME
-    test_plan_definition_dir = CONFIG.get("testDir") + "/" + common.PLAN_DIR_BASE_NAME
-    test_case_definition_file_list = common.find_all_test_case(CONFIG.get("plan"),
+    test_case_definition_dir = CONFIG.get("testDir") + "/" + common_pl.TEST_DIR_BASE_NAME
+    test_plan_definition_dir = CONFIG.get("testDir") + "/" + common_pl.PLAN_DIR_BASE_NAME
+    test_case_definition_file_list = common_pl.find_all_test_case(CONFIG.get("plan"),
                                                                test_case_definition_dir,
                                                                test_plan_definition_dir)
 
