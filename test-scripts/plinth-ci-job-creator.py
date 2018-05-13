@@ -408,19 +408,18 @@ def walk_url(url, distro_url, plans, arch, targets,
         elif arch == 'arm':
             if 'zImage' in name and 'arm' in url:
                 kernel = url + name
-				print 'Found image url as: %s' % kernel
                 base_url = url
         elif arch == 'arm64':
             if 'Image' in name and 'arm64' in url:
                 kernel = url + name
-				print 'Found image url as: %s' % kernel
+                print 'Found image url as: %s' % kernel
                 base_url = url
             if name.startswith('Image') and name.partition('_')[2] in device_map:
                 platform_list.append(url + name)
         if 'distro' in name:
             distro_url = url + name
     if kernel is not None and base_url is not None:
-		print 'Begin to create job!'
+        print 'Begin to create job!'
         if platform_list:
             print 'Found artifacts at: %s' % base_url
             create_jobs(base_url, kernel, plans, platform_list, targets,
