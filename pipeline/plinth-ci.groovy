@@ -99,13 +99,17 @@ node ('ci-compile'){
     echo "build_result : ${build_result}"
     if (build_result == 0) {
         echo "build success"
-	functions.send_mail()
-	currentBuild.result = 'SUCCESS'
     } else {
         echo "build failed"
         functions.send_mail()
         currentBuild.result = 'FAILURE'
         return
     }
-	
+
+    def test_result = 0	
+    stage('Test') {
+	test_result = sh script: "./local/ci-scripts/test-scripts/plinth_boot_start.sh -p env.properties 2>&1" , returnStatus: true
+	}
+
 }
+

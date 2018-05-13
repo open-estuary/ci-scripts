@@ -63,7 +63,7 @@ Build Project Address: $BUILD_URL<br>
 Build and Generated Binaries Address: NONE<br>
 <br>
 The build is failed unexpectly. Please check the log and fix it.<br>
-Build report Address:${FTPSERVER_DISPLAY_URL}/${TREE_NAME}/${BUILD_REPORT_DIR}<br>
+Build report Address: ${FTPSERVER_DISPLAY_URL}/${TREE_NAME}/${BUILD_REPORT_DIR}<br>
 <br>
 EOF
 }
@@ -80,7 +80,7 @@ Version: ${GIT_DESCRIBE}<br>
 Build Status: success<br>
 Build Log Address: ${BUILD_URL}console<br>
 Build Project Address: $BUILD_URL<br>
-Build report Address:${FTPSERVER_DISPLAY_URL}/${TREE_NAME}/${BUILD_REPORT_DIR}<br>
+Build report Address: ${FTPSERVER_DISPLAY_URL}/${TREE_NAME}/${BUILD_REPORT_DIR}<br>
 EOF
 }
 #PRE_TOP_DIR=$(cd "`dirname $0`" ; pwd)

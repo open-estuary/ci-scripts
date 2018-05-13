@@ -2,16 +2,16 @@ Build:
     # parameters for the build
     Distro:
         - Ubuntu
-        - CentOS
-        - Debian
+        #- CentOS
+        #- Debian
         #- Fedora
         #- OpenSuse
         #- Rancher
         #- OpenEmbedded
 
     Platform:
-        - D03
-        - D05
+        #- D03
+        #- D05
         - D06
 
 DISTRO:
@@ -29,7 +29,7 @@ DISTRO:
 Arch:
     d03: arm64
     d05: arm64
-
+    d06: arm64
 # for lava connection
 LAVA:
     TOKEN: 0p9a29zs4rq15xyaaw9eza9sa1hsdb8axx4p9fankh6j0304wrla08w9n7s9qghn2m8bnofcolbrng0sy0zzef7awwt6hjnajhmnoq5aj0ufxm4mqt7629d3fskcnm75
@@ -48,7 +48,7 @@ Jenkins:
 Test:
     Plan: '*'
     Scope: '*'
-    Repo: https://github.com/qinshulei/ci-test-cases
+    Repo: https://github.com/Luojiaxing1991/plinth-test-suite.git
     Level: 4
 
 # for kernelci access
@@ -80,9 +80,11 @@ Kernel_dev:
 Mail:
     SUCCESS_LIST:
         - luojiaxing@huawei.com
+        - chen_jing94@163.com
     SUCCESS_CC_LIST:
         - 1191097880@qq.com
     FAILED_LIST:
         - luojiaxing@huawei.com
+        - chen_jing94@163.com
     FAILED_CC_LIST:
         - 1191097880@qq.com
