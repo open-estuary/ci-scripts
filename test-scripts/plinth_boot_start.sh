@@ -277,17 +277,17 @@ function trigger_lava_build() {
                 # boot from ISO
                 generate_jobs $boot_plan $DISTRO
 
-                if [ -d ${JOBS_DIR} ]; then
-                    if ! run_and_move_result $boot_plan $DISTRO ;then
-                        if [ ! -d ${GIT_DESCRIBE}/${RESULTS_DIR}/${DISTRO} ];then
-                            mv ${DISTRO} ${GIT_DESCRIBE}/${RESULTS_DIR}
-                            continue
-                        else
-                            cp -fr ${DISTRO}/* ${GIT_DESCRIBE}/${RESULTS_DIR}/${DISTRO}/
-                            continue
-                        fi
-                    fi
-                fi
+                #if [ -d ${JOBS_DIR} ]; then
+                 #   if ! run_and_move_result $boot_plan $DISTRO ;then
+                  #      if [ ! -d ${GIT_DESCRIBE}/${RESULTS_DIR}/${DISTRO} ];then
+                   #         mv ${DISTRO} ${GIT_DESCRIBE}/${RESULTS_DIR}
+                    #        continue
+                     #   else
+                      #      cp -fr ${DISTRO}/* ${GIT_DESCRIBE}/${RESULTS_DIR}/${DISTRO}/
+                       #     continue
+                        #fi
+                    #fi
+                #fi
             elif [ "$boot_plan" = "BOOT_PXE" ]; then
                 # pxe install in previous step.use ssh to do the pxe test.
                 # BOOT_PXE
