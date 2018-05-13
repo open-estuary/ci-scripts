@@ -93,11 +93,11 @@ def filter_test_definitions(distro, device_type, test_scope, test_level,
         except(yaml.parser.ParserError, yaml.scanner.ScannerError) as e:
             print "warnings: wrong yaml syntax :\n %s" % e
             continue
-
+        print "Have found the right format yaml!"
         if not test_yaml or not 'metadata' in test_yaml:
             print "warning : don't have metadata : " + str(file)
             continue
-
+        print "Metadata have been found in Yaml file!"
         if not 'format' in test_yaml['metadata']:
             print "warning : don't have metadata.format : " + str(file)
             continue
@@ -151,6 +151,7 @@ def filter_test_definitions(distro, device_type, test_scope, test_level,
                 and distro.lower() in test_yaml['metadata']['os']:
             test_path = file[start_point:]
             test_yaml['metadata']['test_path'] = test_path
+            print "Success add Yaml file to list!!"
             work_test_list.append(test_yaml)
 
     work_test_list = sorted(work_test_list,
