@@ -83,8 +83,10 @@ def get_nfs_url(distro_url, device_type):
         if not name.endswith('/'):
             dirs += [name]
         print "url + name is %s" % distro_url+name
+        print "device_type is $s" % device_type
         if name.endswith('.tar.gz') and 'distro' in distro_url+name and device_type in distro_url+name:
             distro_list.append(distro_url+name)
+            print "Success to add distro_list!"
         for direc in dirs:
             get_nfs_url(distro_url + direc, device_type)
 
