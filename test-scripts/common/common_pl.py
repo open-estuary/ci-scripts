@@ -134,11 +134,13 @@ def filter_test_definitions(distro, device_type, test_scope, test_level,
             print "warning: test definition name contains space. skip it."
             continue
         else:
+            print "Ready to add name of test in definition"
             test_definitions.append(name)
 
         if test_scope.lower().strip() == "*" or test_scope.lower() in scope:
             pass
         else:
+            print "Test scope is not correct!"
             continue
 
         if int(level) > 5 or (int(level) <= 5 and int(level) <= int(test_level)):
@@ -146,7 +148,8 @@ def filter_test_definitions(distro, device_type, test_scope, test_level,
         else:
             print "Test level is not correct!"
             continue
-
+        print "device_type is %s" % device_type
+        print "distro is %s" % distro
         if ready \
                 and device_type.lower() in test_yaml['metadata']['devices'] \
                 and distro.lower() in test_yaml['metadata']['os']:
