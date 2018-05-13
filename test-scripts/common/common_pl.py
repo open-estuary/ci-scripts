@@ -144,6 +144,7 @@ def filter_test_definitions(distro, device_type, test_scope, test_level,
         if int(level) > 5 or (int(level) <= 5 and int(level) <= int(test_level)):
             pass
         else:
+            print "Test level is not correct!"
             continue
 
         if ready \
