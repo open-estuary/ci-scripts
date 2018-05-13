@@ -9,7 +9,7 @@ import re
 import urllib2
 import urlparse
 from lib import configuration
-from common_pl import common_pl
+from common import common_pl
 
 base_url = None
 kernel = None
