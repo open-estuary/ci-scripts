@@ -764,11 +764,12 @@ function main() {
     print_time "time_preparing_envireonment"
 
     trigger_lava_build
-    collect_result
 
-    print_time "time_test_test_end"
+    #collect_result
 
-    save_properties_and_result pass
+    #print_time "time_test_test_end"
+
+    #save_properties_and_result pass
 
     #generate_success_mail
     generate_simple_mail ${JOBS_DIR}
