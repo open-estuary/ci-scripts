@@ -124,7 +124,7 @@ function init_boot_env() {
 function generate_jobs() {
     local test_name=$1
 	
-	//ubuntu
+	#ubuntu
     local distro=$2
 
     pwd
