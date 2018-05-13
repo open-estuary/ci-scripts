@@ -164,11 +164,11 @@ function run_and_report_jobs() {
             cat ${JOBS_DIR}/${RESULTS_DIR}/POLL
         fi
 
-        python estuary-report.py --boot ${JOBS_DIR}/${RESULTS_DIR}/POLL --lab $LAVA_USER --testDir "${TEST_CASE_DIR}" --distro "$distro"
-        if [ ! -d ${RESULTS_DIR} ]; then
-            echo "running jobs error! Aborting"
-            return -1
-        fi
+        //python estuary-report.py --boot ${JOBS_DIR}/${RESULTS_DIR}/POLL --lab $LAVA_USER --testDir "${TEST_CASE_DIR}" --distro "$distro"
+        //if [ ! -d ${RESULTS_DIR} ]; then
+            //echo "running jobs error! Aborting"
+            //return -1
+        //fi
     else
         echo "skip lava run and report"
     fi
@@ -277,17 +277,17 @@ function trigger_lava_build() {
                 # boot from ISO
                 generate_jobs $boot_plan $DISTRO
 
-                #if [ -d ${JOBS_DIR} ]; then
-                 #   if ! run_and_move_result $boot_plan $DISTRO ;then
-                  #      if [ ! -d ${GIT_DESCRIBE}/${RESULTS_DIR}/${DISTRO} ];then
-                   #         mv ${DISTRO} ${GIT_DESCRIBE}/${RESULTS_DIR}
-                    #        continue
-                     #   else
-                      #      cp -fr ${DISTRO}/* ${GIT_DESCRIBE}/${RESULTS_DIR}/${DISTRO}/
-                       #     continue
-                        #fi
-                    #fi
-                #fi
+                if [ -d ${JOBS_DIR} ]; then
+                    if ! run_and_move_result $boot_plan $DISTRO ;then
+                        if [ ! -d ${GIT_DESCRIBE}/${RESULTS_DIR}/${DISTRO} ];then
+                            mv ${DISTRO} ${GIT_DESCRIBE}/${RESULTS_DIR}
+                            continue
+                        else
+                            cp -fr ${DISTRO}/* ${GIT_DESCRIBE}/${RESULTS_DIR}/${DISTRO}/
+                            continue
+                        fi
+                    fi
+                fi
             elif [ "$boot_plan" = "BOOT_PXE" ]; then
                 # pxe install in previous step.use ssh to do the pxe test.
                 # BOOT_PXE
@@ -719,6 +719,20 @@ function detail_html_footer() {
     echo "</table>" >> ${target_html}
 }
 
+function generate_simple_mail(){
+    local tid=$1
+    echo "${FAILED_MAIL_LIST}" > ${CUR_TOP_DIR}/MAIL_LIST.txt
+    echo "${FAILED_MAIL_CC_LIST}" > ${CUR_TOP_DIR}/MAIL_CC_LIST.txt
+    echo "Plinth CI Test Result - ${GIT_DESCRIBE} " > ${CUR_TOP_DIR}/MAIL_SUBJECT.txt
+    cat > ${CUR_TOP_DIR}/MAIL_CONTENT.txt <<EOF
+( This mail is send by Jenkins automatically, don't reply )<br>
+Project Name: ${TREE_NAME}<br>
+Version: ${GIT_DESCRIBE}<br>
+Test Result Address: http://120.31.149.194:180/results/${tid}<br>
+<br>
+EOF
+}
+
 function main() {
     set_timezone_china
 
@@ -756,7 +770,8 @@ function main() {
 
     save_properties_and_result pass
 
-    generate_success_mail
+    #generate_success_mail
+    generate_simple_mail ${JOBS_DIR}
 }
 
 main "$@"

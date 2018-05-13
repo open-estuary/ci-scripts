@@ -94,8 +94,8 @@ node ('ci-compile'){
 
     def build_result = 0
     stage('Build') {
-        //build_result = sh script: "./local/ci-scripts/build-scripts/plinth_build.sh", returnStatus: true
-        build_result = sh script:"pwd",returnStatus: true
+        build_result = sh script: "./local/ci-scripts/build-scripts/plinth_build.sh", returnStatus: true
+        //build_result = 1
     }
     echo "build_result : ${build_result}"
     if (build_result == 0) {
@@ -111,10 +111,7 @@ node ('ci-compile'){
     stage('Test') {
     test_result = sh script: "./local/ci-scripts/test-scripts/plinth_boot_start.sh -p env.properties 2>&1" , returnStatus: true
     }
-	
-    stage('Mail & Report') {
-        functions.publish_html()
-        functions.send_mail()
-        functions.archive_result()
-    }
+
+    functions.send_mail()
+
 }
