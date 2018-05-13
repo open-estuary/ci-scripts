@@ -94,8 +94,8 @@ node ('ci-compile'){
 
     def build_result = 0
     stage('Build') {
-        build_result = sh script: "./local/ci-scripts/build-scripts/plinth_build.sh", returnStatus: true
-        //build_result = 1
+        //build_result = sh script: "./local/ci-scripts/build-scripts/plinth_build.sh", returnStatus: true
+        build_result = 1
     }
     echo "build_result : ${build_result}"
     if (build_result == 0) {
