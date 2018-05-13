@@ -92,24 +92,29 @@ node ('ci-compile'){
     def functions = load "./local/ci-scripts/pipeline/functions.groovy"
 
 
-    //def build_result = 0
-    //stage('Build') {
-        //build_result = sh script: "./local/ci-scripts/build-scripts/plinth_build.sh", returnStatus: true
+    def build_result = 0
+    stage('Build') {
+        build_result = sh script: "./local/ci-scripts/build-scripts/plinth_build.sh", returnStatus: true
         //build_result = 1
-    //}
-    //echo "build_result : ${build_result}"
-    //if (build_result == 0) {
-        //echo "build success"
-    //} else {
-        //echo "build failed"
-        //functions.send_mail()
-        //currentBuild.result = 'FAILURE'
-        //return
-    //}
+    }
+    echo "build_result : ${build_result}"
+    if (build_result == 0) {
+        echo "build success"
+    } else {
+        echo "build failed"
+        functions.send_mail()
+        currentBuild.result = 'FAILURE'
+        return
+    }
 
-    def test_result = 0	
+    def test_result = 0
     stage('Test') {
     test_result = sh script: "./local/ci-scripts/test-scripts/plinth_boot_start.sh -p env.properties 2>&1" , returnStatus: true
     }
-
+	
+    stage('Mail & Report') {
+        functions.publish_html()
+        functions.send_mail()
+        functions.archive_result()
+    }
 }
