@@ -15,7 +15,7 @@ function parse_params() {
 	
 	pwd
 	
-#    : ${SHELL_PLATFORM:=`python configs/parameter_parser.py -f config.yaml -s Build -k Platform`}
+    : ${SHELL_PLATFORM:=`python configs/parameter_parser.py -f config_plinth.yaml -s Build -k Platform`}
 #    : ${ALL_SHELL_PLATFORM:=`python configs/parameter_parser.py -f config.yaml -s Build -k Platform`}
 #    : ${SHELL_DISTRO:=`python configs/parameter_parser.py -f config.yaml -s Build -k Distro`}
 #    : ${ALL_SHELL_DISTRO:=`python configs/parameter_parser.py -f config.yaml -s Build -k Distro`}
@@ -219,11 +219,11 @@ echo "Finish Build Image"
 ##########
 [ ! -d ${FTP_DIR}/${TREE_NAME} ] && mkdir ${FTP_DIR}/${TREE_NAME}
 
-[ ! -d ${FTP_DIR}/${TREE_NAME}/${BRANCH_NAME} ] && mkdir ${FTP_DIR}/${TREE_NAME}/${BRANCH_NAME}
+[ ! -d ${FTP_DIR}/${TREE_NAME}/${GIT_DESCRIBE}/${SHELL_PLATFORM}-arm64 ] && mkdir -p ${FTP_DIR}/${TREE_NAME}/${GIT_DESCRIBE}/${SHELL_PLATFORM}-arm64
 
 [ ! -d ${FTP_DIR}/${TREE_NAME}/${BUILD_REPORT_DIR} ] && mkdir ${FTP_DIR}/${TREE_NAME}/${BUILD_REPORT_DIR}
 
-cp ${IMAGE_DIR} ${FTP_DIR}/${TREE_NAME}/${BRANCH_NAME}
+cp ${IMAGE_DIR} ${FTP_DIR}/${TREE_NAME}/${GIT_DESCRIBE}/${SHELL_PLATFORM}-arm64
 
 cp ${BUILD_DIR}/output/build_${BRANCH_NAME}_${DATE}.log ${FTP_DIR}/${TREE_NAME}/${BUILD_REPORT_DIR}
 
