@@ -164,11 +164,11 @@ function run_and_report_jobs() {
             cat ${JOBS_DIR}/${RESULTS_DIR}/POLL
         fi
 
-        //python estuary-report.py --boot ${JOBS_DIR}/${RESULTS_DIR}/POLL --lab $LAVA_USER --testDir "${TEST_CASE_DIR}" --distro "$distro"
-        //if [ ! -d ${RESULTS_DIR} ]; then
-            //echo "running jobs error! Aborting"
-            //return -1
-        //fi
+        #python estuary-report.py --boot ${JOBS_DIR}/${RESULTS_DIR}/POLL --lab $LAVA_USER --testDir "${TEST_CASE_DIR}" --distro "$distro"
+        #if [ ! -d ${RESULTS_DIR} ]; then
+            #echo "running jobs error! Aborting"
+            #return -1
+        #fi
     else
         echo "skip lava run and report"
     fi
