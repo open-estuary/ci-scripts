@@ -266,6 +266,7 @@ def create_jobs(base_url, kernel, plans, platform_list, targets, priority,
                     get_nfs_url(distro_url, device_type)
 
                     # TODO : think filter the test job by platform, distro, device type, level, scope
+                    print 'Beging to generate test define!'
                     test_definitions = generate_test_definitions(
                         common_pl.filter_test_definitions(distro, device_type, scope, level, test_case_definition_dir, test_case_definition_file_list), test_case_definition_url)
 
@@ -375,6 +376,7 @@ def generate_job_file(cwd,
 def walk_url(url, distro_url, plans, arch, targets,
              priority, distro, scope, level,
              test_case_definition_dir, test_case_definition_file_list, test_case_definition_url):
+    # plans means boot_plan
     global base_url
     global kernel
     global platform_list
