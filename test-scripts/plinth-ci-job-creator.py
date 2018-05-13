@@ -38,7 +38,11 @@ d05 = {'device_type': 'd05',
                   'd05-arm64-kernel-ci-boot-iso-template.yaml',
                   'd05-arm64-kernel-ci-boot-pxe-template.yaml']
 }
-
+d06 = {'device_type': 'd06',
+    'templates': ['d06-arm64-kernel-ci-boot-nfs-template.yaml',
+                  'd06-arm64-kernel-ci-boot-iso-template.yaml',
+                  'd06-arm64-kernel-ci-boot-pxe-template.yaml']
+}
 dummy_ssh = {'device_type': 'dummy_ssh',
              'templates': ['dummy_ssh_template.yaml']
              }
