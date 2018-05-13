@@ -305,6 +305,7 @@ def generate_job_file(cwd,
             job_json = cwd + '/jobs/' + job_name + '.yaml'
         template_file = cwd + '/templates/' + plan + '/' + str(template)
         if os.path.exists(template_file):
+            print 'Begin to generate yaml file at $s' % job_json
             with open(job_json, 'wt') as fout:
                 with open(template_file, "rt") as fin:
                     for line in fin:
