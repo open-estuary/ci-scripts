@@ -136,7 +136,8 @@ def filter_test_definitions(distro, device_type, test_scope, test_level,
         else:
             print "Ready to add name of test in definition"
             test_definitions.append(name)
-
+        print "Test scope is %s" % test_scope
+        print "Test scope.lower.strip is %s" % test_scope.lower().strip()
         if test_scope.lower().strip() == "*" or test_scope.lower() in scope:
             pass
         else:
