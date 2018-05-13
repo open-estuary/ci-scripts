@@ -79,8 +79,10 @@ def get_nfs_url(distro_url, device_type):
     files= parse_re.findall(html)
     dirs = []
     for name in files:
+        print "Get NFS file name %s" % name
         if not name.endswith('/'):
             dirs += [name]
+        print "url + name is %s" % distro_url+name
         if name.endswith('.tar.gz') and 'distro' in distro_url+name and device_type in distro_url+name:
             distro_list.append(distro_url+name)
         for direc in dirs:
