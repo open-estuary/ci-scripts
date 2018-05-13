@@ -272,6 +272,7 @@ def create_jobs(base_url, kernel, plans, platform_list, targets, priority,
 
                     number = 1
                     for definitions in test_definitions:
+                        print 'Beging to generate job file!'
                         generate_job_file(cwd, defconfig, device_type,
                                           distro, distro_url, image_url, kernel,
                                           kernel_version, plan, platform, platform_name, priority,
