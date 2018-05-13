@@ -66,7 +66,9 @@ def find_all_test_case_by_test_plan(testDir, planDir, plan):
 
 
 def find_all_test_case(plan, test_case_definition_dir, test_plan_definition_dir):
+    print "Begin to search all test case using plan %s" % plan
     if plan is not None and plan != "" and plan != "*":
+        print "Plan found.Begin to search all test case!"
         test_case_definition_file_list = find_all_test_case_by_test_plan(test_case_definition_dir,
                                                                          test_plan_definition_dir, plan)
     else:
