@@ -105,6 +105,7 @@ def generate_test_definitions(work_test_list, test_case_definition_url):
     i = 0
     current_definition = ""
     for test in work_test_list:
+        print "Find test in work_test_list,Begin to generate define!"
         definition = generate_test_definition(test['metadata']['test_path'], test['metadata']['name'], test_case_definition_url)
         current_definition += definition
         if i == (batch_num - 1):
@@ -460,7 +461,7 @@ def main(args):
                                                                test_case_definition_dir,
                                                                test_plan_definition_dir)
 
-    test_case_definition_url = "https://github.com/Luojiaxing1991/plinth-test-suite"
+    test_case_definition_url = "https://github.com/Luojiaxing1991/plinth-test-suite.git"
     if CONFIG.get("testUrl") is not None and CONFIG.get("testUrl") != "":
         test_case_definition_url = CONFIG.get("testUrl")
 
