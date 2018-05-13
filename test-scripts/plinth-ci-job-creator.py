@@ -421,7 +421,7 @@ def walk_url(url, distro_url, plans, arch, targets,
                 base_url = url
                 print 'Add platform message as %s' % name.partition('_')[2]
                 print 'Add platform message as %s' % device_map['D06']
-            if name.startswith('Image') and name.partition('_')[2] in device_map:
+            if name.startswith('Image') and name.partition('_')[2] in device_map.keys():
                 platform_list.append(url + name)
                 print 'Add platform message as %s' % platform_list
         if 'distro' in name:
