@@ -46,6 +46,7 @@ dummy_ssh = {'device_type': 'dummy_ssh',
 device_map = {
               'D03': [d03],
               'D05': [d05],
+              'D06': [d06],
               }
 
 parse_re = re.compile('href="([^./"?][^"?]*)"')
