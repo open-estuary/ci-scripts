@@ -21,6 +21,7 @@ def find_all_test_case_by_search(testDir):
         files = [f for f in files if not re.match('(.*\.sh$)|(.*\.bash$)', f)]
         files = [f for f in files if re.match('(.*\.yaml$)|(.*\.yml$)', f)]
         for fname in files:
+            print "Begin to add Yaml file: %s to list !" % fname
             test_case_yaml_file_list.append(fname)
             # print fname
     return test_case_yaml_file_list
@@ -69,6 +70,7 @@ def find_all_test_case(plan, test_case_definition_dir, test_plan_definition_dir)
         test_case_definition_file_list = find_all_test_case_by_test_plan(test_case_definition_dir,
                                                                          test_plan_definition_dir, plan)
     else:
+        print "Begin to search all yaml file at %s" % test_case_definition_dir
         test_case_definition_file_list = find_all_test_case_by_search(test_case_definition_dir)
     return test_case_definition_file_list
 
