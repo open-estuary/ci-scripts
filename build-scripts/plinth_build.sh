@@ -195,13 +195,13 @@ git pull
 #before building,change some build cfg
 
 #HNS3 build into kernel option
-sed -i 's/CONFIG_HNS3=m/CONFIG_HNS3=y/g' arch/arm64/configs/defconfig
-sed -i 's/CONFIG_HNS3_HCLGE=m/CONFIG_HNS3_HCLGE=y/g' arch/arm64/configs/defconfig
-sed -i 's/CONFIG_HNS3_ENET=m/CONFIG_HNS3_ENET=y/g' arch/arm64/configs/defconfig
+sed -i 's/CONFIG_HNS3=m/CONFIG_HNS3=y/g' arch/arm64/configs/plinth-config
+sed -i 's/CONFIG_HNS3_HCLGE=m/CONFIG_HNS3_HCLGE=y/g' arch/arm64/configs/plinth-config
+sed -i 's/CONFIG_HNS3_ENET=m/CONFIG_HNS3_ENET=y/g' arch/arm64/configs/plinth-config
 
 
 #HNS VLAN build option
-#sed -i 's/CONFIG_VLAN_8021Q=m/CONFIG_VLAN_8021Q=y/g' arch/arm64/configs/defconfig
+sed -i 's/CONFIG_VLAN_8021Q=m/CONFIG_VLAN_8021Q=y/g' arch/arm64/configs/defconfig
 
 #
 #sed -i '$a\CONFIG_IXGBE_DCB=y' arch/arm64/configs/plinth-config
