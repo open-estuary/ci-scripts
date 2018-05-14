@@ -112,6 +112,6 @@ node ('ci-compile'){
     //test_result = sh script: "./local/ci-scripts/test-scripts/plinth_boot_start.sh -p env.properties 2>&1" , returnStatus: true
    // }
 
-    //functions.send_mail()
+    functions.send_mail()
 
 }
