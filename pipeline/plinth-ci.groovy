@@ -109,7 +109,7 @@ node ('ci-compile'){
 
     def test_result = 0
     stage('Test') {
-    test_result = sh script: "./local/ci-scripts/test-scripts/plinth_boot_start.sh -p env.properties 2>&1" , returnStatus: true
+        test_result = sh script: "./local/ci-scripts/test-scripts/plinth_boot_start.sh -p env.properties 2>&1" , returnStatus: true
     }
 
     functions.send_mail()
