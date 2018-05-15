@@ -220,6 +220,8 @@ DATE=`date +%Y-%m-%d`
 
 cp ../kernel-dev/build.sh .
 
+make clean
+
 bash build.sh ${BOARD_TYPE} > ${BUILD_DIR}/output/build_${BRANCH_NAME}_${DATE}.log
 
 #export ARCH=arm64
