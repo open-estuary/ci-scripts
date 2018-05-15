@@ -59,10 +59,10 @@ Ftpinfo:
 
 # mail list
 Mail:
-  SUCCESS_LIST: zhanglu0704@thundersoft.com,liucaili2@huawei.com
-  SUCCESS_CC_LIST: qinsl0106@thundersoft.com
-  FAILED_LIST: zhanglu0704@thundersoft.com
-  FAILED_CC_LIST: qinsl0106@thundersoft.com
+  SUCCESS_LIST: salil.mehta@huawei.com,luojiaxing@huawei.com
+  SUCCESS_CC_LIST: salil.mehta@huawei.com
+  FAILED_LIST: luojiaxing@huawei.com
+  FAILED_CC_LIST: 1191097880@qq.com
 
 DHCP:
   ip: 192.168.50.122
@@ -77,14 +77,3 @@ REPORT:
 Kernel_dev:
     Image_dir: arch/arm64/boot/Image
     
-Mail:
-    SUCCESS_LIST:
-        - luojiaxing@huawei.com
-        - chen_jing94@163.com
-    SUCCESS_CC_LIST:
-        - 1191097880@qq.com
-    FAILED_LIST:
-        - luojiaxing@huawei.com
-        - chen_jing94@163.com
-    FAILED_CC_LIST:
-        - 1191097880@qq.com

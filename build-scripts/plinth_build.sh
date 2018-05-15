@@ -204,7 +204,7 @@ git pull
 sed -i 's/CONFIG_HNS3=m/CONFIG_HNS3=y/g' arch/arm64/configs/defconfig
 sed -i 's/CONFIG_HNS3_HCLGE=m/CONFIG_HNS3_HCLGE=y/g' arch/arm64/configs/defconfig
 sed -i 's/CONFIG_HNS3_ENET=m/CONFIG_HNS3_ENET=y/g' arch/arm64/configs/defconfig
-
+sed -i 's/CONFIG_HNS3_HCLGEVF=m/CONFIG_HNS3_HCLGEVF=y/g' arch/arm64/configs/defconfig
 
 
 #HNS VLAN build option
