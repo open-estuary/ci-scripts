@@ -214,7 +214,7 @@ sed -i 's/CONFIG_VLAN_8021Q=m/CONFIG_VLAN_8021Q=y/g' arch/arm64/configs/defconfi
 
 echo "Begin to build the kernel!"
 #cp ${BUILD_DIR}/output/build.sh .
-ls -l ${IMAGE_DIR}
+#ls -l ${IMAGE_DIR}
 
 DATE=`date +%Y-%m-%d`
 
