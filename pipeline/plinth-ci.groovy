@@ -6,7 +6,7 @@ def clone2local(giturl, branchname, localdir) {
     dir (localdir) {
         checkout([$class: 'GitSCM', branches: [[name: branchname],timeout:12000],
                 extensions: [[$class: 'CloneOption', timeout: 12000]], gitTool: 'Default',
-                userRemoteConfigs: [[url: giturl]]
+                userRemoteConfigs: [[url: giturl]],timeout: 12000
             ])
     }
 }
