@@ -11,6 +11,9 @@ script_path="${0%/*}"  # remove the script name ,get the path
 script_path=${script_path/\./$(pwd)} # if path start with . , replace with $PWD
 source "${script_path}/../common-scripts/common.sh"
 
+JOB_ID=0
+JOB_RESULT_MAIL="Unknow"
+
 function init_build_option() {
     SKIP_LAVA_RUN=${SKIP_LAVA_RUN:-"false"}
 }
@@ -162,6 +165,8 @@ function run_and_report_jobs() {
         else
             echo "POLL Result:"
             cat ${JOBS_DIR}/${RESULTS_DIR}/POLL
+            JOB_ID=`cat ${JOBS_DIR}/${RESULTS_DIR}/POLL | grep bundle | awk -F"'" '{print $2}'`
+            JOB_RESULT_MAIL=`cat ${JOBS_DIR}/${RESULTS_DIR}/POLL | grep bundle | awk -F"," '{print $2}' | awk -F'}' '{print $1}'`
         fi
 
         #python estuary-report.py --boot ${JOBS_DIR}/${RESULTS_DIR}/POLL --lab $LAVA_USER --testDir "${TEST_CASE_DIR}" --distro "$distro"
@@ -719,11 +724,15 @@ function detail_html_footer() {
     echo "</table>" >> ${target_html}
 }
 
+
+#$1:  LAVA JOB ID used to contruct url for result
+#$2:  LAVA RESULT 
 function generate_simple_mail(){
     local tid=$1
+    local result=$2
     echo "${FAILED_MAIL_LIST}" > ${WORKSPACE}/MAIL_LIST.txt
     echo "${FAILED_MAIL_CC_LIST}" > ${WORKSPACE}/MAIL_CC_LIST.txt
-    echo "Plinth CI Test Result - ${GIT_DESCRIBE} " > ${WORKSPACE}/MAIL_SUBJECT.txt
+    echo "Plinth CI D06 Kernel Test Result - ${GIT_DESCRIBE} - ${result}" > ${WORKSPACE}/MAIL_SUBJECT.txt
     cat > ${WORKSPACE}/MAIL_CONTENT.txt <<EOF
 ( This mail is send by Jenkins automatically, don't reply )<br>
 Project Name: ${TREE_NAME}<br>
@@ -772,7 +781,7 @@ function main() {
     #save_properties_and_result pass
 
     #generate_success_mail
-    generate_simple_mail ${JOBS_DIR}
+    generate_simple_mail ${JOB_ID} ${JOB_RESULT_MAIL}
 }
 
 main "$@"
