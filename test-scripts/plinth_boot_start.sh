@@ -730,8 +730,8 @@ function detail_html_footer() {
 function generate_simple_mail(){
     local tid=$1
     local result=$2
-    echo "${FAILED_MAIL_LIST}" > ${WORKSPACE}/MAIL_LIST.txt
-    echo "${FAILED_MAIL_CC_LIST}" > ${WORKSPACE}/MAIL_CC_LIST.txt
+    echo "${SUCCESS_MAIL_LIST}" > ${WORKSPACE}/MAIL_LIST.txt
+    echo "${SUCCESS_MAIL_CC_LIST}" > ${WORKSPACE}/MAIL_CC_LIST.txt
     echo "Plinth CI D06 ${GIT_DESCRIBE} Result" > ${WORKSPACE}/MAIL_SUBJECT.txt
     cat > ${WORKSPACE}/MAIL_CONTENT.txt <<EOF
 ( This mail is send by Jenkins automatically, don't reply )<br>
