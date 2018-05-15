@@ -218,7 +218,7 @@ echo "Begin to build the kernel!"
 
 DATE=`date +%Y-%m-%d`
 
-cp ../kernel-dev/build.sh .
+#cp ../kernel-dev/build.sh .
 
 make clean
 
