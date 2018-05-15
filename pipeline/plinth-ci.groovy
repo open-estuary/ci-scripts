@@ -5,7 +5,7 @@ def clone2local(giturl, branchname, localdir) {
     }
     dir (localdir) {
         checkout([$class: 'GitSCM', branches: [[name: branchname]],
-                extensions: [[$class: 'CloneOption', timeout: 120]], gitTool: 'Default',
+                extensions: [[$class: 'CloneOption', timeout: 12000]], gitTool: 'Default',
                 userRemoteConfigs: [[url: giturl]]
             ])
     }
@@ -108,11 +108,11 @@ node ('ci-compile'){
         return
     }
 
-    def test_result = 0
-    stage('Test') {
-        test_result = sh script: "./local/ci-scripts/test-scripts/plinth_boot_start.sh -p env.properties 2>&1" , returnStatus: true
-    }
+    //def test_result = 0
+    //stage('Test') {
+        //test_result = sh script: "./local/ci-scripts/test-scripts/plinth_boot_start.sh -p env.properties 2>&1" , returnStatus: true
+    //}
 
-    functions.send_mail()
+    //functions.send_mail()
 
 }
