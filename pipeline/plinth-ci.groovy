@@ -24,6 +24,7 @@ node ('ci-compile'){
 
     stage('Build Preparation') { // for display purposes
         clone2local(getGitUrl(), getGitBranchName(), './local/ci-scripts')
+        clone2local(scm.getUserRemoteConfigs()[1].getUrl(), scm.branches[1].name, './local/ci-scripts')
 
         // prepare variables.
         sh 'env'
