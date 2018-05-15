@@ -218,12 +218,14 @@ echo "Begin to build the kernel!"
 
 DATE=`date +%Y-%m-%d`
 
-#bash build.sh ${BOARD_TYPE} > ${BUILD_DIR}/output/build_${BRANCH_NAME}_${DATE}.log
+cp ../kernel-dev/build.sh .
 
-export ARCH=arm64
-export CROSS_COMPILE=aarch64-linux-gun-
+bash build.sh ${BOARD_TYPE} > ${BUILD_DIR}/output/build_${BRANCH_NAME}_${DATE}.log
 
-make -j16
+#export ARCH=arm64
+#export CROSS_COMPILE=aarch64-linux-gun-
+
+#make -j16
 
 ls -l ${IMAGE_DIR}
 
