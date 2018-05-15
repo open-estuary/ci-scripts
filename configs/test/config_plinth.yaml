@@ -60,7 +60,7 @@ Ftpinfo:
 # mail list
 Mail:
   SUCCESS_LIST: salil.mehta@huawei.com,luojiaxing@huawei.com
-  SUCCESS_CC_LIST: salil.mehta@huawei.com
+  SUCCESS_CC_LIST: luojiaxing@huawei.com
   FAILED_LIST: luojiaxing@huawei.com
   FAILED_CC_LIST: 1191097880@qq.com
 
