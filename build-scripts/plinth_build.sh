@@ -219,10 +219,14 @@ OLD_IFS=${IFS}
 IFS='.'
 oldnumlist=(${latest_branch})
 oldlen=${#oldnumlist[@]}
-echo $oldnumlist
+echo ${oldnumlist[0]}
+echo ${oldnumlist[1]}
+echo ${oldnumlist[2]}
 newnumlist=(${verNum})
 newlen=${#newnumlist[@]}
-echo $newnumlist
+echo ${newnumlist[0]}
+echo ${newnumlist[1]}
+echo ${newnumlist[2]}
 IFS=${OLD_IFS}
 
 if [ $newlen -gt $oldlen ];then
