@@ -319,15 +319,13 @@ if [ -z "${verbranch}" ]; then
 	exit 0
 fi
 
-exit 0
-
 git remote update origin --prune
 
 #checkout specified branch and build keinel
 git stash
 
 #git branch | grep ${BRANCH_NAME} 2>&1
-
+BRANCH_NAME=${verbranch}
 
 #if [ $? -eq 0 ];then
 	#The same name of branch is exit
