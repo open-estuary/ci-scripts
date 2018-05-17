@@ -170,7 +170,7 @@ if [ x"${FORCE_BRANCH}" = x"FALSE" ];then
 
 oldbranchlist=`git branch -a | grep "origin" | grep ${BRANCH_GROUP}`
 verbranch=
-latest_branch=
+latest_branch='1.1.1'
 git remote update origin --prune
 declare -a newbranchlist
 #newbranchlist
@@ -180,18 +180,108 @@ IFS="@@"
 newbranchlist=(${tmp})
 IFS=@{OLD_IFS}
 
+#******
+#***Get the latest brach in branch group
+#*****
 for branch in ${newbranchlist[@]}
 do
-	if [ -z "${latest_branch}" ];then
-		latest_branch=${branch}
+	
+OLD_IFS=${IFS}
+IFS='-'
+list=($branch)
+IFS=${OLD_IFS}
+
+#Get the first group of  version num 4.16.1
+verNum_1=
+for s in ${list[@]}
+do
+	echo $s
+	if [[ $s =~ '.' ]];then
+		tmp1=`echo $s | awk -F'.' '{print $1}'`
+		if [ -n "$(echo ${tmp1} | sed -n "/^[0-9]\+$/p")" ];then
+			verNum=$s
+			break
+		fi
 	fi
+
+done
+
+if [ -z "${verNum}" ];then
+	echo "Fail to get the version num!"
+else
+	echo "Success to get the version num as ${verNum}"
+fi
+
+OLD_IFS=${IFS}
+IFS='.'
+oldnumlist=(${latest_branch})
+oldlen=${#oldnumlist[@]}
+echo $oldnumlist
+newnumlist=(${verNum})
+newlen=${#newnumlist[@]}
+echo $newnumlist
+IFS=${OLD_IFS}
+
+if [ $newlen -gt $oldlen ];then
+	index=$(expr ${oldlen} - 1)
+	for i in `seq 0 $index`
+	do
+		if [ ${newnumlist[$i]} -gt ${oldnumlist[$i]}  ];then
+			latest_branch=$verNum
+			echo "Get the bigger version num!"
+			break;
+		fi
+	done
+else
+	for i in `seq 0 $(expr ${newlen} - 1)`
+	do
+		if [ ${newnumlist[$i]} -gt ${oldnumlist[$i]}  ];then
+			latest_branch=$verNum
+			echo "Get the bigger version num!"
+			break;
+		fi
+	done
+fi
+
+if [ $newlen -gt $oldlen ];then
+	if [[ ${verNum} =~ ${latest_branch} ]];then
+		latest_branch=$verNum
+	fi
+fi
+
+echo "The later version is ${latest_branch}"
+
+done
+
+
+
+numof_same_ver=`git branch -a | grep "origin" | grep ${BRANCH_GROUP} | grep ${latest_branch} | wc -l`
+
+if [ $numof_same_ver -gt 1 ];then
+	tmp1=`git branch -a | grep "origin" | grep ${BRANCH_GROUP} | grep ${latest_branch}`
+	OLD_IFS="$IFS"
+	IFS="@@"
+	tmp2=(${tmp1})
+	IFS=@{OLD_IFS}
+	latest_branch=`echo ${tmp2[${#tmp2[*]}-1]} | awk -f '/' '{print ${NF}}'`
+else
+	latest_branch=`git branch -a | grep "origin" | grep ${BRANCH_GROUP} | grep ${latest_branch} | awk -F'/' '{print $NF}'`
+fi
+
+echo "The latest branch in group is ${latest_branch}"
+
+for branch in ${newbranchlist[@]}
+do
+	#if [ -z "${latest_branch}" ];then
+		#latest_branch=${branch}
+	#fi
 	
 	#name=`echo ${branch} | awk '{print $3}'`
 	#echo ${name}
 	if [[ ${oldbranchlist} =~ ${branch} ]]; then
 		continue
 	else
-		verbranch=$branch
+		verbranch=`echo $branch | awk -F'/' '{print $NF}'`
 		echo "New version have been published!"
 		break
 	fi
