@@ -178,13 +178,15 @@ tmp=`git branch -a | grep "origin" | grep ${BRANCH_GROUP} |  awk '{gsub(" ","@")
 OLD_IFS="$IFS"
 IFS="@@"
 newbranchlist=(${tmp})
-IFS=@{OLD_IFS}
+IFS=%{OLD_IFS}
 
 #******
 #***Get the latest brach in branch group
 #*****
 for branch in ${newbranchlist[@]}
 do
+
+branch=`echo $branch | awk -F'/' '{print $NF}'`
 	
 OLD_IFS=${IFS}
 IFS='-'
