@@ -229,9 +229,9 @@ if [ $newlen -gt $oldlen ];then
 	index=$(expr ${oldlen} - 1)
 	for i in `seq 0 $index`
 	do
-		${newnumlist[$i]}=$(expr ${newnumlist[$i]} + 0)
-		${oldnumlist[$i]}=$(expr ${oldnumlist[$i]} + 0)
-		if [ ${newnumlist[$i]} -gt ${oldnumlist[$i]} ];then
+		tmp1=$(expr ${newnumlist[$i]} + 0)
+		tmp2=$(expr ${oldnumlist[$i]} + 0)
+		if [ $tmp1 -gt $tmp2 ];then
 			latest_branch=$verNum
 			echo "Get the bigger version num!"
 			break;
@@ -241,9 +241,9 @@ else
 	index=$(expr ${newlen} - 1)
 	for i in `seq 0 $index`
 	do
-		${newnumlist[$i]}=$(expr ${newnumlist[$i]} + 0)
-		${oldnumlist[$i]}=$(expr ${oldnumlist[$i]} + 0)
-		if [ ${newnumlist[$i]} -gt ${oldnumlist[$i]} ];then
+		tmp1=$(expr ${newnumlist[$i]} + 0)
+		tmp2=$(expr ${oldnumlist[$i]} + 0)
+		if [ $tmp1 -gt $tmp2 ];then
 			latest_branch=$verNum
 			echo "Get the bigger version num!"
 			break;
