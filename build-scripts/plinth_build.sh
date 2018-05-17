@@ -231,7 +231,7 @@ IFS=${OLD_IFS}
 
 if [ $newlen -gt $oldlen ];then
 	index=$(expr ${oldlen} - 1)
-	for i in {0..$index}
+	for ((i=0;i<$index;i++))
 	do
 		echo $i
 		tmp1=$(expr ${newnumlist[${i}]} + 0)
@@ -244,7 +244,7 @@ if [ $newlen -gt $oldlen ];then
 	done
 else
 	index=$(expr ${newlen} - 1)
-	for i in {0..$index}
+	for ((i=0;i<$index;i++))
 	do
 		if [ ${newnumlist[${i}]} -gt ${oldnumlist[${i}]} ];then
 			latest_branch=$verNum
