@@ -241,7 +241,7 @@ else
 	index=$(expr ${newlen} - 1)
 	for i in $(seq 0 2)
 	do
-		if [ ${newnumlist[$i]} -gt ${oldnumlist[$i]} ];then
+		if [ 3 -gt 2 ];then
 			latest_branch=$verNum
 			echo "Get the bigger version num!"
 			break;
