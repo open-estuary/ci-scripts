@@ -321,6 +321,8 @@ fi
 
 echo "The branch to be build is ${verbranch}"
 
+exit 0
+
 git remote update origin --prune
 
 #checkout specified branch and build keinel
@@ -387,7 +389,7 @@ bash build.sh ${BOARD_TYPE} > ${BUILD_DIR}/output/build_${BRANCH_NAME}_${DATE}.l
 
 #make -j16
 
-ls -l ${IMAGE_DIR}
+#ls -l ${IMAGE_DIR}
 
 cat .config
 
@@ -403,8 +405,8 @@ echo "Finish Build Image"
 
 [ ! -d ${FTP_DIR}/${TREE_NAME}/${BUILD_REPORT_DIR} ] && mkdir ${FTP_DIR}/${TREE_NAME}/${BUILD_REPORT_DIR}
 
-cp ${IMAGE_DIR} ${FTP_DIR}/${TREE_NAME}/${GIT_DESCRIBE}/${SHELL_PLATFORM}-arm64/Image_${SHELL_PLATFORM}
-
+#cp ${IMAGE_DIR} ${FTP_DIR}/${TREE_NAME}/${GIT_DESCRIBE}/${SHELL_PLATFORM}-arm64/Image_${SHELL_PLATFORM}
+cp arch/arm64/boot/Image ${FTP_DIR}/${TREE_NAME}/${GIT_DESCRIBE}/${SHELL_PLATFORM}-arm64/Image_${SHELL_PLATFORM}
 #cp ${IMAGE_DIR} /root/estuary/tftp_nfs_data/plinth/Image
 
 cp ${BUILD_DIR}/output/build_${BRANCH_NAME}_${DATE}.log ${FTP_DIR}/${TREE_NAME}/${BUILD_REPORT_DIR}
