@@ -233,8 +233,9 @@ if [ $newlen -gt $oldlen ];then
 	index=$(expr ${oldlen} - 1)
 	for i in `seq 0 $index`
 	do
-		tmp1=$(expr ${newnumlist[$i]} + 0)
-		tmp2=$(expr ${oldnumlist[$i]} + 0)
+		echo $i
+		tmp1=$(expr ${newnumlist[${i}]} + 0)
+		tmp2=$(expr ${oldnumlist[${i}]} + 0)
 		if [ $tmp1 -gt $tmp2 ];then
 			latest_branch=$verNum
 			echo "Get the bigger version num!"
