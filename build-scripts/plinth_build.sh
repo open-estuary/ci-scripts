@@ -174,7 +174,7 @@ latest_branch=
 git remote update origin --prune
 declare -a newbranchlist
 #newbranchlist
-tmp=`git branch -a | grep "origin" | grep 'BRANCH_GROUP' |  awk '{gsub(" ","@");print}'`
+tmp=`git branch -a | grep "origin" | grep '${BRANCH_GROUP}' |  awk '{gsub(" ","@");print}'`
 OLD_IFS="$IFS"
 IFS="@@"
 newbranchlist=(${tmp})
@@ -212,6 +212,11 @@ else
 fi
 
 echo "The branch to be build is ${verbranch}"
+
+if [ -z "${verbranch}" ]; then
+	echo "verbranch no foud! exit !"
+	exit 0
+fi
 
 exit 0
 
