@@ -168,13 +168,13 @@ fi
 #********
 if [ x"${FORCE_BRANCH}" = x"FALSE" ];then
 
-oldbranchlist=`git branch -a | grep "origin" | grep 'new'`
+oldbranchlist=`git branch -a | grep "origin" | grep ${BRANCH_GROUP}`
 verbranch=
 latest_branch=
 git remote update origin --prune
 declare -a newbranchlist
 #newbranchlist
-tmp=`git branch -a | grep "origin" | grep '${BRANCH_GROUP}' |  awk '{gsub(" ","@");print}'`
+tmp=`git branch -a | grep "origin" | grep ${BRANCH_GROUP} |  awk '{gsub(" ","@");print}'`
 OLD_IFS="$IFS"
 IFS="@@"
 newbranchlist=(${tmp})
