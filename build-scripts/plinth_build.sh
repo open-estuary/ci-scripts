@@ -312,12 +312,16 @@ else
 	verbranch=${FORCE_BRANCH}
 fi
 
-echo "The branch to be build is ${verbranch}"
+
 
 if [ -z "${verbranch}" ]; then
 	echo "verbranch no foud! exit !"
 	exit 0
 fi
+
+echo "The branch to be build is ${verbranch}"
+
+exit 0
 
 git remote update origin --prune
 
