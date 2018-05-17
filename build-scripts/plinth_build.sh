@@ -97,7 +97,60 @@ BUILD_DIR="/home/plinth"
 #build result variable
 envok=0
 
+#********
+#****Start : Find out witch branch to be build
+#****If new version of BRANCH_GROUP(liek release-plinth) have been published then build it
+#****If no new version ,and FORCE_SMOKE flag is set TRUE and FORCE_BRANCH is set to FALSE,the latest branch is build
+#****If FORCE_BRANCH is not set to false, it must run the FORCE_BRANCH build 
+#********
+if [ x"${FORCE_BRANCH}" = x"FALSE" ];then
 
+oldbranchlist=`git branch -a | grep "origin" | grep 'new'`
+verbranch=
+latest_branch=
+git remote update origin --prune
+declare -a newbranchlist
+#newbranchlist
+tmp=`git branch -a | grep "origin" | grep 'BRANCH_GROUP' |  awk '{gsub(" ","@");print}'`
+OLD_IFS="$IFS"
+IFS="@@"
+newbranchlist=(${tmp})
+IFS=@{OLD_IFS}
+
+for branch in ${newbranchlist[@]}
+do
+	if [ -z "${latest_branch}" ];then
+		latest_branch=${branch}
+	fi
+	
+	#name=`echo ${branch} | awk '{print $3}'`
+	#echo ${name}
+	if [[ ${oldbranchlist} =~ ${branch} ]]; then
+		continue
+	else
+		verbranch=$branch
+		echo "New version have been published!"
+		break
+	fi
+done
+
+if [ -z "${verbranch}" ]; then
+	echo "No found the New Version branch published!"
+	if [ x"${FORCE_SMOKE}" = x"TRUE" ];then
+			echo "Force to test the latest version of branch group"
+			verbranch=${latest_branch}
+	else
+		exit 0
+	fi
+fi
+
+else
+	verbranch=${FORCE_BRANCH}
+fi
+
+echo "The branch to be build is ${verbranch}"
+
+exit 0
 #********
 #****Start : Clone kernel repo and build it
 #********
