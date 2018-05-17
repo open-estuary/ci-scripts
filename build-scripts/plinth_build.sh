@@ -321,8 +321,6 @@ fi
 
 echo "The branch to be build is ${verbranch}"
 
-exit 0
-
 git remote update origin --prune
 
 #checkout specified branch and build keinel
