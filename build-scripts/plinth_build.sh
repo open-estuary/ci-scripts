@@ -210,6 +210,7 @@ done
 
 if [ -z "${verNum}" ];then
 	echo "Fail to get the version num!"
+	continue
 else
 	echo "Success to get the version num as ${verNum}"
 fi
