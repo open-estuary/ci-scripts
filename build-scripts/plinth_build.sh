@@ -239,7 +239,7 @@ if [ $newlen -gt $oldlen ];then
 	done
 else
 	index=$(expr ${newlen} - 1)
-	for i in $(seq 0 ${index})
+	for i in $(seq 0 2)
 	do
 		if [ ${newnumlist[$i]} -gt ${oldnumlist[$i]} ];then
 			latest_branch=$verNum
