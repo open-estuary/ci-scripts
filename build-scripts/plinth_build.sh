@@ -102,6 +102,7 @@ envok=0
 #********
 
 #get the name of git,the name is used to find the dir
+#tmp=`echo ${KERNEL_GITADDR} | awk -F'.' '{print $2}' | awk -F'/' '{print $NF}'`
 tmp=`echo ${KERNEL_GITADDR} | awk -F'.' '{print $2}' | awk -F'/' '{print $NF}'`
 echo "The name of kernel repo is "$tmp
 
@@ -412,7 +413,7 @@ echo ${BUILD_REPORT_DIR}
 cp arch/arm64/boot/Image ${FTP_DIR}/${TREE_NAME}/plinth_test/${SHELL_PLATFORM}-arm64/Image_${SHELL_PLATFORM}
 #cp ${IMAGE_DIR} /root/estuary/tftp_nfs_data/plinth/Image
 
-cp ${BUILD_DIR}/output/build_${BRANCH_NAME}_${DATE}.log ${FTP_DIR}/${TREE_NAME}/${BUILD_REPORT_DIR}
+cp ${BUILD_DIR}/output/build_${BRANCH_NAME}_${DATE}.log ${FTP_DIR}/${TREE_NAME}/build_report
 
 echo "Finish the kernel build!"
 
