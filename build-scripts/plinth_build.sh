@@ -231,7 +231,7 @@ IFS=${OLD_IFS}
 
 if [ $newlen -gt $oldlen ];then
 	index=$(expr ${oldlen} - 1)
-	for ((i=0;i<$index;i++))
+	for ((i=0;i<=$index;i++))
 	do
 		echo $i
 		tmp1=$(expr ${newnumlist[${i}]} + 0)
@@ -244,7 +244,7 @@ if [ $newlen -gt $oldlen ];then
 	done
 else
 	index=$(expr ${newlen} - 1)
-	for ((i=0;i<$index;i++))
+	for ((i=0;i<=$index;i++))
 	do
 		if [ ${newnumlist[${i}]} -gt ${oldnumlist[${i}]} ];then
 			latest_branch=$verNum
@@ -269,9 +269,9 @@ done
 numof_same_ver=`git branch -a | grep "origin" | grep ${BRANCH_GROUP} | grep ${latest_branch} | wc -l`
 
 if [ $numof_same_ver -gt 1 ];then
-	tmp1=`git branch -a | grep "origin" | grep ${BRANCH_GROUP} | grep ${latest_branch}`
+	tmp1=`git branch -a | grep "origin" | grep ${BRANCH_GROUP} | grep ${latest_branch} | awk '{gsub("  ","@");print}'`
 	OLD_IFS="$IFS"
-	IFS="@@"
+	IFS="@"
 	tmp2=(${tmp1})
 	IFS=@{OLD_IFS}
 	latest_branch=`echo ${tmp2[${#tmp2[*]}-1]} | awk -f '/' '{print ${NF}}'`
