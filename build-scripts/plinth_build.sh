@@ -417,6 +417,24 @@ echo "Finish Build Image"
 ##########
 ##Copy the Image to FTP document##
 ##########
+    pushd ${CI_SCRIPTS_DIR}
+	
+    pwd
+	
+    SHELL_PLATFORM=`python configs/parameter_parser.py -f config_plinth.yaml -s Build -k Platform`
+    FTP_DIR=`python configs/parameter_parser.py -f config_plinth.yaml -s Ftpinfo -k FTP_DIR`
+    FTPSERVER_DISPLAY_URL=`python configs/parameter_parser.py -f config_plinth.yaml -s Ftpinfo -k FTPSERVER_DISPLAY_URL`
+
+
+
+    BUILD_REPORT_DIR=`python configs/parameter_parser.py -f config_plinth.yaml -s REPORT -k BUILD_DIR`
+    IMAGE_DIR=`python configs/parameter_parser.py -f config_plinth.yaml -s Kernel_dev -k Image_dir`
+	
+    popd    # restore current work directory
+
+
+
+
 echo ${GIT_DESCRIBE}
 echo ${BUILD_REPORT_DIR}
 
