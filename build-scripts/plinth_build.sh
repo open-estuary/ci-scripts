@@ -169,7 +169,7 @@ fi
 #********
 if [ x"${FORCE_BRANCH}" = x"FALSE" ];then
 
-oldbranchlist=`git branch -a | grep "origin" | grep ${BRANCH_GROUP}`
+oldbranchlist=`git branch -a | grep "origin"`
 verbranch=
 latest_branch='1.1.1'
 git remote update origin --prune
@@ -321,6 +321,45 @@ if [ -z "${verbranch}" ]; then
 fi
 
 echo "The branch to be build is ${verbranch}"
+
+    pushd ${CI_SCRIPTS_DIR}
+	
+    pwd
+	
+    SHELL_PLATFORM= `python configs/parameter_parser.py -f config_plinth.yaml -s Build -k Platform`
+#    : ${ALL_SHELL_PLATFORM:=`python configs/parameter_parser.py -f config.yaml -s Build -k Platform`}
+#    : ${SHELL_DISTRO:=`python configs/parameter_parser.py -f config.yaml -s Build -k Distro`}
+#    : ${ALL_SHELL_DISTRO:=`python configs/parameter_parser.py -f config.yaml -s Build -k Distro`}
+
+#    : ${BOOT_PLAN:=`python configs/parameter_parser.py -f config.yaml -s Jenkins -k Boot`}
+
+#    : ${TEST_PLAN:=`python configs/parameter_parser.py -f config.yaml -s Test -k Plan`}
+#    : ${TEST_SCOPE:=`python configs/parameter_parser.py -f config.yaml -s Test -k Scope`}
+#    : ${TEST_REPO:=`python configs/parameter_parser.py -f config.yaml -s Test -k Repo`}
+#    : ${TEST_LEVEL:=`python configs/parameter_parser.py -f config.yaml -s Test -k Level`}
+
+#    : ${LAVA_SERVER:=`python configs/parameter_parser.py -f config.yaml -s LAVA -k lavaserver`}
+#    : ${LAVA_USER:=`python configs/parameter_parser.py -f config.yaml -s LAVA -k lavauser`}
+#    : ${LAVA_STREAM:=`python configs/parameter_parser.py -f config.yaml -s LAVA -k lavastream`}
+#    : ${LAVA_TOKEN:=`python configs/parameter_parser.py -f config.yaml -s LAVA -k TOKEN`}
+
+#    : ${FTP_SERVER:=`python configs/parameter_parser.py -f config.yaml -s Ftpinfo -k ftpserver`}
+    FTP_DIR=`python configs/parameter_parser.py -f config_plinth.yaml -s Ftpinfo -k FTP_DIR`
+    FTPSERVER_DISPLAY_URL=`python configs/parameter_parser.py -f config_plinth.yaml -s Ftpinfo -k FTPSERVER_DISPLAY_URL`
+
+#    : ${ARCH_MAP:=`python configs/parameter_parser.py -f config.yaml -s Arch`}
+
+#    : ${SUCCESS_MAIL_LIST:=`python configs/parameter_parser.py -f config_plinth.yaml -s Mail -k SUCCESS_LIST`}
+#    : ${SUCCESS_MAIL_CC_LIST:=`python configs/parameter_parser.py -f config_plinth.yaml -s Mail -k SUCCESS_CC_LIST`}
+#    : ${FAILED_MAIL_LIST:=`python configs/parameter_parser.py -f config_plinth.yaml -s Mail -k FAILED_LIST`}
+#    : ${FAILED_MAIL_CC_LIST:=`python configs/parameter_parser.py -f config_plinth.yaml -s Mail -k FAILED_CC_LIST`}
+
+    BUILD_REPORT_DIR=`python configs/parameter_parser.py -f config_plinth.yaml -s REPORT -k BUILD_DIR`
+    IMAGE_DIR=`python configs/parameter_parser.py -f config_plinth.yaml -s Kernel_dev -k Image_dir`
+	
+    popd    # restore current work directory
+
+
 
 git remote update origin --prune
 
