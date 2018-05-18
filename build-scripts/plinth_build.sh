@@ -175,7 +175,7 @@ latest_branch='1.1.1'
 git remote update origin --prune
 declare -a newbranchlist
 #newbranchlist
-tmp=`git branch -a | grep "origin" | grep ${BRANCH_GROUP}`
+tmp=`git branch -a | grep "origin" | grep "${BRANCH_GROUP}"`
 tmp=`echo $tmp | awk '{gsub("  ","@");print}'`
 echo $tmp
 OLD_IFS="$IFS"
@@ -328,33 +328,11 @@ echo "The branch to be build is ${verbranch}"
 	
     pwd
 	
-    SHELL_PLATFORM= `python configs/parameter_parser.py -f config_plinth.yaml -s Build -k Platform`
-#    : ${ALL_SHELL_PLATFORM:=`python configs/parameter_parser.py -f config.yaml -s Build -k Platform`}
-#    : ${SHELL_DISTRO:=`python configs/parameter_parser.py -f config.yaml -s Build -k Distro`}
-#    : ${ALL_SHELL_DISTRO:=`python configs/parameter_parser.py -f config.yaml -s Build -k Distro`}
-
-#    : ${BOOT_PLAN:=`python configs/parameter_parser.py -f config.yaml -s Jenkins -k Boot`}
-
-#    : ${TEST_PLAN:=`python configs/parameter_parser.py -f config.yaml -s Test -k Plan`}
-#    : ${TEST_SCOPE:=`python configs/parameter_parser.py -f config.yaml -s Test -k Scope`}
-#    : ${TEST_REPO:=`python configs/parameter_parser.py -f config.yaml -s Test -k Repo`}
-#    : ${TEST_LEVEL:=`python configs/parameter_parser.py -f config.yaml -s Test -k Level`}
-
-#    : ${LAVA_SERVER:=`python configs/parameter_parser.py -f config.yaml -s LAVA -k lavaserver`}
-#    : ${LAVA_USER:=`python configs/parameter_parser.py -f config.yaml -s LAVA -k lavauser`}
-#    : ${LAVA_STREAM:=`python configs/parameter_parser.py -f config.yaml -s LAVA -k lavastream`}
-#    : ${LAVA_TOKEN:=`python configs/parameter_parser.py -f config.yaml -s LAVA -k TOKEN`}
-
-#    : ${FTP_SERVER:=`python configs/parameter_parser.py -f config.yaml -s Ftpinfo -k ftpserver`}
+    SHELL_PLATFORM=`python configs/parameter_parser.py -f config_plinth.yaml -s Build -k Platform`
     FTP_DIR=`python configs/parameter_parser.py -f config_plinth.yaml -s Ftpinfo -k FTP_DIR`
     FTPSERVER_DISPLAY_URL=`python configs/parameter_parser.py -f config_plinth.yaml -s Ftpinfo -k FTPSERVER_DISPLAY_URL`
 
-#    : ${ARCH_MAP:=`python configs/parameter_parser.py -f config.yaml -s Arch`}
 
-#    : ${SUCCESS_MAIL_LIST:=`python configs/parameter_parser.py -f config_plinth.yaml -s Mail -k SUCCESS_LIST`}
-#    : ${SUCCESS_MAIL_CC_LIST:=`python configs/parameter_parser.py -f config_plinth.yaml -s Mail -k SUCCESS_CC_LIST`}
-#    : ${FAILED_MAIL_LIST:=`python configs/parameter_parser.py -f config_plinth.yaml -s Mail -k FAILED_LIST`}
-#    : ${FAILED_MAIL_CC_LIST:=`python configs/parameter_parser.py -f config_plinth.yaml -s Mail -k FAILED_CC_LIST`}
 
     BUILD_REPORT_DIR=`python configs/parameter_parser.py -f config_plinth.yaml -s REPORT -k BUILD_DIR`
     IMAGE_DIR=`python configs/parameter_parser.py -f config_plinth.yaml -s Kernel_dev -k Image_dir`
@@ -444,14 +422,14 @@ echo ${BUILD_REPORT_DIR}
 
 [ ! -d ${FTP_DIR}/${TREE_NAME} ] && mkdir ${FTP_DIR}/${TREE_NAME}
 
-#[ ! -d ${FTP_DIR}/${TREE_NAME}/${GIT_DESCRIBE}/${SHELL_PLATFORM}-arm64 ] && mkdir -p ${FTP_DIR}/${TREE_NAME}/${GIT_DESCRIBE}/${SHELL_PLATFORM}-arm64
-[ ! -d ${FTP_DIR}/${TREE_NAME}/plinth_test/${SHELL_PLATFORM}-arm64 ] && mkdir -p ${FTP_DIR}/${TREE_NAME}/plinth_test/${SHELL_PLATFORM}-arm64
+[ ! -d ${FTP_DIR}/${TREE_NAME}/${GIT_DESCRIBE}/${SHELL_PLATFORM}-arm64 ] && mkdir -p ${FTP_DIR}/${TREE_NAME}/${GIT_DESCRIBE}/${SHELL_PLATFORM}-arm64
+#[ ! -d ${FTP_DIR}/${TREE_NAME}/plinth_test/${SHELL_PLATFORM}-arm64 ] && mkdir -p ${FTP_DIR}/${TREE_NAME}/plinth_test/${SHELL_PLATFORM}-arm64
 
-#[ ! -d ${FTP_DIR}/${TREE_NAME}/${BUILD_REPORT_DIR} ] && mkdir ${FTP_DIR}/${TREE_NAME}/${BUILD_REPORT_DIR}
-[ ! -d ${FTP_DIR}/${TREE_NAME}/build_report ] && mkdir ${FTP_DIR}/${TREE_NAME}/build_report
+[ ! -d ${FTP_DIR}/${TREE_NAME}/${BUILD_REPORT_DIR} ] && mkdir ${FTP_DIR}/${TREE_NAME}/${BUILD_REPORT_DIR}
+#[ ! -d ${FTP_DIR}/${TREE_NAME}/build_report ] && mkdir ${FTP_DIR}/${TREE_NAME}/build_report
 
-#cp ${IMAGE_DIR} ${FTP_DIR}/${TREE_NAME}/${GIT_DESCRIBE}/${SHELL_PLATFORM}-arm64/Image_${SHELL_PLATFORM}
-cp arch/arm64/boot/Image ${FTP_DIR}/${TREE_NAME}/plinth_test/${SHELL_PLATFORM}-arm64/Image_${SHELL_PLATFORM}
+cp ${IMAGE_DIR} ${FTP_DIR}/${TREE_NAME}/${GIT_DESCRIBE}/${SHELL_PLATFORM}-arm64/Image_${SHELL_PLATFORM}
+#cp arch/arm64/boot/Image ${FTP_DIR}/${TREE_NAME}/plinth_test/${SHELL_PLATFORM}-arm64/Image_${SHELL_PLATFORM}
 #cp ${IMAGE_DIR} /root/estuary/tftp_nfs_data/plinth/Image
 
 cp ${BUILD_DIR}/output/build_${BRANCH_NAME}_${DATE}.log ${FTP_DIR}/${TREE_NAME}/build_report
