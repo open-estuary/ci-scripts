@@ -441,13 +441,13 @@ echo ${BUILD_REPORT_DIR}
 [ ! -d ${FTP_DIR}/${TREE_NAME} ] && mkdir ${FTP_DIR}/${TREE_NAME}
 
 #[ ! -d ${FTP_DIR}/${TREE_NAME}/${GIT_DESCRIBE}/${SHELL_PLATFORM}-arm64 ] && mkdir -p ${FTP_DIR}/${TREE_NAME}/${GIT_DESCRIBE}/${SHELL_PLATFORM}-arm64
-[ ! -d ${FTP_DIR}/${TREE_NAME}/plinth_test/d06-arm64 ] && mkdir -p ${FTP_DIR}/${TREE_NAME}/plinth_test/d06-arm64
+[ ! -d ${FTP_DIR}/${TREE_NAME}/kernel_test/d06-arm64 ] && mkdir -p ${FTP_DIR}/${TREE_NAME}/kernel_test/d06-arm64
 
 #[ ! -d ${FTP_DIR}/${TREE_NAME}/${BUILD_REPORT_DIR} ] && mkdir ${FTP_DIR}/${TREE_NAME}/${BUILD_REPORT_DIR}
 [ ! -d ${FTP_DIR}/${TREE_NAME}/build_report ] && mkdir ${FTP_DIR}/${TREE_NAME}/build_report
 
 #cp ${IMAGE_DIR} ${FTP_DIR}/${TREE_NAME}/${GIT_DESCRIBE}/${SHELL_PLATFORM}-arm64/Image_${SHELL_PLATFORM}
-cp arch/arm64/boot/Image ${FTP_DIR}/${TREE_NAME}/plinth_test/d06-arm64/Image_d06
+cp arch/arm64/boot/Image ${FTP_DIR}/${TREE_NAME}/kernel_test/d06-arm64/Image_d06
 #cp ${IMAGE_DIR} /root/estuary/tftp_nfs_data/plinth/Image
 
 cp ${BUILD_DIR}/output/build_${BRANCH_NAME}_${DATE}.log ${FTP_DIR}/${TREE_NAME}/build_report
