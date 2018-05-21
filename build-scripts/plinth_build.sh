@@ -449,6 +449,7 @@ echo ${BUILD_REPORT_DIR}
 #cp ${IMAGE_DIR} ${FTP_DIR}/${TREE_NAME}/${GIT_DESCRIBE}/${SHELL_PLATFORM}-arm64/Image_${SHELL_PLATFORM}
 cp arch/arm64/boot/Image ${FTP_DIR}/${TREE_NAME}/kernel_test/d06-arm64/Image_d06
 #cp ${IMAGE_DIR} /root/estuary/tftp_nfs_data/plinth/Image
+cp arch/arm64/boot/Image /tftp/plinth/Image_ci
 
 cp ${BUILD_DIR}/output/build_${BRANCH_NAME}_${DATE}.log ${FTP_DIR}/${TREE_NAME}/build_report
 
