@@ -242,7 +242,7 @@ if [ $newlen -gt $oldlen ];then
 		if [ $tmp1 -gt $tmp2 ];then
 			latest_branch=$verNum
 			echo "Get the bigger version num!"
-			break;
+			break
 		fi
 	done
 else
@@ -252,7 +252,7 @@ else
 		if [ ${newnumlist[${i}]} -gt ${oldnumlist[${i}]} ];then
 			latest_branch=$verNum
 			echo "Get the bigger version num!"
-			break;
+			break
 		fi
 	done
 fi
