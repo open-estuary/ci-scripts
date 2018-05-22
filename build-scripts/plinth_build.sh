@@ -175,7 +175,7 @@ latest_branch='1.1.1'
 git remote update origin --prune
 declare -a newbranchlist
 #newbranchlist
-newbranchlist=`git branch -a | grep "origin" | grep "${BRANCH_GROUP}" | awk -f ' ' '{print $1}'`
+newbranchlist=`git branch -a | grep "origin" | grep "${BRANCH_GROUP}" | awk -F' ' '{print $1}'`
 #tmp=`echo $tmp | awk '{gsub(" ","@");print}'`
 #echo $tmp
 #OLD_IFS="$IFS"
