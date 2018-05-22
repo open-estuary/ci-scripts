@@ -175,13 +175,13 @@ latest_branch='1.1.1'
 git remote update origin --prune
 declare -a newbranchlist
 #newbranchlist
-tmp=`git branch -a | grep "origin" | grep "${BRANCH_GROUP}"`
-tmp=`echo $tmp | awk '{gsub("  ","@");print}'`
-echo $tmp
-OLD_IFS="$IFS"
-IFS="@"
-newbranchlist=(${tmp})
-IFS=%{OLD_IFS}
+newbranchlist=`git branch -a | grep "origin" | grep "${BRANCH_GROUP}" | awk -f ' ' '{print $1}'`
+#tmp=`echo $tmp | awk '{gsub(" ","@");print}'`
+#echo $tmp
+#OLD_IFS="$IFS"
+#IFS="@"
+#newbranchlist=(${tmp})
+#IFS=%{OLD_IFS}
 
 #******
 #***Get the latest brach in branch group
@@ -272,7 +272,7 @@ done
 numof_same_ver=`git branch -a | grep "origin" | grep ${BRANCH_GROUP} | grep ${latest_branch} | wc -l`
 
 if [ $numof_same_ver -gt 1 ];then
-	tmp1=`git branch -a | grep "origin" | grep ${BRANCH_GROUP} | grep ${latest_branch} | awk '{gsub("  ","@");print}'`
+	tmp1=`git branch -a | grep "origin" | grep ${BRANCH_GROUP} | grep ${latest_branch} | awk '{gsub(" ","@");print}'`
 	OLD_IFS="$IFS"
 	IFS="@"
 	tmp2=(${tmp1})
