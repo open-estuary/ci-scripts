@@ -189,17 +189,17 @@ IFS=%{OLD_IFS}
 for branch in ${newbranchlist[@]}
 do
 
-branch=`echo $branch | awk -F'/' '{print $NF}'`
+   branch=`echo $branch | awk -F'/' '{print $NF}'`
 	
-OLD_IFS=${IFS}
-IFS='-'
-list=($branch)
-IFS=${OLD_IFS}
+   OLD_IFS=${IFS}
+   IFS='-'
+   list=($branch)
+   IFS=${OLD_IFS}
 
-#Get the first group of  version num 4.16.1
-verNum_1=
-for s in ${list[@]}
-do
+   #Get the first group of  version num 4.16.1
+   verNum_1=
+   for s in ${list[@]}
+   do
 	echo $s
 	if [[ $s =~ '.' ]];then
 		tmp1=`echo $s | awk -F'.' '{print $1}'`
@@ -209,30 +209,30 @@ do
 		fi
 	fi
 
-done
+   done
 
-if [ -z "${verNum}" ];then
+   if [ -z "${verNum}" ];then
 	echo "Fail to get the version num!"
 	continue
-else
+   else
 	echo "Success to get the version num as ${verNum}"
-fi
+   fi
 
-OLD_IFS=${IFS}
-IFS='.'
-oldnumlist=(${latest_branch})
-oldlen=${#oldnumlist[@]}
-echo ${oldnumlist[0]}
-echo ${oldnumlist[1]}
-echo ${oldnumlist[2]}
-newnumlist=(${verNum})
-newlen=${#newnumlist[@]}
-echo ${newnumlist[0]}
-echo ${newnumlist[1]}
-echo ${newnumlist[2]}
-IFS=${OLD_IFS}
+   OLD_IFS=${IFS}
+   IFS='.'
+   oldnumlist=(${latest_branch})
+   oldlen=${#oldnumlist[@]}
+   echo ${oldnumlist[0]}
+   echo ${oldnumlist[1]}
+   echo ${oldnumlist[2]}
+   newnumlist=(${verNum})
+   newlen=${#newnumlist[@]}
+   echo ${newnumlist[0]}
+   echo ${newnumlist[1]}
+   echo ${newnumlist[2]}
+   IFS=${OLD_IFS}
 
-if [ $newlen -gt $oldlen ];then
+   if [ $newlen -gt $oldlen ];then
 	index=$(expr ${oldlen} - 1)
 	for ((i=0;i<=$index;i++))
 	do
@@ -245,7 +245,7 @@ if [ $newlen -gt $oldlen ];then
 			break
 		fi
 	done
-else
+   else
 	index=$(expr ${newlen} - 1)
 	for ((i=0;i<=$index;i++))
 	do
@@ -255,15 +255,15 @@ else
 			break
 		fi
 	done
-fi
+   fi 
 
-if [ $newlen -gt $oldlen ];then
+   if [ $newlen -gt $oldlen ];then
 	if [[ ${verNum} =~ ${latest_branch} ]];then
 		latest_branch=$verNum
 	fi
-fi
+   fi
 
-echo "The later version is ${latest_branch}"
+   echo "The later version is ${latest_branch}"
 
 done
 
