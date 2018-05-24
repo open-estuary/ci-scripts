@@ -57,7 +57,8 @@ device_map = {'d03': ['hip06-d03', 'hisi'],
               # 'dummy_ssh': ['hip05-d02', 'hisi'],
               'x86': ['x86', None],
               'dummy-ssh': ['dummy-ssh', None],
-              'kvm': ['x86-kvm', None]}
+              'kvm': ['x86-kvm', None],
+			  'd06': ['d06_01','hisi']}
 
 
 def parse_yaml(yaml):
