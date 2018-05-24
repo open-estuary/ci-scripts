@@ -282,7 +282,7 @@ if [ $numof_same_ver -gt 1 ];then
 	#latest_branch=${tmp2[0]}
 	for branch in ${tmp2[@]}
 	do
-		latest_branch=`echo branch |  awk -F'/' '{print $NF}'`
+		latest_branch=`echo $branch |  awk -F'/' '{print $NF}'`
 		break
 	done
 else
