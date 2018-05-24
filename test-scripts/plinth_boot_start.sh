@@ -566,7 +566,7 @@ function generate_success_mail(){
     JOB_RESULT_VERSION="Estuary V5.0"
     JOB_RESULT_DATA=""
     for DISTRO in $SHELL_DISTRO; do
-        JOB_RESULT_DATA=$(< mail/ubuntu/whole_sum.txt)",${JOB_RESULT_DATA}"
+        JOB_RESULT_DATA=$(< mail/${DISTRO}/whole_sum.txt)",${JOB_RESULT_DATA}"
     done
     JOB_RESULT_DATA="${JOB_RESULT_DATA%,}"
     export_vars JOB_RESULT_VERSION JOB_RESULT_DATA
