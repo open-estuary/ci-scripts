@@ -596,7 +596,8 @@ function generate_success_mail(){
   
   mkdir -p /home/luojiaxing/mail
   
-  echo  "luojiaxing@huawei.com,huangdaode@hisilicon.com,tanhuazhong@huawei.com,linyunsheng@huawei.com,chenjing92@hisilicon.com" > TEST_LIST.txt
+  echo  "luojiaxing@huawei.com,huangdaode@hisilicon.com" > TEST_LIST.txt
+  echo  "tanhuazhong@huawei.com,linyunsheng@huawei.com,chenjing92@hisilicon.com" >> TEST_LIST.txt
   
   #cp mail/MAIL_LIST.txt /home/luojiaxing/mail/MAIL_LIST.txt
   cp TEST_LIST.txt /home/luojiaxing/mail/MAIL_LIST.txt
