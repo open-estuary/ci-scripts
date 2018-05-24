@@ -170,7 +170,7 @@ function run_and_report_jobs() {
             JOB_RESULT_MAIL=`cat ${JOBS_DIR}/${RESULTS_DIR}/POLL | grep bundle | awk -F"," '{print $2}' | awk -F'}' '{print $1}'`
         fi
 
-        python estuary-report.py --boot ${JOBS_DIR}/${RESULTS_DIR}/POLL --lab $LAVA_USER --testDir "${TEST_CASE_DIR}" --distro "$distro"
+        python ${script_path}/plinth-report.py --boot ${JOBS_DIR}/${RESULTS_DIR}/POLL --lab $LAVA_USER --testDir "${TEST_CASE_DIR}" --distro "$distro"
         if [ ! -d ${RESULTS_DIR} ]; then
             echo "running jobs error! Aborting"
             return -1
