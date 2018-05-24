@@ -54,7 +54,6 @@ device_map = {'d03': ['hip06-d03', 'hisi'],
               'd05': ['d05_01', 'hisi'],
               'd05ssh': ['d05ssh01', 'hisi'],
               'ssh': ['ssh01', None],
-              # 'dummy_ssh': ['hip05-d02', 'hisi'],
               'x86': ['x86', None],
               'dummy-ssh': ['dummy-ssh', None],
               'kvm': ['x86-kvm', None],
@@ -533,7 +532,7 @@ def boot_report(config):
                 #    platform_name = device_map[device_type][0] + '_rootfs:nfs'
                 #else:
                 #    platform_name = device_map[device_type][0]
-			platform_name="d0601"
+            platform_name="d0601"
             # Create txt format boot metadata
             print 'Creating boot log for %s' % (platform_name + job_name + '_' + job_id)
             log = 'boot-%s.txt' % (platform_name + job_name + '_' + job_id)
