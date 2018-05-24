@@ -272,12 +272,13 @@ done
 numof_same_ver=`git branch -a | grep "origin" | grep ${BRANCH_GROUP} | grep ${latest_branch} | wc -l`
 
 if [ $numof_same_ver -gt 1 ];then
+#if [ 2 -gt 3 ];then
 	tmp2=`git branch -a | grep "origin" | grep ${BRANCH_GROUP} | grep ${latest_branch} | awk -F' ' '{print $1}'`
 	#OLD_IFS="$IFS"
 	#IFS="@"
 	#tmp2=(${tmp1})
 	#IFS=@{OLD_IFS}
-	latest_branch=`echo ${tmp2[${#tmp2[*]}-1]} | awk -f '/' '{print ${NF-1}}'`
+	latest_branch=`echo ${tmp2[${#tmp2[*]}-1]} | awk -F '/' '{print ${NF-1}}'`
 else
 	latest_branch=`git branch -a | grep "origin" | grep ${BRANCH_GROUP} | grep ${latest_branch} | awk -F'/' '{print $NF}'`
 fi
