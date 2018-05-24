@@ -7,9 +7,9 @@
 #: Description            : CI中 测试部分 的jenkins任务脚本
 
 __ORIGIN_PATH__="$PWD"
-#script_path="${0%/*}"  # remove the script name ,get the path
-#script_path=${script_path/\./$(pwd)} # if path start with . , replace with $PWD
-script_path=$(cd "`dirname $0`";pwd)
+script_path="${0%/*}"  # remove the script name ,get the path
+script_path=${script_path/\./$(pwd)} # if path start with . , replace with $PWD
+#script_path=$(cd "`dirname $0`";pwd)
 source "${script_path}/../common-scripts/common.sh"
 
 JOB_ID=0
@@ -495,8 +495,8 @@ function generate_test_rate() {
 function generate_success_mail(){
     echo "###################### start generate mail ####################"
 	
-	
-	pushd ${script_path}
+	path=$(cd "`dirname $0`";pwd)
+	pushd ${path}
 	
     # prepare parameters
 	
