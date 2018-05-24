@@ -378,7 +378,7 @@ function collect_result() {
     for distro_name in ${distro_dirs};do
         # add distro info in txt file
         # sed -i -e 's/^/'"${distro_name}"' /' ${CI_SCRIPTS_DIR}/test-scripts/${GIT_DESCRIBE}/${RESULTS_DIR}/${distro_name}/${DETAILS_SUM}
-		if [ -e  ${CI_SCRIPTS_DIR}/test-scripts/${GIT_DESCRIBE}/${RESULTS_DIR}/${distro_name}/${DETAILS_SUM}} ]; then
+		if [ -e  ${CI_SCRIPTS_DIR}/test-scripts/${GIT_DESCRIBE}/${RESULTS_DIR}/${distro_name}/${DETAILS_SUM} ]; then
 			cat ${CI_SCRIPTS_DIR}/test-scripts/${GIT_DESCRIBE}/${RESULTS_DIR}/${distro_name}/${DETAILS_SUM} >> ${GIT_DESCRIBE}/${RESULTS_DIR}/${DETAILS_SUM}
 		fi
     done
@@ -759,14 +759,14 @@ function main() {
 
     trigger_lava_build
 
-    #collect_result
+    collect_result
 
     #print_time "time_test_test_end"
 
     #save_properties_and_result pass
 
-    #generate_success_mail
-    generate_simple_mail ${JOB_ID} ${JOB_RESULT_MAIL}
+    generate_success_mail
+    #generate_simple_mail ${JOB_ID} ${JOB_RESULT_MAIL}
 }
 
 main "$@"
