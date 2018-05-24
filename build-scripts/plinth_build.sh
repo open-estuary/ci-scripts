@@ -279,7 +279,12 @@ if [ $numof_same_ver -gt 1 ];then
 	#tmp2=(${tmp1})
 	#IFS=@{OLD_IFS}
 	#latest_branch=`echo ${tmp2[${#tmp2[*]}-1]} | awk -F '/' '{print ${NF-1}}'`
-	latest_branch=${tmp2[0]}
+	#latest_branch=${tmp2[0]}
+	for branch in ${tmp2[@]}
+	do
+		latest_branch=`echo branch |  awk -F'/' '{print $NF}'`
+		break
+	done
 else
 	latest_branch=`git branch -a | grep "origin" | grep ${BRANCH_GROUP} | grep ${latest_branch} | awk -F'/' '{print $NF}'`
 fi
