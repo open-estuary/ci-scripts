@@ -464,7 +464,7 @@ echo "Finish the kernel build!"
 
 
 git stash
-git checkout master
+git checkout test
 git branch -D ${BRANCH_NAME}
 
 generate_success_mail
