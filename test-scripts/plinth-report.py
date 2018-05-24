@@ -840,7 +840,7 @@ def get_name_from_yaml(path_list, dir_name_lists, owner, test_case_definition_di
                     module = paths[1]
                     submodule = paths[2]
                     owner_detail = get_owner_detail(owner, submodule)
-					dir_name_lists[module][submodule]["developer"] = "Luojiaxing"
+                    dir_name_lists[module][submodule]["developer"] = "Luojiaxing"
                     dir_name_lists[module][submodule]["tester"] = "CI"
                     dir_name_lists[module][submodule][data['metadata']['name']] = {}
                     #if owner_detail is not -1:
