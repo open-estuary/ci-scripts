@@ -271,8 +271,8 @@ done
 
 numof_same_ver=`git branch -a | grep "origin" | grep ${BRANCH_GROUP} | grep ${latest_branch} | wc -l`
 
-if [ $numof_same_ver -gt 1 ];then
-#if [ 2 -gt 3 ];then
+#if [ $numof_same_ver -gt 1 ];then
+if [ 2 -gt 3 ];then
 	tmp2=`git branch -a | grep "origin" | grep ${BRANCH_GROUP} | grep ${latest_branch} | awk -F' ' '{print $1}'`
 	#OLD_IFS="$IFS"
 	#IFS="@"
