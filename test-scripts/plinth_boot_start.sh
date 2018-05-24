@@ -7,8 +7,9 @@
 #: Description            : CI中 测试部分 的jenkins任务脚本
 
 __ORIGIN_PATH__="$PWD"
-script_path="${0%/*}"  # remove the script name ,get the path
-script_path=${script_path/\./$(pwd)} # if path start with . , replace with $PWD
+#script_path="${0%/*}"  # remove the script name ,get the path
+#script_path=${script_path/\./$(pwd)} # if path start with . , replace with $PWD
+script_path=$(cd "`dirname $0`";pwd)
 source "${script_path}/../common-scripts/common.sh"
 
 JOB_ID=0
@@ -169,11 +170,11 @@ function run_and_report_jobs() {
             JOB_RESULT_MAIL=`cat ${JOBS_DIR}/${RESULTS_DIR}/POLL | grep bundle | awk -F"," '{print $2}' | awk -F'}' '{print $1}'`
         fi
 
-        #python estuary-report.py --boot ${JOBS_DIR}/${RESULTS_DIR}/POLL --lab $LAVA_USER --testDir "${TEST_CASE_DIR}" --distro "$distro"
-        #if [ ! -d ${RESULTS_DIR} ]; then
-            #echo "running jobs error! Aborting"
-            #return -1
-        #fi
+        python estuary-report.py --boot ${JOBS_DIR}/${RESULTS_DIR}/POLL --lab $LAVA_USER --testDir "${TEST_CASE_DIR}" --distro "$distro"
+        if [ ! -d ${RESULTS_DIR} ]; then
+            echo "running jobs error! Aborting"
+            return -1
+        fi
     else
         echo "skip lava run and report"
     fi
@@ -492,27 +493,41 @@ function generate_test_rate() {
 
 function generate_success_mail(){
     echo "###################### start generate mail ####################"
-
+	
+	
+	pushd ${script_path}
+	
     # prepare parameters
-    cd ${WORKSPACE}
-    echo "${SUCCESS_MAIL_LIST}" > ${WORKSPACE}/MAIL_LIST.txt
-    echo "${SUCCESS_MAIL_CC_LIST}" > ${WORKSPACE}/MAIL_CC_LIST.txt
+	
+	#all file used to be generate mail is to be save in mail document
+	mkdir -p mail
+	
+	for DISTRO in $SHELL_DISTRO; do
+		mkdir mail/${DISTRO}
+		
+		#whole_sum.txt record the daily test report for 今日构建结果
+		cp ${GIT_DESCRIBE}/${RESULTS_DIR}/${DISTRO}/${WHOLE_SUM} mail/${DISTRO}/whole_sum.txt
+		
+		#detail_sum.txt record the result of all test case have run this time
+		cp ${GIT_DESCRIBE}/${RESULTS_DIR}/${DETAILS_SUM} mail/detail_sum.txt
+	done
+	
+    echo "${SUCCESS_MAIL_LIST}" > mail/MAIL_LIST.txt
+    echo "${SUCCESS_MAIL_CC_LIST}" > mail/MAIL_CC_LIST.txt
 
     TODAY=$(date +"%Y/%m/%d")
     MONTH=$(date +"%Y%m")
-
-    cd ${WORKSPACE}/local/ci-scripts/test-scripts/
 
     # the result dir path ${GIT_DESCRIBE}/${RESULTS_DIR}/${DISTRO}/
 
     # set job result by
     JOB_RESULT=PASS
-    if [ -e ${GIT_DESCRIBE}/${RESULTS_DIR}/${DETAILS_SUM} ];then
-        if cat ${GIT_DESCRIBE}/${RESULTS_DIR}/${DETAILS_SUM} | grep -q "\(fail\|FAIL\)$";then
+    if [ -e mail/detail_sum.txt ];then
+        if cat mail/detail_sum.txt | grep -q "\(fail\|FAIL\)$";then
             JOB_RESULT=FAIL
         fi
 
-        if cat ${GIT_DESCRIBE}/${RESULTS_DIR}/${DETAILS_SUM} | grep -q "\(pass\|PASS\)$";then
+        if cat mail/detail_sum.txt | grep -q "\(pass\|PASS\)$";then
             :
         else
             JOB_RESULT=FAIL
@@ -527,14 +542,14 @@ function generate_success_mail(){
     echo "------------------------------------------------------------"
 
 
-    echo "Estuary CI Auto-test Daily Report (${TODAY}) - ${JOB_RESULT}" > ${WORKSPACE}/MAIL_SUBJECT.txt
+    echo "Plinth CI Auto-test Daily Report (${TODAY}) - ${JOB_RESULT}" > mail/MAIL_SUBJECT.txt
 
-    echo "<b>Estuary CI Auto-test Daily Report (${TODAY})</b><br>" > ${WORKSPACE}/MAIL_CONTENT.txt
-    echo "<br>" >> ${WORKSPACE}/MAIL_CONTENT.txt
-    echo "<br>" >> ${WORKSPACE}/MAIL_CONTENT.txt
-    echo "<b>1. 构建信息</b><br>" >> ${WORKSPACE}/MAIL_CONTENT.txt
+    echo "<b>Plinth CI Auto-test Daily Report (${TODAY})</b><br>" > mail/MAIL_CONTENT.txt
+    echo "<br>" >> mail/MAIL_CONTENT.txt
+    echo "<br>" >> mail/MAIL_CONTENT.txt
+    echo "<b>1. 构建信息</b><br>" >> mail/MAIL_CONTENT.txt
 
-    JOB_INFO_VERSION="Estuary V5.0 - ${TODAY}"
+    JOB_INFO_VERSION="Plinth V1.0 - ${TODAY}"
     # TODO : the start time need read from file.
     JOB_INFO_SHA1="${GIT_DESCRIBE}"
     JOB_INFO_RESULT=${JOB_RESULT}
@@ -542,77 +557,46 @@ function generate_success_mail(){
     JOB_INFO_END_TIME=$(current_time)
     export_vars JOB_INFO_VERSION JOB_INFO_SHA1 JOB_INFO_RESULT JOB_INFO_START_TIME JOB_INFO_END_TIME
     envsubst < ./html/1-job-info-table.json > ./html/1-job-info-table.json.tmp
-    python ./html/html-table.py -f ./html/1-job-info-table.json.tmp >> ${WORKSPACE}/MAIL_CONTENT.txt
+    python ./html/html-table.py -f ./html/1-job-info-table.json.tmp >> mail/MAIL_CONTENT.txt
     rm -f ./html/1-job-info-table.json.tmp
-    echo "<br><br>" >> ${WORKSPACE}/MAIL_CONTENT.txt
+    echo "<br><br>" >> mail/MAIL_CONTENT.txt
 
-    echo "<b>2. 今日构建结果</b><br>" >> ${WORKSPACE}/MAIL_CONTENT.txt
+    echo "<b>2. 今日构建结果</b><br>" >> mail/MAIL_CONTENT.txt
     JOB_RESULT_VERSION="Estuary V5.0"
     JOB_RESULT_DATA=""
     for DISTRO in $SHELL_DISTRO; do
-        JOB_RESULT_DATA=$(< ${GIT_DESCRIBE}/${RESULTS_DIR}/${DISTRO}/${WHOLE_SUM})",${JOB_RESULT_DATA}"
+        JOB_RESULT_DATA=$(< mail/ubuntu/whole_sum.txt)",${JOB_RESULT_DATA}"
     done
     JOB_RESULT_DATA="${JOB_RESULT_DATA%,}"
     export_vars JOB_RESULT_VERSION JOB_RESULT_DATA
     envsubst < ./html/2-job-result-table.json > ./html/2-job-result-table.json.tmp
-    python ./html/html-table.py -f ./html/2-job-result-table.json.tmp >> ${WORKSPACE}/MAIL_CONTENT.txt
+    python ./html/html-table.py -f ./html/2-job-result-table.json.tmp >> mail/MAIL_CONTENT.txt
     rm -f ./html/2-job-result-table.json.tmp
-    echo "<br><br>" >> ${WORKSPACE}/MAIL_CONTENT.txt
-
-    echo "<b>3. 测试数据统计</b><br>" >> ${WORKSPACE}/MAIL_CONTENT.txt
-    for DISTRO in $SHELL_DISTRO; do
-        # if don't exist this scope result file skip it.
-        if [ ! -e ${GIT_DESCRIBE}/${RESULTS_DIR}/${DISTRO}/${SCOPE_SUMMARY_NAME} ];then
-            echo "Waining: ${SCOPE_SUMMARY_NAME} don't exist"
-            continue
-        fi
-        echo "${DISTRO} 版本测试数据统计:" >> ${WORKSPACE}/MAIL_CONTENT.txt
-        DISTRO_RESULT_DATA=$(cat ${GIT_DESCRIBE}/${RESULTS_DIR}/${DISTRO}/${SCOPE_SUMMARY_NAME})
-        export_vars DISTRO_RESULT_DATA
-        envsubst < ./html/3-distro-result-table.json > ./html/3-distro-result-table.json.tmp
-        python ./html/html-table.py -f ./html/3-distro-result-table.json.tmp >> ${WORKSPACE}/MAIL_CONTENT.txt
-        rm -f ./html/3-distro-result-table.json.tmp
-        echo "<br>" >> ${WORKSPACE}/MAIL_CONTENT.txt
-done
-
-  echo "<b>4. ${MONTH}月版本健康度统计</b><br>" >> ${WORKSPACE}/MAIL_CONTENT.txt
-  HEALTH_RATE_VERSION="Estuary V5.0"
-  BUILD_PASS_RATE=$(generate_pass_rate || true)
-  HEALTH_RATE_COMPILE="{\"data\": \"${BUILD_PASS_RATE}%\", \"link\": \"${BUILD_URL}BuildReport\"}"
-  TEST_PASS_RATE=$(generate_test_rate || true)
-  HEALTH_RATE_TEST="${TEST_PASS_RATE}%"
-  HEALTH_RATE_LINT="100%"
-  HEALTH_RATE_TOTAL="${TEST_PASS_RATE}%"
-  export_vars HEALTH_RATE_VERSION HEALTH_RATE_COMPILE HEALTH_RATE_TEST HEALTH_RATE_LINT HEALTH_RATE_TOTAL
-  envsubst < ./html/4-health-rate-table.json > ./html/4-health-rate-table.json.tmp
-  python ./html/html-table.py -f ./html/4-health-rate-table.json.tmp >> ${WORKSPACE}/MAIL_CONTENT.txt
-  rm -f ./html/4-health-rate-table.json.tmp
-  echo "<br><br>" >> ${WORKSPACE}/MAIL_CONTENT.txt
-
-  echo "<b>5. 构建结果访问</b><br>" >> ${WORKSPACE}/MAIL_CONTENT.txt
-  JOB_LINK_COMPILE="${BUILD_URL}console"
-  JOB_LINK_RESULT="${FTPSERVER_DISPLAY_URL}/open-estuary/${GIT_DESCRIBE}"
-  JOB_LINK_TEST_CASE="${TEST_REPO}"
-  export_vars JOB_LINK_COMPILE JOB_LINK_RESULT JOB_LINK_TEST_CASE
-  envsubst < ./html/5-job-link-table.json > ./html/5-job-link-table.json.tmp
-  python ./html/html-table.py -f ./html/5-job-link-table.json.tmp >> ${WORKSPACE}/MAIL_CONTENT.txt
-  rm -f ./html/5-job-link-table.json.tmp
-  echo "<br><br>" >> ${WORKSPACE}/MAIL_CONTENT.txt
+    echo "<br><br>" >> mail/MAIL_CONTENT.txt
 
   # generate distro html
   for DISTRO in $SHELL_DISTRO; do
       detail_html_generate "${GIT_DESCRIBE}/${RESULTS_DIR}/${DETAILS_SUM}" "${WORKSPACE}/html/TestReport" "${DISTRO}"
   done
 
-  echo "<br><br>" >> ${WORKSPACE}/MAIL_CONTENT.txt
+  echo "<br><br>" >> mail/MAIL_CONTENT.txt
 
 
   ##  编译结果
   touch ${WORKSPACE}/html/BuildReport.html
   # TODO : add build result into the build.html
-  cd -
+  #cd -
 
+  #copy the Mail txt to workspace document
+  cp mail/MAIL_LIST.txt ${WORKSPACE}/MAIL_LIST.txt
+  cp mail/MAIL_CC_LIST.txt ${WORKSPACE}/MAIL_CC_LIST.txt
+  cp mail/MAIL_CONTENT.txt ${WORKSPACE}/MAIL_CONTENT.txt
+  cp mail/MAIL_SUBJECT.txt ${WORKSPACE}/MAIL_SUBJECT.txt
+  
+  
   cp ${WORKSPACE}/MAIL_CONTENT.txt ${WORKSPACE}/html/DailyReport.html
+  
+  rm -rf mail
   echo "######################################## generate mail success ########################################"
 }
 
@@ -774,14 +758,14 @@ function main() {
 
     trigger_lava_build
 
-    #collect_result
+    collect_result
 
-    #print_time "time_test_test_end"
+    print_time "time_test_test_end"
 
-    #save_properties_and_result pass
+    save_properties_and_result pass
 
-    #generate_success_mail
-    generate_simple_mail ${JOB_ID} ${JOB_RESULT_MAIL}
+    generate_success_mail
+    #generate_simple_mail ${JOB_ID} ${JOB_RESULT_MAIL}
 }
 
 main "$@"
