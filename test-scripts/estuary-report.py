@@ -1018,7 +1018,7 @@ def main(args):
     distro = config.get("distro")
 
     if config.get("boot"):
-        boot_report(config)
+        #boot_report(config)
         module_dict = generate_module_dict(job_result_dict, TEST_CASE_DEFINITION_DIR)
         generate_scope_test_report(TEST_CASE_DEFINITION_DIR, module_dict, jenkins_build_url, distro)
         generate_current_test_report()
