@@ -1,9 +1,9 @@
 def send_mail() {
     //get mail info
-    mailTo = readFile 'MAIL_LIST.txt'
-    mailCC = readFile 'MAIL_CC_LIST.txt'
-    mailSubject = readFile 'MAIL_SUBJECT.txt'
-    mailContent = readFile 'MAIL_CONTENT.txt'
+    mailTo = readFile '/home/luojiaxing/mail/MAIL_LIST.txt'
+    mailCC = readFile '/home/luojiaxing/mail/MAIL_CC_LIST.txt'
+    mailSubject = readFile '/home/luojiaxing/mail/MAIL_SUBJECT.txt'
+    mailContent = readFile '/home/luojiaxing/mail/MAIL_CONTENT.txt'
     // send test result
 
     mail mimeType: 'text/html', bcc: '', body: mailContent, cc: mailCC, subject: mailSubject, to: mailTo

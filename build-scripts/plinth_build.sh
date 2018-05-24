@@ -50,10 +50,10 @@ function parse_params() {
 }
 
 function generate_failed_mail(){
-    echo "${FAILED_MAIL_LIST}" > ${CUR_TOP_DIR}/MAIL_LIST.txt
-    echo "${FAILED_MAIL_CC_LIST}" > ${CUR_TOP_DIR}/MAIL_CC_LIST.txt
-    echo "Estuary CI Build - ${GIT_DESCRIBE} - Failed" > ${CUR_TOP_DIR}/MAIL_SUBJECT.txt
-    cat > ${CUR_TOP_DIR}/MAIL_CONTENT.txt <<EOF
+    echo "${FAILED_MAIL_LIST}" > /home/luojiaxing/mail/MAIL_LIST.txt
+    echo "${FAILED_MAIL_CC_LIST}" > /home/luojiaxing/mail/MAIL_CC_LIST.txt
+    echo "Estuary CI Build - ${GIT_DESCRIBE} - Failed" > /home/luojiaxing/mail/MAIL_SUBJECT.txt
+    cat > /home/luojiaxing/mail/MAIL_CONTENT.txt <<EOF
 ( This mail is send by Jenkins automatically, don't reply )<br>
 Project Name: ${TREE_NAME}<br>
 Version: ${GIT_DESCRIBE}<br>
@@ -70,10 +70,10 @@ EOF
 
 
 function generate_success_mail(){
-    echo "${SUCCESS_MAIL_LIST}" > ${CUR_TOP_DIR}/MAIL_LIST.txt
-    echo "${SUCCESS_MAIL_CC_LIST}" > ${CUR_TOP_DIR}/MAIL_CC_LIST.txt
-    echo "Estuary CI - ${GIT_DESCRIBE} - Result" > ${CUR_TOP_DIR}/MAIL_SUBJECT.txt
-    cat > ${CUR_TOP_DIR}/MAIL_CONTENT.txt <<EOF
+    echo "${SUCCESS_MAIL_LIST}" > /home/luojiaxing/mail/MAIL_LIST.txt
+    echo "${SUCCESS_MAIL_CC_LIST}" > /home/luojiaxing/mail/MAIL_CC_LIST.txt
+    echo "Estuary CI - ${GIT_DESCRIBE} - Result" > /home/luojiaxing/mail/MAIL_SUBJECT.txt
+    cat > /home/luojiaxing/mail/MAIL_CONTENT.txt <<EOF
 ( This mail is send by Jenkins automatically, don't reply )<br>
 Project Name: ${TREE_NAME}<br>
 Version: ${GIT_DESCRIBE}<br>
@@ -277,7 +277,7 @@ if [ $numof_same_ver -gt 1 ];then
 	#IFS="@"
 	#tmp2=(${tmp1})
 	#IFS=@{OLD_IFS}
-	latest_branch=`echo ${tmp2[${#tmp2[*]}-1]} | awk -f '/' '{print ${NF}}'`
+	latest_branch=`echo ${tmp2[${#tmp2[*]}-1]} | awk -f '/' '{print ${NF-1}}'`
 else
 	latest_branch=`git branch -a | grep "origin" | grep ${BRANCH_GROUP} | grep ${latest_branch} | awk -F'/' '{print $NF}'`
 fi

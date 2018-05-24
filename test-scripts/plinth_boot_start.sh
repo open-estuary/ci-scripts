@@ -594,6 +594,11 @@ function generate_success_mail(){
   cp mail/MAIL_CONTENT.txt ${WORKSPACE}/MAIL_CONTENT.txt
   cp mail/MAIL_SUBJECT.txt ${WORKSPACE}/MAIL_SUBJECT.txt
   
+  mkdir -p /home/luojiaxing/mail
+  cp mail/MAIL_LIST.txt /home/luojiaxing/mail/MAIL_LIST.txt
+  cp mail/MAIL_CC_LIST.txt /home/luojiaxing/mail/MAIL_CC_LIST.txt
+  cp mail/MAIL_CONTENT.txt /home/luojiaxing/mail/MAIL_CONTENT.txt
+  cp mail/MAIL_SUBJECT.txt /home/luojiaxing/mail/MAIL_SUBJECT.txt
   
   cp ${WORKSPACE}/MAIL_CONTENT.txt ${WORKSPACE}/html/DailyReport.html
   
