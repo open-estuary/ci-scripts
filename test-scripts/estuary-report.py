@@ -134,7 +134,7 @@ def get_plans(directory, filename):
 def parser_and_get_result(contents, filename, directory, report_directory, connection):
     summary_post = '_summary.txt'
     if filename.endswith('.txt'):
-        board_type = get_board_type(directory, filename)
+        board_type = "d06"  #get_board_type(directory, filename)
         plan = get_plans(report_directory, filename)
         if board_type and plan:
             summary = board_type + '_' + plan + summary_post
