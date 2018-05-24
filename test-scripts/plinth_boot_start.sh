@@ -759,14 +759,14 @@ function main() {
 
     trigger_lava_build
 
-    collect_result
+    #collect_result
 
-    print_time "time_test_test_end"
+    #print_time "time_test_test_end"
 
-    save_properties_and_result pass
+    #save_properties_and_result pass
 
-    generate_success_mail
-    #generate_simple_mail ${JOB_ID} ${JOB_RESULT_MAIL}
+    #generate_success_mail
+    generate_simple_mail ${JOB_ID} ${JOB_RESULT_MAIL}
 }
 
 main "$@"
