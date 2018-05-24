@@ -835,14 +835,11 @@ def get_name_from_yaml(path_list, dir_name_lists, owner, test_case_definition_di
                 print "warnings: wrong yaml syntax :\n %s" % e
                 continue
 
-            if isinstance(data, dict):
-                if data.has_key('metadata') and data['metadata'].has_key('name'):
-                    module = paths[1]
-                    submodule = paths[2]
-                    owner_detail = get_owner_detail(owner, submodule)
-                    dir_name_lists[module][submodule]["developer"] = "Luojiaxing"
-                    dir_name_lists[module][submodule]["tester"] = "CI"
-                    dir_name_lists[module][submodule][data['metadata']['name']] = {}
+            #if isinstance(data, dict):
+                #if data.has_key('metadata') and data['metadata'].has_key('name'):
+                    #module = paths[1]
+                    #submodule = paths[2]
+                    #owner_detail = get_owner_detail(owner, submodule)
                     #if owner_detail is not -1:
                     #    dir_name_lists[module][submodule]["developer"] = owner[owner_detail][2]
                     #    dir_name_lists[module][submodule]["tester"] = owner[owner_detail][3]
@@ -1021,7 +1018,7 @@ def main(args):
     distro = config.get("distro")
 
     if config.get("boot"):
-        #boot_report(config)
+        boot_report(config)
         module_dict = generate_module_dict(job_result_dict, TEST_CASE_DEFINITION_DIR)
         generate_scope_test_report(TEST_CASE_DEFINITION_DIR, module_dict, jenkins_build_url, distro)
         generate_current_test_report()
