@@ -524,6 +524,7 @@ def boot_report(config):
 
         # Record the boot log and result
         # TODO: Will need to map device_types to dashboard device types
+		device_type="d06"
         if kernel_defconfig and device_type and result:
             #if ( 'arm' == arch or 'arm64' == arch ) and device_tree is None:
                 #platform_name = device_map[device_type][0] + ',legacy'
@@ -573,8 +574,8 @@ def boot_report(config):
             boot_meta['defconfig'] = kernel_defconfig_base
             if kernel_defconfig_full is not None:
                 boot_meta['defconfig_full'] = kernel_defconfig_full
-            if device_map[device_type][1]:
-                boot_meta['mach'] = device_map[device_type][1]
+            #if device_map[device_type][1]:
+                #boot_meta['mach'] = device_map[device_type][1]
             boot_meta['kernel'] = kernel_version
 
             boot_meta['job'] = kernel_tree
