@@ -526,14 +526,14 @@ def boot_report(config):
         # Record the boot log and result
         # TODO: Will need to map device_types to dashboard device types
         if kernel_defconfig and device_type and result:
-            if ( 'arm' == arch or 'arm64' == arch ) and device_tree is None:
-                platform_name = device_map[device_type][0] + ',legacy'
-            else:
-                if test_plan == 'boot-nfs' or test_plan == 'boot-nfs-mp':
-                    platform_name = device_map[device_type][0] + '_rootfs:nfs'
-                else:
-                    platform_name = device_map[device_type][0]
-
+            #if ( 'arm' == arch or 'arm64' == arch ) and device_tree is None:
+                #platform_name = device_map[device_type][0] + ',legacy'
+            #else:
+                #if test_plan == 'boot-nfs' or test_plan == 'boot-nfs-mp':
+                #    platform_name = device_map[device_type][0] + '_rootfs:nfs'
+                #else:
+                #    platform_name = device_map[device_type][0]
+			platform_name="d0601"
             # Create txt format boot metadata
             print 'Creating boot log for %s' % (platform_name + job_name + '_' + job_id)
             log = 'boot-%s.txt' % (platform_name + job_name + '_' + job_id)
