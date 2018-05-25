@@ -552,7 +552,7 @@ function generate_success_mail(){
 
     JOB_INFO_VERSION="Plinth V1.0 - ${TODAY}"
     # TODO : the start time need read from file.
-    JOB_INFO_SHA1="${GIT_DESCRIBE}"
+    JOB_INFO_SHA1=${BRANCH_NAME}#"${GIT_DESCRIBE}"
     JOB_INFO_RESULT=${JOB_RESULT}
     JOB_INFO_START_TIME="${JENKINS_JOB_START_TIME}"
     JOB_INFO_END_TIME=$(current_time)
@@ -563,7 +563,7 @@ function generate_success_mail(){
     echo "<br><br>" >> mail/MAIL_CONTENT.txt
 
     echo "<b>2. 今日构建结果</b><br>" >> mail/MAIL_CONTENT.txt
-    JOB_RESULT_VERSION="Estuary V5.0"
+    JOB_RESULT_VERSION="Plinth ${BRANCH_NAME}"
     JOB_RESULT_DATA=""
     for DISTRO in $SHELL_DISTRO; do
         JOB_RESULT_DATA=$(< mail/${DISTRO}/whole_sum.txt)",${JOB_RESULT_DATA}"
@@ -604,8 +604,8 @@ function generate_success_mail(){
   #cat "luojiaxing@huawei.com,1191097880@qq.com,huangdaode@hisilicon.com" > TEST_LIST.txt
   #cat "tanhuazhong@huawei.com,linyunsheng@huawei.com,chenjing92@hisilicon.com" >> TEST_LIST.txt
   
-  #cp mail/MAIL_LIST.txt /home/luojiaxing/mail/MAIL_LIST.txt
-  cp /home/luojiaxing/mail/TEST_LIST.txt /home/luojiaxing/mail/MAIL_LIST.txt
+  cp mail/MAIL_LIST.txt /home/luojiaxing/mail/MAIL_LIST.txt
+  #cp /home/luojiaxing/mail/TEST_LIST.txt /home/luojiaxing/mail/MAIL_LIST.txt
   cp mail/MAIL_CC_LIST.txt /home/luojiaxing/mail/MAIL_CC_LIST.txt
   cp mail/MAIL_CONTENT.txt /home/luojiaxing/mail/MAIL_CONTENT.txt
   cp mail/MAIL_SUBJECT.txt /home/luojiaxing/mail/MAIL_SUBJECT.txt
