@@ -572,6 +572,8 @@ function generate_success_mail(){
     export_vars JOB_RESULT_VERSION JOB_RESULT_DATA
     envsubst < ./html/2-job-result-table.json > ./html/2-job-result-table.json.tmp
     python ./html/html-table.py -f ./html/2-job-result-table.json.tmp >> mail/MAIL_CONTENT.txt
+    echo "<br>" >> mail/MAIL_CONTENT.txt
+    echo "Test Result Address: http://120.31.149.194:180/results/${tid}<br>" >> mail/MAIL_CONTENT.txt
     rm -f ./html/2-job-result-table.json.tmp
     echo "<br><br>" >> mail/MAIL_CONTENT.txt
 
