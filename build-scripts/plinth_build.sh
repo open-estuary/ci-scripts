@@ -519,11 +519,6 @@ cp ${BUILD_DIR}/output/build_${BRANCH_NAME}_${DATE}.log ${FTP_DIR}/${TREE_NAME}/
 
 echo "Finish the kernel build!"
 
-
-git stash
-git checkout test
-git branch -D ${BRANCH_NAME}
-
 generate_success_mail
 
 cd ${CUR_TOP_DIR}
