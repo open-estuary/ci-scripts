@@ -595,12 +595,17 @@ function generate_success_mail(){
   cp mail/MAIL_SUBJECT.txt ${WORKSPACE}/MAIL_SUBJECT.txt
   
   mkdir -p /home/luojiaxing/mail
-  
-  cat "luojiaxing@huawei.com,1191097880@qq.com,huangdaode@hisilicon.com" > TEST_LIST.txt
-  cat "tanhuazhong@huawei.com,linyunsheng@huawei.com,chenjing92@hisilicon.com" >> TEST_LIST.txt
+ 
+  if [ ! -f /home/luojiaxing/mail/TEST_LIST.txt ];then
+	touch /home/luojiaxing/mail/TEST_LIST.txt
+	cat "luojiaxing@huawei.com,1191097880@qq.com,huangdaode@hisilicon.com,tanhuazhong@huawei.com" > TEST_LIST.txt
+  fi
+
+  #cat "luojiaxing@huawei.com,1191097880@qq.com,huangdaode@hisilicon.com" > TEST_LIST.txt
+  #cat "tanhuazhong@huawei.com,linyunsheng@huawei.com,chenjing92@hisilicon.com" >> TEST_LIST.txt
   
   #cp mail/MAIL_LIST.txt /home/luojiaxing/mail/MAIL_LIST.txt
-  cp TEST_LIST.txt /home/luojiaxing/mail/MAIL_LIST.txt
+  cp /home/luojiaxing/mail/TEST_LIST.txt /home/luojiaxing/mail/MAIL_LIST.txt
   cp mail/MAIL_CC_LIST.txt /home/luojiaxing/mail/MAIL_CC_LIST.txt
   cp mail/MAIL_CONTENT.txt /home/luojiaxing/mail/MAIL_CONTENT.txt
   cp mail/MAIL_SUBJECT.txt /home/luojiaxing/mail/MAIL_SUBJECT.txt
