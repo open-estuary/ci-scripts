@@ -1,8 +1,8 @@
 {
   "Column" : [
     "版本描述",
-    "Sha1 Value",
-    "构建结果",
+    "Branch Value",
+    "Test Result",
     "构建开始时间",
     "测试完成时间"
   ],

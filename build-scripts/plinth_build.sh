@@ -364,6 +364,63 @@ BRANCH_NAME=${verbranch}
 #fi
 git branch
 
+#######
+#prepare the checkout environment for CI
+#######
+branchlist=`git branch | awk -F'\n' '{print $1}'`
+git stash
+#check if test branch is exist or not 
+#and checkout to test_luo 
+if [[ ${branchlist} =~ "test_luo" ]]; then
+	#branch test_luo is exist
+	#then findout if the current branch is test_luo or not
+
+	local_branch=`git branch | grep "*"`
+       if [[ ${local_branch} =~ "test_luo"  ]];then
+		echo "local in test_luo now"
+	else
+		git checkout test_luo
+       fi	       
+else
+	#branch test_luo is not exist
+	git checkout -b test_luo origin/master	
+
+fi
+
+#delete all branch except test_luo
+
+declare -A branchlist
+branchlist=`git branch`
+branchlist=${branchlist/\*/" "}
+#branchlist=`echo $branchlist | awk -F' '`
+branchlist=`echo $branchlist | awk -v RS='' '{gsub(" ","@");print}'`
+OLD_IFS="$IFS"
+IFS="@"
+arr=($branchlist)
+IFS="${OLD_IFS}"
+#branchlist=${branchlist/\*/" "}
+#branchlist=`echo $branchlist | awk -F' ' '{print $1}'`
+
+
+#for bra in ${branchlist[@]}
+
+len=${#arr[@]}
+for(( i=0;i<${len};i++))
+do
+		if [[ ${arr[i]} =~ "test_luo" ]];then
+			echo "do nothing delete when target is test_luo"
+		else
+			git branch -D ${arr[i]}
+		fi
+done
+
+git branch
+echo "End of prepare checkout environment"
+#####
+#End of prepare the checkout enviroment 
+#####
+
+
 #git checkout -b mybranch origin/release-plinth-4.16.1
 git checkout -b ${BRANCH_NAME} remotes/origin/${BRANCH_NAME}
 
