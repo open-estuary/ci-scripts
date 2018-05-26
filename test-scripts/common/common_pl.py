@@ -18,8 +18,11 @@ def find_all_test_case_by_search(testDir):
 
         # exclude/include files
         files = [os.path.join(root, f) for f in files]
+        print files
         files = [f for f in files if not re.match('(.*\.sh$)|(.*\.bash$)', f)]
+        print files
         files = [f for f in files if re.match('(.*\.yaml$)|(.*\.yml$)', f)]
+        print files
         for fname in files:
             print "Begin to add Yaml file: %s to list !" % fname
             test_case_yaml_file_list.append(fname)

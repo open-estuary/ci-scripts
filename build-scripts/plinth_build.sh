@@ -442,13 +442,24 @@ git checkout -b ${BRANCH_NAME} remotes/origin/${BRANCH_NAME}
 git pull
 
 
-#git branch -D tmp_luo
-
 #before any change,patch the PMU patch to support D05
 #git am --abort
 #git am ${BUILD_DIR}/output/${tmp_patch}
 #sleep 20
 #git branch -D svm-4.15
+
+if [ ! -f home/luojiaxing/env/plinth-config ];then
+	touch home/luojiaxing/env/plinth-config
+fi
+
+if [ -f arch/arm64/configs/plinth-config ];then
+	echo "Fine plinth-config in kernel code!"
+	mkdir -p /home/luojiaxing/env/
+	cp arch/arm64/configs/plinth-config /home/luojiaxing/env/
+else
+	echo "No found the plinth-config.use default file!"
+	cp home/luojiaxing/env/plinth-config arch/arm64/configs/plinth-config
+fi
 
 #before building,change some build cfg
 

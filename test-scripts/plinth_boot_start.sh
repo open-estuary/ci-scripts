@@ -564,7 +564,7 @@ function generate_success_mail(){
     echo "<br><br>" >> mail/MAIL_CONTENT.txt
 
     echo "<b>2. 今日构建结果</b><br>" >> mail/MAIL_CONTENT.txt
-    JOB_RESULT_VERSION="${PLINTH_GITADDR}@${BRANCH_NAME}"
+    JOB_RESULT_VERSION="${PLINTH_GITADDR} ${PLINTH_BRANCH_NAME}"
     JOB_RESULT_DATA=""
     for DISTRO in $SHELL_DISTRO; do
         JOB_RESULT_DATA=$(< mail/${DISTRO}/whole_sum.txt)",${JOB_RESULT_DATA}"
