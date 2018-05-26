@@ -447,14 +447,14 @@ git pull
 #git am ${BUILD_DIR}/output/${tmp_patch}
 #sleep 20
 #git branch -D svm-4.15
-
+mkdir -p /home/luojiaxing/env/
+	
 if [ ! -f home/luojiaxing/env/plinth-config ];then
 	touch home/luojiaxing/env/plinth-config
 fi
 
 if [ -f arch/arm64/configs/plinth-config ];then
 	echo "Fine plinth-config in kernel code!"
-	mkdir -p /home/luojiaxing/env/
 	cp arch/arm64/configs/plinth-config /home/luojiaxing/env/
 else
 	echo "No found the plinth-config.use default file!"
