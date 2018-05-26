@@ -449,8 +449,8 @@ git pull
 #git branch -D svm-4.15
 mkdir -p /home/luojiaxing/env/
 	
-if [ ! -f home/luojiaxing/env/plinth-config ];then
-	touch home/luojiaxing/env/plinth-config
+if [ ! -f /home/luojiaxing/env/plinth-config ];then
+	touch /home/luojiaxing/env/plinth-config
 fi
 
 if [ -f arch/arm64/configs/plinth-config ];then
@@ -458,7 +458,7 @@ if [ -f arch/arm64/configs/plinth-config ];then
 	cp arch/arm64/configs/plinth-config /home/luojiaxing/env/
 else
 	echo "No found the plinth-config.use default file!"
-	cp home/luojiaxing/env/plinth-config arch/arm64/configs/plinth-config
+	cp /home/luojiaxing/env/plinth-config arch/arm64/configs/plinth-config
 fi
 
 #before building,change some build cfg
