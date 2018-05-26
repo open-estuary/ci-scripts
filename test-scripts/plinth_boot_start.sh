@@ -550,9 +550,10 @@ function generate_success_mail(){
     echo "<br>" >> mail/MAIL_CONTENT.txt
     echo "<b>1. 构建信息</b><br>" >> mail/MAIL_CONTENT.txt
 
-    JOB_INFO_VERSION="Plinth V1.0 - ${TODAY}"
+    JOB_INFO_VERSION="Plinth ${PLINTH_GITADDR} - ${TODAY}"
     # TODO : the start time need read from file.
-    JOB_INFO_SHA1=${BRANCH_NAME}#"${GIT_DESCRIBE}"
+    JOB_INFO_SHA1=${PLINTH_BRANCH_NAME}
+	#"${GIT_DESCRIBE}"
     JOB_INFO_RESULT=${JOB_RESULT}
     JOB_INFO_START_TIME="${JENKINS_JOB_START_TIME}"
     JOB_INFO_END_TIME=$(current_time)
@@ -563,7 +564,7 @@ function generate_success_mail(){
     echo "<br><br>" >> mail/MAIL_CONTENT.txt
 
     echo "<b>2. 今日构建结果</b><br>" >> mail/MAIL_CONTENT.txt
-    JOB_RESULT_VERSION="Plinth ${BRANCH_NAME}"
+    JOB_RESULT_VERSION="${PLINTH_GITADDR}@${BRANCH_NAME}"
     JOB_RESULT_DATA=""
     for DISTRO in $SHELL_DISTRO; do
         JOB_RESULT_DATA=$(< mail/${DISTRO}/whole_sum.txt)",${JOB_RESULT_DATA}"
@@ -749,7 +750,8 @@ function main() {
 
     parse_input "$@"
     source_properties_file "${PROPERTIES_FILE}"
-
+    source_properties_file /home/luojiaxing/env/plinth.properties
+	
     init_timefile test
 
     init_workspace

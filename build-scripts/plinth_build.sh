@@ -356,6 +356,20 @@ git stash
 #git branch | grep ${BRANCH_NAME} 2>&1
 BRANCH_NAME=${verbranch}
 
+#####
+#save the plinth global env variable
+#####
+mkdir -p /home/luojiaxing/env/
+tmpGitAddr=`echo ${KERNEL_GITADDR} | awk -F'.' '{print $2}' | awk -F'/' '{print $NF}'`
+    cat << EOF > /home/luojiaxing/env/plinth.properties
+PLINTH_BRANCH_NAME=$BRANCH_NAME
+PLINTH_GITADDR=${tmpGitAddr}
+EOF
+
+# EXECUTE_STATUS="Failure"x
+cat /home/luojiaxing/env/plinth.properties
+
+
 #if [ $? -eq 0 ];then
 	#The same name of branch is exit
 	#git stash
