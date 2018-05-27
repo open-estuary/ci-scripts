@@ -436,6 +436,11 @@ echo "End of prepare checkout environment"
 
 git stash
 
+if [ -f arch/arm64/configs/plinth-config ];then
+	rm arch/arm64/configs/plinth-config
+fi
+
+
 #git checkout -b mybranch origin/release-plinth-4.16.1
 git checkout -b ${BRANCH_NAME} remotes/origin/${BRANCH_NAME}
 
