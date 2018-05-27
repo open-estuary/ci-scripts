@@ -434,6 +434,7 @@ echo "End of prepare checkout environment"
 #End of prepare the checkout enviroment 
 #####
 
+git stash
 
 #git checkout -b mybranch origin/release-plinth-4.16.1
 git checkout -b ${BRANCH_NAME} remotes/origin/${BRANCH_NAME}
