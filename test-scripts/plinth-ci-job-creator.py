@@ -111,6 +111,7 @@ def generate_test_definitions(work_test_list, test_case_definition_url):
         print "Find test in work_test_list,Begin to generate define!"
         definition = generate_test_definition(test['metadata']['test_path'], test['metadata']['name'], test_case_definition_url)
         current_definition += definition
+		print current_definition
         if i == (batch_num - 1):
             all_definitions.append(current_definition)
             current_definition = ""

@@ -282,7 +282,6 @@ function trigger_lava_build() {
                 # BOOT_ISO
                 # boot from ISO
                 generate_jobs $boot_plan $DISTRO
-
                 if [ -d ${JOBS_DIR} ]; then
                     if ! run_and_move_result $boot_plan $DISTRO ;then
                         if [ ! -d ${GIT_DESCRIBE}/${RESULTS_DIR}/${DISTRO} ];then
@@ -315,7 +314,7 @@ function trigger_lava_build() {
                 # BOOT_NFS
                 # boot from NFS
                 generate_jobs $boot_plan $DISTRO
-
+				exit 1
                 if [ -d ${JOBS_DIR} ]; then
                     if ! run_and_move_result $boot_plan $DISTRO ;then
                         if [ ! -d ${GIT_DESCRIBE}/${RESULTS_DIR}/${DISTRO} ];then
