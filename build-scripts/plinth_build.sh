@@ -481,6 +481,7 @@ sed -i 's/CONFIG_HNS3_ENET=m/CONFIG_HNS3_ENET=y/g' arch/arm64/configs/plinth-con
 #sed -i 's/CONFIG_HNS3_ENET=m/CONFIG_HNS3_ENET=y/g' arch/arm64/configs/defconfig
 sed -i 's/CONFIG_HNS3_HCLGEVF=m/CONFIG_HNS3_HCLGEVF=y/g' arch/arm64/configs/plinth-config
 
+sed -i 's/CONFIG_SCSI_HISI_SAS_PCI=m/CONFIG_SCSI_HISI_SAS_PCI=y/g' arch/arm64/configs/plinth-config
 
 #HNS VLAN build option
 sed -i 's/CONFIG_VLAN_8021Q=m/CONFIG_VLAN_8021Q=y/g' arch/arm64/configs/defconfig

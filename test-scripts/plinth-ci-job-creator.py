@@ -108,7 +108,7 @@ def generate_test_definitions(work_test_list, test_case_definition_url):
     i = 0
     current_definition = ""
     for test in work_test_list:
-        print "Find test in work_test_list,Begin to generate define!"
+        print "Find test in work_test_list,Begin to generate define-luo!"
         definition = generate_test_definition(test['metadata']['test_path'], test['metadata']['name'], test_case_definition_url)
         current_definition += definition
         print "Luojiaxing debug yaml generate!"
