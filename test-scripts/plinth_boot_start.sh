@@ -410,7 +410,7 @@ function init_env() {
 	#Get the name of test repo
 	tmp=`echo ${TEST_REPO} | awk -F'.' '{print $2}' | awk -F'/' '{print $NF}'`
 	
-    TEST_CASE_DIR=${WORKSPACE}/local/${TEST_REPO}
+    TEST_CASE_DIR=${WORKSPACE}/local/${tmp}
 	
     #Clone the git repo in local for yaml file generate
 	if [ -d ${TEST_CASE_DIR} ];then
