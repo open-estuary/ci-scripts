@@ -436,10 +436,14 @@ echo "End of prepare checkout environment"
 
 git stash
 
+#test_luo is base on kernle-dev/master branch . there is no plinth-confg and build.sh
 if [ -f arch/arm64/configs/plinth-config ];then
 	rm arch/arm64/configs/plinth-config
 fi
 
+if [ -f build.sh ];then
+	rm build.sh
+fi
 
 #git checkout -b mybranch origin/release-plinth-4.16.1
 git checkout -b ${BRANCH_NAME} remotes/origin/${BRANCH_NAME}
@@ -455,16 +459,18 @@ git pull
 #git branch -D svm-4.15
 mkdir -p /home/luojiaxing/env/
 	
-if [ ! -f /home/luojiaxing/env/plinth-config ];then
-	touch /home/luojiaxing/env/plinth-config
-fi
-
 if [ -f arch/arm64/configs/plinth-config ];then
 	echo "Fine plinth-config in kernel code!"
-	cp arch/arm64/configs/plinth-config /home/luojiaxing/env/
 else
 	echo "No found the plinth-config.use default file!"
-	cp /home/luojiaxing/env/plinth-config arch/arm64/configs/plinth-config
+	cp ${CI_SCRIPTS_DIR}/test-scripts/common/plinth-config arch/arm64/configs/plinth-config
+fi
+
+if [ -f build.sh ];then
+	echo "Fine build.sh in kernel code!"
+else
+	echo "No found build.sh.use default file!"
+	cp ${CI_SCRIPTS_DIR}/test-scripts/common/build.sh .
 fi
 
 #before building,change some build cfg
