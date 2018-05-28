@@ -407,7 +407,27 @@ function collect_result() {
 
 function init_env() {
     CI_SCRIPTS_DIR=${WORKSPACE}/local/ci-scripts
-    TEST_CASE_DIR=${WORKSPACE}/local/plinth-test-suite
+    
+	#Get the name of test repo
+	tmp=`echo ${TEST_REPO} | awk -F'.' '{print $2}' | awk -F'/' '{print $NF}'`
+	
+    TEST_CASE_DIR=${WORKSPACE}/local/${TEST_REPO}
+	
+    #Clone the git repo in local for yaml file generate
+	if [ -d ${TEST_CASE_DIR} ];then
+		echo "Find test repo in local document!"
+	else
+		echo "No found the test repo in local document!git clone"
+		pushd ${WORKSPACE}/local/
+		git clone $TEST_REPO
+		popd
+	fi
+	
+	#Update test repo
+	pushd ${TEST_CASE_DIR}
+	git pull
+	popd
+
 }
 
 
