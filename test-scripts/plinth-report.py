@@ -827,8 +827,12 @@ def generate_email_test_report(distro, module_dict, jenkins_build_url):
                 # ["Ubuntu", "pass", "100", "50%", "50", "50", "0"],
                 wfp.write("[\"%s\", " % key)
                 # always pass for compile result
-                wfp.write("{\"data\": \"%s\", \"color\": \"%s\"}, " %
-                  (suite_result, PASS_COLOR))
+                if suite_result == "pass" :
+                   wfp.write("{\"data\": \"%s\", \"color\": \"%s\"}, " %
+                      (suite_result, PASS_COLOR))
+                else:
+                   wfp.write("{\"data\": \"%s\", \"color\": \"%s\"}, " %
+                      (suite_result, FAIL_COLOR))
                 wfp.write("{\"data\": \"%s\", \"link\": \"%s\"}, " % (repr(suite_total), "http://120.31.149.194:180" + suite_url))
                 if suite_total == 0:
                    wfp.write("\"%.2f%%\", " % (0.0))
