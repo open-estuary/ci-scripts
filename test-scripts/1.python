@@ -1,0 +1,13 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+
+import plinth_report
+import yaml
+
+tmpdirt={"1":"fe","2":"fwe"}
+f = open("lava_9429.yaml")
+test=yaml.load(f)
+print test
+plinth_report.job_result_dict["1234"] = test
+
+plinth_report.generate_email_test_report("ubuntu",tmpdirt,"http://fffff/")

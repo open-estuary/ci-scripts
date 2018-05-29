@@ -718,7 +718,9 @@ def generate_email_test_report(distro, module_dict, jenkins_build_url):
 
     #get all the test suite list from get_testjob_results_yaml
     for job_id in job_result_dict.keys():
+        print job_id
         for item in job_result_dict[job_id]:
+            print item
             if suite_list.count(item['suite']) == 0:
                 suite_list.append(item['suite'])
 
@@ -758,23 +760,82 @@ def generate_email_test_report(distro, module_dict, jenkins_build_url):
                     test_total += 1
 
     with open(summary_file, 'w') as wfp:
+        #get the url of test
+        str=case_dict['lava'][0]['url'].split('/')
+        print str
+        str.pop(-1)
+        str.pop(-1)
+        print str
+        lava_url='/'.join(str)
+        print lava_url
         # ["Ubuntu", "pass", "100", "50%", "50", "50", "0"],
         wfp.write("[\"%s\", " % distro)
         # always pass for compile result
         wfp.write("{\"data\": \"%s\", \"color\": \"%s\"}, " %
                   ("pass", PASS_COLOR))
-        wfp.write("{\"data\": \"%s\", \"link\": \"%s\"}, " % (str(test_total), jenkins_build_url + "TestReport_" + distro + ""))
+        type(lava_url)
+        type(test_total)
+
+        print "test_total is %s "%test_total
+
+        wfp.write("{\"data\": \"%s\", \"link\": \"%s\"}, " % (str(lava_url), "http://120.31.149.194:180"))
         if test_total == 0:
             wfp.write("\"%.2f%%\", " % (0.0))
         else:
             wfp.write("\"%.2f%%\", " % (100.0 * test_success / test_total))
         wfp.write("{\"data\": \"%s\", \"color\": \"%s\", \"link\": \"%s\"}, " %
-                  (str(test_success), PASS_COLOR,  jenkins_build_url + "TestReport_" + distro + "_pass"))
+                  (str(test_success), PASS_COLOR,  "http://120.31.149.194:180" + str(lava_url)))
         wfp.write("{\"data\": \"%s\", \"color\": \"%s\", \"link\": \"%s\"}, " %
-                  (str(test_fail), FAIL_COLOR,  jenkins_build_url + "TestReport_" + distro + "_fail"))
+                  (str(test_fail), FAIL_COLOR,  "http://120.31.149.194:180" + str(lava_url)))
         wfp.write("{\"data\": \"%s\", \"color\": \"%s\"}" %
                   (str(test_total - test_success - test_fail), BLOCK_COLOR))
-        wfp.write("]")
+        wfp.write("],\n")
+        #cycle show the result of each test
+        for key in sorted(case_dict.keys()):
+            if key == 'lava':
+                print "No add LAVA result at mial result txt!"
+            else:
+                for testsuite in case_dict[key]:
+                    #get the result count in each testsuit
+                    if testsuite['result'] == 'pass':
+                       suite_total += 1
+                       suite_success += 1
+                    elif item['result'] == 'fail':
+                       suite_total += 1
+                       suite_fail += 1
+                    else:
+                       suite_total += 1
+                if suite_total == suite_success:
+                    suite_result = "pass"
+                else:
+                    suite_result = "fail"
+                
+                #get the url of test suite
+                str=testsuite['url'].split('/')
+                print str
+                str.pop(-1)
+                print str
+                suite_url='/'.join(str)
+                print suite_url
+
+                # ["Ubuntu", "pass", "100", "50%", "50", "50", "0"],
+                wfp.write("[\"%s\", " % key)
+                # always pass for compile result
+                wfp.write("{\"data\": \"%s\", \"color\": \"%s\"}, " %
+                  (suite_result, PASS_COLOR))
+                wfp.write("{\"data\": \"%s\", \"link\": \"%s\"}, " % (str(suite_total), "http://120.31.149.194:180" + str(suite_url)))
+                if suite_total == 0:
+                   wfp.write("\"%.2f%%\", " % (0.0))
+                else:
+                   wfp.write("\"%.2f%%\", " % (100.0 * suite_success / suite_total))
+                wfp.write("{\"data\": \"%s\", \"color\": \"%s\", \"link\": \"%s\"}, " %
+                  (str(suite_success), PASS_COLOR,  "http://120.31.149.194:180" + str(suite_url)))
+                wfp.write("{\"data\": \"%s\", \"color\": \"%s\", \"link\": \"%s\"}, " %
+                  (str(suite_fail), FAIL_COLOR,  "http://120.31.149.194:180" + str(suite_url)))
+                wfp.write("{\"data\": \"%s\", \"color\": \"%s\"}" %
+                  (str(suite_total - suite_success - suite_fail), BLOCK_COLOR))
+                wfp.write("],\n")
+                print wfp
                         
     ## try to write details file
     details_dir = os.getcwd()
