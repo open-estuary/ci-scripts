@@ -795,9 +795,9 @@ def generate_email_test_report(distro, module_dict, jenkins_build_url):
                        suite_fail += 1
                     else:
                        suite_total += 1
-                if suite_total == suite_success
+                if suite_total == suite_success:
                     suite_result = "pass"
-                else
+                else:
                     suite_result = "fail"
                 
                 #get the url of test suite
