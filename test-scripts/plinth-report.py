@@ -798,6 +798,9 @@ def generate_email_test_report(distro, module_dict, jenkins_build_url):
                 print "No add LAVA result at mial result txt!"
             else:
                 suite_count -= 1
+                suite_total = 0
+                suite_success = 0
+                suite_fail = 0
                 for testsuite in case_dict[key]:
                     #get the result count in each testsuit
                     if testsuite['result'] == 'pass':
