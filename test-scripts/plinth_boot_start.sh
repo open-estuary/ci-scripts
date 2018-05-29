@@ -592,7 +592,7 @@ function generate_success_mail(){
     envsubst < ./html/2-job-result-table.json > ./html/2-job-result-table.json.tmp
     python ./html/html-table.py -f ./html/2-job-result-table.json.tmp >> mail/MAIL_CONTENT.txt
     echo "<br>" >> mail/MAIL_CONTENT.txt
-    echo "Test Result Address: http://120.31.149.194:180/results/${JOB_ID}<br>" >> mail/MAIL_CONTENT.txt
+    #echo "Test Result Address: http://120.31.149.194:180/results/${JOB_ID}<br>" >> mail/MAIL_CONTENT.txt
     rm -f ./html/2-job-result-table.json.tmp
     echo "<br><br>" >> mail/MAIL_CONTENT.txt
 
@@ -801,7 +801,6 @@ function main() {
     #print_time "time_test_test_end"
 
     #save_properties_and_result pass
-
     generate_success_mail
     #generate_simple_mail ${JOB_ID} ${JOB_RESULT_MAIL}
 }

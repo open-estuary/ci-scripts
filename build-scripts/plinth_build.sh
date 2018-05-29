@@ -44,8 +44,8 @@ function parse_params() {
     : ${FAILED_MAIL_CC_LIST:=`python configs/parameter_parser.py -f config_plinth.yaml -s Mail -k FAILED_CC_LIST`}
 
     : ${BUILD_REPORT_DIR:=`python configs/parameter_parser.py -f config_plinth.yaml -s REPORT -k BUILD_DIR`}
-	: ${IMAGE_DIR:=`python configs/parameter_parser.py -f config_plinth.yaml -s Kernel_dev -k Image_dir`}
-	
+    : ${IMAGE_DIR:=`python configs/parameter_parser.py -f config_plinth.yaml -s Kernel_dev -k Image_dir`}
+    : ${JUMP_BUILD:="FALSE"}
     popd    # restore current work directory
 }
 
@@ -85,6 +85,14 @@ EOF
 }
 #PRE_TOP_DIR=$(cd "`dirname $0`" ; pwd)
 parse_params
+
+#check if need to be jump through build action
+if [ x"$JUMP_BUILD" = x"TRUE" ];then
+	echo "jump the build action!"
+	exit 0
+else
+	echo "Continue the build physe!"
+fi
 
 #The CI Build use VM to run build job,
 #so I should used relational path to find the build git 
@@ -382,7 +390,9 @@ git branch
 #prepare the checkout environment for CI
 #######
 branchlist=`git branch | awk -F'\n' '{print $1}'`
+#git add -f *
 git stash
+#git pull
 #check if test branch is exist or not 
 #and checkout to test_luo 
 if [[ ${branchlist} =~ "test_luo" ]]; then
@@ -480,6 +490,11 @@ sed -i 's/CONFIG_HNS3=m/CONFIG_HNS3=y/g' arch/arm64/configs/plinth-config
 sed -i 's/CONFIG_HNS3_HCLGE=m/CONFIG_HNS3_HCLGE=y/g' arch/arm64/configs/plinth-config
 sed -i 's/CONFIG_HNS3_ENET=m/CONFIG_HNS3_ENET=y/g' arch/arm64/configs/plinth-config
 
+sed -i 's/CONFIG_INFINIBAND_HNS_PCI=m/CONFIG_INFINIBAND_HNS_PCI=y/g' arch/arm64/configs/plinth-config
+sed -i 's/CONFIG_INFINIBAND_HNS=m/CONFIG_INFINIBAND_HNS=y/g' arch/arm64/configs/plinth-config
+sed -i 's/CONFIG_INFINIBAND_HNS_HIP06=m/CONFIG_INFINIBAND_HNS_HIP06=y/g' arch/arm64/configs/plinth-config
+sed -i 's/CONFIG_INFINIBAND_HNS_HIP08=m/CONFIG_INFINIBAND_HNS_HIP08=y/g' arch/arm64/configs/plinth-config
+
 #[ ! -f  'arch/arm64/configs/plinth-config' ] && echo " " > arch/arm64/configs/plinth-config 
 
 #sed -i 's/CONFIG_HNS3=m/CONFIG_HNS3=y/g' arch/arm64/configs/defconfig
@@ -491,6 +506,8 @@ sed -i 's/CONFIG_SCSI_HISI_SAS_PCI=m/CONFIG_SCSI_HISI_SAS_PCI=y/g' arch/arm64/co
 
 #HNS VLAN build option
 sed -i 's/CONFIG_VLAN_8021Q=m/CONFIG_VLAN_8021Q=y/g' arch/arm64/configs/defconfig
+
+cat arch/arm64/configs/plinth-config
 
 echo "Begin to build the kernel!"
 #cp ${BUILD_DIR}/output/build.sh .
@@ -512,6 +529,10 @@ bash build.sh ${BOARD_TYPE} > ${BUILD_DIR}/output/build_${BRANCH_NAME}_${DATE}.l
 #ls -l ${IMAGE_DIR}
 
 cat .config
+
+git stash
+
+git checkout test_luo
 
 echo "Finish Build Image"
 
