@@ -712,6 +712,9 @@ def generate_email_test_report(distro, module_dict, jenkins_build_url):
     test_total = 0
     test_success = 0
     test_fail = 0
+    suite_total = 0
+    suite_success = 0
+    suite_fail = 0
 
     #get all the test suite list from get_testjob_results_yaml
     for job_id in job_result_dict.keys():
@@ -768,15 +771,15 @@ def generate_email_test_report(distro, module_dict, jenkins_build_url):
         # always pass for compile result
         wfp.write("{\"data\": \"%s\", \"color\": \"%s\"}, " %
                   ("pass", PASS_COLOR))
-        wfp.write("{\"data\": \"%s\", \"link\": \"%s\"}, " % (str(test_total), "http://120.31.149.194:180" + lava_url + ""))
+        wfp.write("{\"data\": \"%s\", \"link\": \"%s\"}, " % (str(test_total), "http://120.31.149.194:180" + str(lava_url) + ""))
         if test_total == 0:
             wfp.write("\"%.2f%%\", " % (0.0))
         else:
             wfp.write("\"%.2f%%\", " % (100.0 * test_success / test_total))
         wfp.write("{\"data\": \"%s\", \"color\": \"%s\", \"link\": \"%s\"}, " %
-                  (str(test_success), PASS_COLOR,  "http://120.31.149.194:180" + lava_url))
+                  (str(test_success), PASS_COLOR,  "http://120.31.149.194:180" + str(lava_url)))
         wfp.write("{\"data\": \"%s\", \"color\": \"%s\", \"link\": \"%s\"}, " %
-                  (str(test_fail), FAIL_COLOR,  "http://120.31.149.194:180" + lava_url))
+                  (str(test_fail), FAIL_COLOR,  "http://120.31.149.194:180" + str(lava_url)))
         wfp.write("{\"data\": \"%s\", \"color\": \"%s\"}" %
                   (str(test_total - test_success - test_fail), BLOCK_COLOR))
         wfp.write("],\n")
@@ -813,15 +816,15 @@ def generate_email_test_report(distro, module_dict, jenkins_build_url):
                 # always pass for compile result
                 wfp.write("{\"data\": \"%s\", \"color\": \"%s\"}, " %
                   (suite_result, PASS_COLOR))
-                wfp.write("{\"data\": \"%s\", \"link\": \"%s\"}, " % (str(suite_total), "http://120.31.149.194:180" + suite_url))
+                wfp.write("{\"data\": \"%s\", \"link\": \"%s\"}, " % (str(suite_total), "http://120.31.149.194:180" + str(suite_url)))
                 if suite_total == 0:
                    wfp.write("\"%.2f%%\", " % (0.0))
                 else:
                    wfp.write("\"%.2f%%\", " % (100.0 * suite_success / suite_total))
                 wfp.write("{\"data\": \"%s\", \"color\": \"%s\", \"link\": \"%s\"}, " %
-                  (str(suite_success), PASS_COLOR,  "http://120.31.149.194:180" + suite_url))
+                  (str(suite_success), PASS_COLOR,  "http://120.31.149.194:180" + str(suite_url)))
                 wfp.write("{\"data\": \"%s\", \"color\": \"%s\", \"link\": \"%s\"}, " %
-                  (str(suite_fail), FAIL_COLOR,  "http://120.31.149.194:180" + suite_url))
+                  (str(suite_fail), FAIL_COLOR,  "http://120.31.149.194:180" + str(suite_url)))
                 wfp.write("{\"data\": \"%s\", \"color\": \"%s\"}" %
                   (str(suite_total - suite_success - suite_fail), BLOCK_COLOR))
                 wfp.write("],\n")
