@@ -801,7 +801,6 @@ function main() {
     #print_time "time_test_test_end"
 
     #save_properties_and_result pass
-    exit 1
     generate_success_mail
     #generate_simple_mail ${JOB_ID} ${JOB_RESULT_MAIL}
 }
