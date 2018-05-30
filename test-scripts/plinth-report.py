@@ -744,6 +744,7 @@ def generate_email_test_report(distro, module_dict, jenkins_build_url):
             for item in case_dict[key]:
                 if commit_id == '':
                    commit_id=item['unit']
+                   print "commit id is %s"%commit_id
                 if item['result'] == 'pass':
                     boot_total += 1
                     boot_success += 1
@@ -773,7 +774,7 @@ def generate_email_test_report(distro, module_dict, jenkins_build_url):
         lava_url='/'.join(str)
         print lava_url
         # ["Ubuntu", "pass", "100", "50%", "50", "50", "0"],
-        wfp.write("[\"%s\", " % distro)
+        wfp.write("[\"%s\", " % commit_id)
         # always pass for compile result
         if test_fail == 0:
             wfp.write("{\"data\": \"%s\", \"color\": \"%s\"}, " %
