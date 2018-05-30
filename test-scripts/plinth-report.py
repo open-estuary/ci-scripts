@@ -775,7 +775,7 @@ def generate_email_test_report(distro, module_dict, jenkins_build_url):
         if test_fail == 0:
             wfp.write("{\"data\": \"%s\", \"color\": \"%s\"}, " %
                   ("pass", PASS_COLOR))
-        else
+        else:
             wfp.write("{\"data\": \"%s\", \"color\": \"%s\"}, " %
                   ("fail", FAIL_COLOR))
         wfp.write("{\"data\": \"%s\", \"color\": \"%s\"}, " %
