@@ -772,8 +772,14 @@ def generate_email_test_report(distro, module_dict, jenkins_build_url):
         # ["Ubuntu", "pass", "100", "50%", "50", "50", "0"],
         wfp.write("[\"%s\", " % distro)
         # always pass for compile result
-        wfp.write("{\"data\": \"%s\", \"color\": \"%s\"}, " %
+        if test_fail == 0:
+            wfp.write("{\"data\": \"%s\", \"color\": \"%s\"}, " %
                   ("pass", PASS_COLOR))
+        else
+            wfp.write("{\"data\": \"%s\", \"color\": \"%s\"}, " %
+                  ("fail", FAIL_COLOR))
+        wfp.write("{\"data\": \"%s\", \"color\": \"%s\"}, " %
+                  ("Huang daode", PASS_COLOR))
         print type(lava_url)
         print type(test_total)
 
@@ -811,6 +817,7 @@ def generate_email_test_report(distro, module_dict, jenkins_build_url):
                        suite_fail += 1
                     else:
                        suite_total += 1
+                    maintainer=testsuite['unit']
                 if suite_total == suite_success:
                     suite_result = "pass"
                 else:
@@ -833,6 +840,8 @@ def generate_email_test_report(distro, module_dict, jenkins_build_url):
                 else:
                    wfp.write("{\"data\": \"%s\", \"color\": \"%s\"}, " %
                       (suite_result, FAIL_COLOR))
+                wfp.write("{\"data\": \"%s\", \"color\": \"%s\"}, " %
+                  (maintainer, PASS_COLOR))
                 wfp.write("{\"data\": \"%s\", \"link\": \"%s\"}, " % (repr(suite_total), "http://120.31.149.194:180" + suite_url))
                 if suite_total == 0:
                    wfp.write("\"%.2f%%\", " % (0.0))
