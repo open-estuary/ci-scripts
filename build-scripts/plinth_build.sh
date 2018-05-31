@@ -491,7 +491,7 @@ sed -i 's/CONFIG_HNS3_HCLGE=m/CONFIG_HNS3_HCLGE=y/g' arch/arm64/configs/plinth-c
 sed -i 's/CONFIG_HNS3_ENET=m/CONFIG_HNS3_ENET=y/g' arch/arm64/configs/plinth-config
 
 sed -i 's/CONFIG_INFINIBAND_HNS_PCI=m/CONFIG_INFINIBAND_HNS_PCI=y/g' arch/arm64/configs/plinth-config
-sed -i 's/CCONFIG_INFINIBAND_HNS=m/CONFIG_INFINIBAND_HNS=y/g' arch/arm64/configs/plinth-config
+sed -i 's/CONFIG_INFINIBAND_HNS=m/CONFIG_INFINIBAND_HNS=y/g' arch/arm64/configs/plinth-config
 sed -i 's/CONFIG_INFINIBAND_HNS_HIP06=m/CONFIG_INFINIBAND_HNS_HIP06=y/g' arch/arm64/configs/plinth-config
 sed -i 's/CONFIG_INFINIBAND_HNS_HIP08=m/CONFIG_INFINIBAND_HNS_HIP08=y/g' arch/arm64/configs/plinth-config
 
