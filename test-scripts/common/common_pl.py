@@ -7,7 +7,7 @@ import yaml
 from lib import utils
 
 TEST_DIR_BASE_NAME = "auto-test"
-PLAN_DIR_BASE_NAME = "plans"
+PLAN_DIR_BASE_NAME = "auto-test"
 
 def find_all_test_case_by_search(testDir):
     test_case_yaml_file_list = []
