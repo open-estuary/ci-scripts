@@ -392,7 +392,7 @@ def generate_current_test_report():
     test_result_file = os.path.join(current_test_result_dir, TEST_RESULT_FILE_NAME)
     if os.path.exists(test_result_file):
         os.remove(test_result_file)
-    utils.write_json(TEST_RESULT_FILE_NAME, current_test_result_dir, job_result_dict)
+    #utils.write_json(TEST_RESULT_FILE_NAME, current_test_result_dir, job_result_dict)
 
 
 def count_scope_pass_number(test_suite_scope_dict, path, result):

@@ -41,30 +41,31 @@ def find_all_test_case_by_test_plan(testDir, planDir, plan):
         files = [f for f in files if not re.match('(.*\.sh$)|(.*\.bash$)', f)]
         files = [f for f in files if re.match('(.*' + plan + '\.yaml$)|(.*' + plan + '\.yml$)', f)]
         for fname in files:
-            test_plan_yaml_file_list.append(fname)
+            #test_plan_yaml_file_list.append(fname)
+            test_case_yaml_file_list.append(fname)
 
-    if len(test_plan_yaml_file_list) == 0:
+    if len(test_case_yaml_file_list) == 0:
         print "Warning : no test definition in this plan!"
         return []
 
-    if len(test_plan_yaml_file_list) > 1:
+    if len(test_case_yaml_file_list) > 1:
         print "Warning : more than 1 test plan finded!"
 
-    load_yaml = utils.load_yaml
-    try:
-        plan_yaml = load_yaml(test_plan_yaml_file_list[0])
-    except(yaml.parser.ParserError, yaml.scanner.ScannerError) as e:
-        print "Errors: wrong yaml syntax :\n %s" % e
-        exit(1)
+    #load_yaml = utils.load_yaml
+    #try:
+     #   plan_yaml = load_yaml(test_plan_yaml_file_list[0])
+    #except(yaml.parser.ParserError, yaml.scanner.ScannerError) as e:
+    #    print "Errors: wrong yaml syntax :\n %s" % e
+    #    exit(1)
 
-    test_case_yaml_file_list=[]
+    #test_case_yaml_file_list=[]
 
-    if not ("tests" in plan_yaml and "automated" in plan_yaml["tests"]):
-        print "Errors: wrong yaml syntax :\n %s" % (planDir + "/" + plan + ".yaml")
-        exit(1)
-    for test in plan_yaml["tests"]["automated"]:
+    #if not ("tests" in plan_yaml and "automated" in plan_yaml["tests"]):
+        #print "Errors: wrong yaml syntax :\n %s" % (planDir + "/" + plan + ".yaml")
+        #exit(1)
+    #for test in plan_yaml["tests"]["automated"]:
         # the test path contains auto-test or automated, so need remove the string in testDir
-        test_case_yaml_file_list.append(os.path.dirname(testDir) + "/" + test["path"])
+        #test_case_yaml_file_list.append(os.path.dirname(testDir) + "/" + test["path"])
     return test_case_yaml_file_list
 
 
