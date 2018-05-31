@@ -44,8 +44,8 @@ function parse_params() {
     : ${FAILED_MAIL_CC_LIST:=`python configs/parameter_parser.py -f config_plinth.yaml -s Mail -k FAILED_CC_LIST`}
 
     : ${BUILD_REPORT_DIR:=`python configs/parameter_parser.py -f config_plinth.yaml -s REPORT -k BUILD_DIR`}
-	: ${IMAGE_DIR:=`python configs/parameter_parser.py -f config_plinth.yaml -s Kernel_dev -k Image_dir`}
-	
+    : ${IMAGE_DIR:=`python configs/parameter_parser.py -f config_plinth.yaml -s Kernel_dev -k Image_dir`}
+    : ${JUMP_BUILD:="FALSE"}
     popd    # restore current work directory
 }
 
@@ -85,6 +85,14 @@ EOF
 }
 #PRE_TOP_DIR=$(cd "`dirname $0`" ; pwd)
 parse_params
+
+#check if need to be jump through build action
+if [ x"$JUMP_BUILD" = x"TRUE" ];then
+	echo "jump the build action!"
+	exit 0
+else
+	echo "Continue the build physe!"
+fi
 
 #The CI Build use VM to run build job,
 #so I should used relational path to find the build git 
