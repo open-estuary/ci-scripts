@@ -507,6 +507,8 @@ sed -i 's/CONFIG_SCSI_HISI_SAS_PCI=m/CONFIG_SCSI_HISI_SAS_PCI=y/g' arch/arm64/co
 #HNS VLAN build option
 sed -i 's/CONFIG_VLAN_8021Q=m/CONFIG_VLAN_8021Q=y/g' arch/arm64/configs/defconfig
 
+cat arch/arm64/configs/plinth-config
+
 echo "Begin to build the kernel!"
 #cp ${BUILD_DIR}/output/build.sh .
 #ls -l ${IMAGE_DIR}
