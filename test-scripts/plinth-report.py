@@ -815,12 +815,15 @@ def generate_email_test_report(distro, module_dict, jenkins_build_url):
                     if testsuite['result'] == 'pass':
                        suite_total += 1
                        suite_success += 1
-                    elif item['result'] == 'fail':
+                    elif testsuite['result'] == 'fail':
                        suite_total += 1
                        suite_fail += 1
                     else:
                        suite_total += 1
-                    maintainer=testsuite['unit']
+                    if testsuite['suite'] == "0_Begin-test":
+                       maintainer="Luojiaxing"
+                    else:
+                       maintainer=testsuite['unit']
                 if suite_total == suite_success:
                     suite_result = "pass"
                 else:
