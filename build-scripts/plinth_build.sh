@@ -390,7 +390,9 @@ git branch
 #prepare the checkout environment for CI
 #######
 branchlist=`git branch | awk -F'\n' '{print $1}'`
+git add *
 git stash
+git pull
 #check if test branch is exist or not 
 #and checkout to test_luo 
 if [[ ${branchlist} =~ "test_luo" ]]; then
