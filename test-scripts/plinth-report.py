@@ -734,7 +734,7 @@ def generate_email_test_report(distro, module_dict, jenkins_build_url):
         for item in job_result_dict[job_id]:
             case_dict[item['suite']].append(item)
             if item['suite'] == "0_Begin-test":
-               commit_id = item['units']
+               commit_id = item['unit']
     #try to write summary file
     summary_dir = os.getcwd()
     summary_file = os.path.join(summary_dir, WHOLE_SUMMARY_NAME)

@@ -32,6 +32,7 @@ def find_all_test_case_by_search(testDir):
 
 def find_all_test_case_by_test_plan(testDir, planDir, plan):
     test_plan_yaml_file_list = []
+    test_case_yaml_file_list=[]
     for root, dirs, files in os.walk(planDir):
         # exclude dirs
         dirs[:] = [os.path.join(root, d) for d in dirs]
