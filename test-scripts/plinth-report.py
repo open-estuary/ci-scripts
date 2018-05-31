@@ -728,23 +728,22 @@ def generate_email_test_report(distro, module_dict, jenkins_build_url):
     #inital a no value dict
     for suite in suite_list:
         case_dict[suite] = []
-
+    commit_id=''
     #set all the value in dict
     for job_id in job_result_dict.keys():
         for item in job_result_dict[job_id]:
             case_dict[item['suite']].append(item)
+            if item['suite'] == "0_Begin-test":
+               commit_id = item['units']
     #try to write summary file
     summary_dir = os.getcwd()
     summary_file = os.path.join(summary_dir, WHOLE_SUMMARY_NAME)
     if os.path.exists(summary_file):
         os.remove(summary_file)
-    commit_id=''
+    
     for key in sorted(case_dict.keys()):
         if key == 'lava':
             for item in case_dict[key]:
-                if commit_id == '':
-                   commit_id=item['unit']
-                   print "commit id is %s"%commit_id
                 if item['result'] == 'pass':
                     boot_total += 1
                     boot_success += 1
