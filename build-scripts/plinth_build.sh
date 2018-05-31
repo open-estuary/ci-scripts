@@ -390,7 +390,7 @@ git branch
 #prepare the checkout environment for CI
 #######
 branchlist=`git branch | awk -F'\n' '{print $1}'`
-git add -f *
+#git add -f *
 git stash
 #git pull
 #check if test branch is exist or not 
@@ -529,6 +529,10 @@ bash build.sh ${BOARD_TYPE} > ${BUILD_DIR}/output/build_${BRANCH_NAME}_${DATE}.l
 #ls -l ${IMAGE_DIR}
 
 cat .config
+
+git stash
+
+git checkout test_luo
 
 echo "Finish Build Image"
 
