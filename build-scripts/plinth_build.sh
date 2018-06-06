@@ -359,7 +359,7 @@ echo "The branch to be build is ${verbranch}"
 git remote update origin --prune
 
 #checkout specified branch and build keinel
-git stash
+git stash -u
 
 #git branch | grep ${BRANCH_NAME} 2>&1
 BRANCH_NAME=${verbranch}
@@ -391,7 +391,7 @@ git branch
 #######
 branchlist=`git branch | awk -F'\n' '{print $1}'`
 #git add -f *
-git stash
+git stash -u
 #git pull
 #check if test branch is exist or not 
 #and checkout to test_luo 
@@ -444,7 +444,7 @@ echo "End of prepare checkout environment"
 #End of prepare the checkout enviroment 
 #####
 
-git stash
+git stash -u
 
 #test_luo is base on kernle-dev/master branch . there is no plinth-confg and build.sh
 if [ -f arch/arm64/configs/plinth-config ];then
@@ -530,7 +530,7 @@ bash build.sh ${BOARD_TYPE} > ${BUILD_DIR}/output/build_${BRANCH_NAME}_${DATE}.l
 
 cat .config
 
-git stash
+git stash -u
 
 git checkout test_luo
 
