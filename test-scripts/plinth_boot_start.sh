@@ -414,13 +414,15 @@ function init_env() {
 	
     #Clone the git repo in local for yaml file generate
 	if [ -d ${TEST_CASE_DIR} ];then
-		echo "Find test repo in local document!"
+		echo "Find test repo in local document!delete it and reclone"
+        rm -rf ${WORKSPACE}/local/${tmp}
 	else
 		echo "No found the test repo in local document!git clone"
-		pushd ${WORKSPACE}/local/
-		git clone $TEST_REPO
-		popd
 	fi
+	
+	pushd ${WORKSPACE}/local/
+	git clone $TEST_REPO
+	popd
 	
 	#Update test repo
 	pushd ${TEST_CASE_DIR}
