@@ -776,11 +776,11 @@ def generate_email_test_report(distro, module_dict, jenkins_build_url):
         wfp.write("[\"%s\", " % commit_id)
         # always pass for compile result
         if test_fail == 0:
-            wfp.write("{\"data\": \"%s\", \"color\": \"%s\"}, " %
-                  ("pass", PASS_COLOR))
+            wfp.write("{\"data\": \"%s\", \"color\": \"%s\", \"link\": \"%s\"}, " %
+                  ("pass", PASS_COLOR,"http://120.31.149.194:180" + result_url))
         else:
-            wfp.write("{\"data\": \"%s\", \"color\": \"%s\"}, " %
-                  ("fail", FAIL_COLOR))
+            wfp.write("{\"data\": \"%s\", \"color\": \"%s\", \"link\": \"%s\"}, " %
+                  ("fail", FAIL_COLOR,"http://120.31.149.194:180" + result_url))
         wfp.write("{\"data\": \"%s\", \"color\": \"%s\"}, " %
                   ("Huang daode", PASS_COLOR))
         print type(lava_url)
@@ -835,17 +835,19 @@ def generate_email_test_report(distro, module_dict, jenkins_build_url):
                 str.pop(-1)
                 print str
                 suite_url='/'.join(str)
+                str.pop(-1)
+                result_url='/'.join(str)
                 print suite_url
 
                 # ["Ubuntu", "pass", "100", "50%", "50", "50", "0"],
                 wfp.write("[\"%s\", " % key)
                 # always pass for compile result
                 if suite_result == "pass" :
-                   wfp.write("{\"data\": \"%s\", \"color\": \"%s\"}, " %
-                      (suite_result, PASS_COLOR))
+                   wfp.write("{\"data\": \"%s\", \"color\": \"%s\", \"link\": \"%s\"}, " %
+                      (suite_result, PASS_COLOR,"http://120.31.149.194:180" + result_url))
                 else:
-                   wfp.write("{\"data\": \"%s\", \"color\": \"%s\"}, " %
-                      (suite_result, FAIL_COLOR))
+                   wfp.write("{\"data\": \"%s\", \"color\": \"%s\", \"link\": \"%s\"}, " %
+                      (suite_result, FAIL_COLOR,"http://120.31.149.194:180" + result_url))
                 wfp.write("{\"data\": \"%s\", \"color\": \"%s\"}, " %
                   (maintainer, PASS_COLOR))
                 wfp.write("{\"data\": \"%s\", \"link\": \"%s\"}, " % (repr(suite_total), "http://120.31.149.194:180" + suite_url))
