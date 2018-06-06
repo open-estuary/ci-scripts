@@ -777,10 +777,10 @@ def generate_email_test_report(distro, module_dict, jenkins_build_url):
         # always pass for compile result
         if test_fail == 0:
             wfp.write("{\"data\": \"%s\", \"color\": \"%s\", \"link\": \"%s\"}, " %
-                  ("pass", PASS_COLOR,"http://120.31.149.194:180" + result_url))
+                  ("pass", PASS_COLOR,"http://120.31.149.194:180" + lava_url))
         else:
             wfp.write("{\"data\": \"%s\", \"color\": \"%s\", \"link\": \"%s\"}, " %
-                  ("fail", FAIL_COLOR,"http://120.31.149.194:180" + result_url))
+                  ("fail", FAIL_COLOR,"http://120.31.149.194:180" + lava_url))
         wfp.write("{\"data\": \"%s\", \"color\": \"%s\"}, " %
                   ("Huang daode", PASS_COLOR))
         print type(lava_url)
