@@ -113,7 +113,7 @@ function init_boot_env() {
 
     # 2. 今日构建结果
     WHOLE_SUM='whole_summary.txt'
-
+    LOCATE_SUM='locate_summary.txt'
     # 3. 测试数据统计
     SCOPE_SUMMARY_NAME='scope_summary.txt'
 
@@ -528,7 +528,7 @@ function generate_success_mail(){
 		
 		#whole_sum.txt record the daily test report for 今日构建结果
 		cp ${GIT_DESCRIBE}/${RESULTS_DIR}/${DISTRO}/${WHOLE_SUM} mail/${DISTRO}/whole_sum.txt
-		
+		cp ${GIT_DESCRIBE}/${RESULTS_DIR}/${DISTRO}/$LOCATE_SUM mail/${DISTRO}/$LOCATE_SUM
 		#detail_sum.txt record the result of all test case have run this time
 		cp ${GIT_DESCRIBE}/${RESULTS_DIR}/${DETAILS_SUM} mail/detail_sum.txt
 	done
@@ -602,9 +602,9 @@ function generate_success_mail(){
     LOCATE_RESULT_VERSION="${PLINTH_GITADDR} ${PLINTH_BRANCH_NAME}"
     LOCATE_RESULT_DATA=""
     for DISTRO in $SHELL_DISTRO; do
-        LOCATE_RESULT_DATA=$(< mail/${DISTRO}/locate_sum.txt)",${LOCATE_RESULT_DATA}"
+        LOCATE_RESULT_DATA=$(< mail/${DISTRO}/$LOCATE_SUM)",${LOCATE_RESULT_DATA}"
     done
-    LOCATE_RESULT_DATA="${LOCATE_RESULT_DATA%,}"
+    #LOCATE_RESULT_DATA="${LOCATE_RESULT_DATA%,}"
     export_vars LOCATE_RESULT_VERSION LOCATE_RESULT_DATA
     envsubst < ./html/6-issue-locate-table.json > ./html/6-issue-locate-table.json.tmp
     python ./html/html-table.py -f ./html/6-issue-locate-table.json.tmp >> mail/MAIL_CONTENT.txt

@@ -1,8 +1,12 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-from code import test
+import code as func
 
-test()
+func.generate_test_report(123)
+
+#func.generate_email_test_report()
+
+func.generate_email_locate_report()
 
 

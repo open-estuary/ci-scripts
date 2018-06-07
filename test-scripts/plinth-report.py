@@ -723,7 +723,7 @@ def generate_email_locate_report(distro, module_dict, jenkins_build_url):
     for job_id in job_result_dict.keys():
         print job_id
         for item in job_result_dict[job_id]:
-            print item
+            #print item
             if suite_list.count(item['suite']) == 0:
                 suite_count += 1
                 suite_list.append(item['suite'])
@@ -812,15 +812,16 @@ def generate_email_locate_report(distro, module_dict, jenkins_build_url):
                     result_url='/'.join(str)
                     print result_url
                      
-                    if testsuite['result'] == 'pass':
-                       wfp.write("[\"%s\", " % key)
-                       wfp.write("\"%s\", " % testsuite['name'])
-                       wfp.write("\"%s\", " % maintainer)
-                       wfp.write("{\"data\": \"%s\", \"color\": \"%s\", \"link\": \"%s\"}, " %
-                             (locate_list[testsuite['name']] , FAIL_COLOR,"http://120.31.149.194:180" + result_url))
-                       #wfp.write("\"%s\", " % locate_list[testsuite['name']])
-                       wfp.write("],\n")
-                    print wfp
+                    for locate_key in sorted(locate_list.keys()):
+                       if testsuite['name'] == locate_key:
+                           wfp.write("[\"%s\", " % key)
+                           wfp.write("\"%s\", " % testsuite['name'])
+                           wfp.write("\"%s\", " % maintainer)
+                           wfp.write("{\"data\": \"%s\", \"color\": \"%s\", \"link\": \"%s\"}, " %
+                                (locate_list[testsuite['name']] , FAIL_COLOR,"http://120.31.149.194:180" + result_url))
+                           #wfp.write("\"%s\", " % locate_list[testsuite['name']])
+                           wfp.write("],\n")
+                           print wfp
     if os.path.getsize(summary_file) == 0:
         with open(summary_file, 'w') as wfp:
                wfp.write("[\"%s\", " % "None")
@@ -830,6 +831,7 @@ def generate_email_locate_report(distro, module_dict, jenkins_build_url):
                wfp.write("],\n")
                print wfp
     print "--------------now end get testjob issue locate --------------------------"
+
 def generate_email_test_report(distro, module_dict, jenkins_build_url):
     print "--------------now begin get testjob: result ------------------------------"
 
@@ -866,7 +868,9 @@ def generate_email_test_report(distro, module_dict, jenkins_build_url):
                commit_id = item['unit']
     #try to write summary file
     summary_dir = os.getcwd()
+    
     summary_file = os.path.join(summary_dir, WHOLE_SUMMARY_NAME)
+    print "The path of summary file is %s" % summary_dir
     if os.path.exists(summary_file):
         os.remove(summary_file)
     
@@ -895,12 +899,12 @@ def generate_email_test_report(distro, module_dict, jenkins_build_url):
     with open(summary_file, 'w') as wfp:
         #get the url of test
         str=case_dict['lava'][0]['url'].split('/')
-        print str
+        #print str
         str.pop(-1)
         str.pop(-1)
-        print str
+        #print str
         lava_url='/'.join(str)
-        print lava_url
+        #print lava_url
         # ["Ubuntu", "pass", "100", "50%", "50", "50", "0"],
         wfp.write("[\"%s\", " % commit_id)
         # always pass for compile result
@@ -930,7 +934,8 @@ def generate_email_test_report(distro, module_dict, jenkins_build_url):
         wfp.write("{\"data\": \"%s\", \"color\": \"%s\"}" %
                   (repr(test_total - test_success - test_fail), BLOCK_COLOR))
         wfp.write("],\n")
-        print wfp
+        print "End with the first line!"
+        #print wfp
         print case_dict
         #cycle show the result of each test
         for key in sorted(case_dict.keys()):
