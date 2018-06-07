@@ -52,7 +52,7 @@ def find_all_test_case_by_test_plan(testDir, planDir, plan):
         # exclude/include files
         files = [os.path.join(root, f) for f in files]
         files = [f for f in files if not re.match('(.*\.sh$)|(.*\.bash$)', f)]
-        files = [f for f in files if re.match('(.*' + end + '\.yaml$)|(.*' + end + '\.yml$)', f)]
+        files = [f for f in files if re.match('(.*' + 'end' + '\.yaml$)|(.*' + 'end' + '\.yml$)', f)]
         for fname in files:
             #test_plan_yaml_file_list.append(fname)
             test_case_yaml_file_list.append(fname)
