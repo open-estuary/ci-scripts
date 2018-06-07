@@ -769,7 +769,7 @@ def generate_email_locate_report(distro, module_dict, jenkins_build_url):
     with open("/fileserver/plinth/%s/result.txt"%job_id, 'r') as resultf:
         for line in resultf.readlines():
             #linestr = line.strip()
-            linestrlist = line.split("\t")
+            linestrlist = line.split("#")
             linestrlist[0]=linestrlist[0].strip()
             print linestrlist
             linelist=map(str,linestrlist)
