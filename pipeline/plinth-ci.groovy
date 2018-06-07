@@ -115,7 +115,7 @@ node ('ci-compile'){
 
     if (build_result == 0) {
         echo "build success"
-        functions.send_mail()
+        //functions.send_mail()
     } else {
         echo "build failed"
         //functions.send_mail()
