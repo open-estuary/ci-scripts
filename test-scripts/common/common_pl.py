@@ -45,6 +45,20 @@ def find_all_test_case_by_test_plan(testDir, planDir, plan):
             #test_plan_yaml_file_list.append(fname)
             test_case_yaml_file_list.append(fname)
 
+
+    for root, dirs, files in os.walk(planDir):
+        # exclude dirs
+        dirs[:] = [os.path.join(root, d) for d in dirs]
+        dirs[:] = [d for d in dirs if not re.match('.*\.git$', d)]
+        # exclude/include files
+        files = [os.path.join(root, f) for f in files]
+        files = [f for f in files if not re.match('(.*\.sh$)|(.*\.bash$)', f)]
+        files = [f for f in files if re.match('(.*' + 'end' + '\.yaml$)|(.*' + 'end' + '\.yml$)', f)]
+        for fname in files:
+            #test_plan_yaml_file_list.append(fname)
+            test_case_yaml_file_list.append(fname)
+
+
     if len(test_case_yaml_file_list) == 0:
         print "Warning : no test definition in this plan!"
         return []

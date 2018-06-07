@@ -113,7 +113,7 @@ function init_boot_env() {
 
     # 2. 今日构建结果
     WHOLE_SUM='whole_summary.txt'
-
+    LOCATE_SUM='locate_summary.txt'
     # 3. 测试数据统计
     SCOPE_SUMMARY_NAME='scope_summary.txt'
 
@@ -210,6 +210,7 @@ function run_and_move_result() {
 
     [ ! -d ${dest_dir} ] && mkdir -p ${dest_dir}
 
+    [ -e ${LOCATE_SUM} ] && mv ${LOCATE_SUM} ${dest_dir}/
     [ -e ${WHOLE_SUM} ] && mv ${WHOLE_SUM} ${dest_dir}/
     [ -e ${DETAILS_SUM} ] && mv ${DETAILS_SUM} ${dest_dir}/
 
@@ -414,13 +415,15 @@ function init_env() {
 	
     #Clone the git repo in local for yaml file generate
 	if [ -d ${TEST_CASE_DIR} ];then
-		echo "Find test repo in local document!"
+		echo "Find test repo in local document!delete it and reclone"
+        rm -rf ${WORKSPACE}/local/${tmp}
 	else
 		echo "No found the test repo in local document!git clone"
-		pushd ${WORKSPACE}/local/
-		git clone $TEST_REPO
-		popd
 	fi
+	
+	pushd ${WORKSPACE}/local/
+	git clone $TEST_REPO
+	popd
 	
 	#Update test repo
 	pushd ${TEST_CASE_DIR}
@@ -526,7 +529,7 @@ function generate_success_mail(){
 		
 		#whole_sum.txt record the daily test report for 今日构建结果
 		cp ${GIT_DESCRIBE}/${RESULTS_DIR}/${DISTRO}/${WHOLE_SUM} mail/${DISTRO}/whole_sum.txt
-		
+		cp ${GIT_DESCRIBE}/${RESULTS_DIR}/${DISTRO}/$LOCATE_SUM mail/${DISTRO}/$LOCATE_SUM
 		#detail_sum.txt record the result of all test case have run this time
 		cp ${GIT_DESCRIBE}/${RESULTS_DIR}/${DETAILS_SUM} mail/detail_sum.txt
 	done
@@ -596,6 +599,24 @@ function generate_success_mail(){
     rm -f ./html/2-job-result-table.json.tmp
     echo "<br><br>" >> mail/MAIL_CONTENT.txt
 
+    echo "<b>3. 问题定位</b><br>" >> mail/MAIL_CONTENT.txt
+    LOCATE_RESULT_VERSION="${PLINTH_GITADDR} ${PLINTH_BRANCH_NAME}"
+    LOCATE_RESULT_DATA=""
+    for DISTRO in $SHELL_DISTRO; do
+        LOCATE_RESULT_DATA=$(< mail/${DISTRO}/$LOCATE_SUM)
+    done
+    #print LOCATE_RESULT_DATA
+    LOCATE_RESULT_DATA=${LOCATE_RESULT_DATA%?}
+    #LOCATE_RESULT_DATA.replace('\t', '\\t')
+    #LOCATE_RESULT_DATA=${LOCATE_RESULT_DATA%?}
+    export_vars LOCATE_RESULT_VERSION LOCATE_RESULT_DATA
+    envsubst < ./html/6-issue-locate-table.json > ./html/6-issue-locate-table.json.tmp
+    python ./html/html-table.py -f ./html/6-issue-locate-table.json.tmp >> mail/MAIL_CONTENT.txt
+    echo "<br>" >> mail/MAIL_CONTENT.txt
+    #echo "Test Result Address: http://120.31.149.194:180/results/${JOB_ID}<br>" >> mail/MAIL_CONTENT.txt
+    rm -f ./html/6-issue-locate-table.json.tmp
+    echo "<br><br>" >> mail/MAIL_CONTENT.txt
+
   # generate distro html
   for DISTRO in $SHELL_DISTRO; do
       detail_html_generate "${GIT_DESCRIBE}/${RESULTS_DIR}/${DETAILS_SUM}" "${WORKSPACE}/html/TestReport" "${DISTRO}"
@@ -632,6 +653,10 @@ function generate_success_mail(){
   cp mail/MAIL_SUBJECT.txt /home/luojiaxing/mail/MAIL_SUBJECT.txt
   
   cp ${WORKSPACE}/MAIL_CONTENT.txt ${WORKSPACE}/html/DailyReport.html
+  
+  if [ -d /fileserver/plinth/${JOB_ID} ];then
+     rm -rf /fileserver/plinth/${JOB_ID}
+  fi
   
   rm -rf mail
   echo "######################################## generate mail success ########################################"
