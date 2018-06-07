@@ -598,6 +598,21 @@ function generate_success_mail(){
     rm -f ./html/2-job-result-table.json.tmp
     echo "<br><br>" >> mail/MAIL_CONTENT.txt
 
+    echo "<b>3. 问题定位</b><br>" >> mail/MAIL_CONTENT.txt
+    LOCATE_RESULT_VERSION="${PLINTH_GITADDR} ${PLINTH_BRANCH_NAME}"
+    LOCATE_RESULT_DATA=""
+    for DISTRO in $SHELL_DISTRO; do
+        LOCATE_RESULT_DATA=$(< mail/${DISTRO}/locate_sum.txt)",${LOCATE_RESULT_DATA}"
+    done
+    LOCATE_RESULT_DATA="${LOCATE_RESULT_DATA%,}"
+    export_vars LOCATE_RESULT_VERSION LOCATE_RESULT_DATA
+    envsubst < ./html/6-issue-locate-table.json > ./html/6-issue-locate-table.json.tmp
+    python ./html/html-table.py -f ./html/6-issue-locate-table.json.tmp >> mail/MAIL_CONTENT.txt
+    echo "<br>" >> mail/MAIL_CONTENT.txt
+    #echo "Test Result Address: http://120.31.149.194:180/results/${JOB_ID}<br>" >> mail/MAIL_CONTENT.txt
+    rm -f ./html/6-issue-locate-table.json.tmp
+    echo "<br><br>" >> mail/MAIL_CONTENT.txt
+
   # generate distro html
   for DISTRO in $SHELL_DISTRO; do
       detail_html_generate "${GIT_DESCRIBE}/${RESULTS_DIR}/${DETAILS_SUM}" "${WORKSPACE}/html/TestReport" "${DISTRO}"
