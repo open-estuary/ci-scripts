@@ -607,7 +607,7 @@ function generate_success_mail(){
     done
     #print LOCATE_RESULT_DATA
     LOCATE_RESULT_DATA=${LOCATE_RESULT_DATA%?}
-    LOCATE_RESULT_DATA.replace('\t', '\\t')
+    #LOCATE_RESULT_DATA.replace('\t', '\\t')
     #LOCATE_RESULT_DATA=${LOCATE_RESULT_DATA%?}
     export_vars LOCATE_RESULT_VERSION LOCATE_RESULT_DATA
     envsubst < ./html/6-issue-locate-table.json > ./html/6-issue-locate-table.json.tmp
