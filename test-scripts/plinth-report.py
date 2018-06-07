@@ -705,7 +705,9 @@ def generate_email_locate_report(distro, module_dict, jenkins_build_url):
     print "--------------now begin get testjob: result ------------------------------"
 
     suite_list = []  #all test suite list
-    locate_list = []
+    linestrlist = []
+    linelist = []
+    locate_list = {}
     case_dict = {}  #testcast dict value like 'smoke-test':[test-case1,test-case2,test-case3]
     boot_total = 0
     boot_success = 0
@@ -763,15 +765,17 @@ def generate_email_locate_report(distro, module_dict, jenkins_build_url):
                     test_fail += 1
                 else:
                     test_total += 1
-    with open(/fileserver/plinth/job_id/result.txt, 'r') as resultf:
+
+    with open("/home/luojiaxing/result.txt", 'r') as resultf:
         for line in resultf.readlines():
             #linestr = line.strip()
-            linestrlist = linestr.splint("\t")
+            linestrlist = line.split("\t")
             linestrlist[0]=linestrlist[0].strip()
+            print linestrlist
             linelist=map(str,linestrlist)
-            locate_list[linelist[0]]=linelist[1]
-            print "New issue locate item with key %s , locate info is %s" %{ linelist[0] , locate_list[linelist[0]] }
-
+            locate_list[linelist[0]]=linelist[1].strip("\n")
+            print "New issue locate item with key %s , locate info is %s" %( linelist[0] , locate_list[linelist[0]] )
+    #os.rmdir(r'/fileserver/plinth/job_id')
     with open(summary_file, 'w') as wfp:
         #cycle show the result of each test
         for key in sorted(case_dict.keys()):
