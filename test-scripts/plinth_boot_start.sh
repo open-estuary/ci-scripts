@@ -603,9 +603,9 @@ function generate_success_mail(){
     LOCATE_RESULT_VERSION="${PLINTH_GITADDR} ${PLINTH_BRANCH_NAME}"
     LOCATE_RESULT_DATA=""
     for DISTRO in $SHELL_DISTRO; do
-        LOCATE_RESULT_DATA=$(< mail/${DISTRO}/$LOCATE_SUM)",${LOCATE_RESULT_DATA}"
+        LOCATE_RESULT_DATA=$(< mail/${DISTRO}/$LOCATE_SUM)
     done
-    print LOCATE_RESULT_DATA
+    #print LOCATE_RESULT_DATA
     #LOCATE_RESULT_DATA="${LOCATE_RESULT_DATA%,}"
     export_vars LOCATE_RESULT_VERSION LOCATE_RESULT_DATA
     envsubst < ./html/6-issue-locate-table.json > ./html/6-issue-locate-table.json.tmp
