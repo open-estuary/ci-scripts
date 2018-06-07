@@ -605,6 +605,7 @@ function generate_success_mail(){
     for DISTRO in $SHELL_DISTRO; do
         LOCATE_RESULT_DATA=$(< mail/${DISTRO}/$LOCATE_SUM)",${LOCATE_RESULT_DATA}"
     done
+    print LOCATE_RESULT_DATA
     #LOCATE_RESULT_DATA="${LOCATE_RESULT_DATA%,}"
     export_vars LOCATE_RESULT_VERSION LOCATE_RESULT_DATA
     envsubst < ./html/6-issue-locate-table.json > ./html/6-issue-locate-table.json.tmp

@@ -7,8 +7,7 @@
     "Issue locate"
   ],
   "Row":[
-    "${LOCATE_RESULT_VERSION}",[
+    "${LOCATE_RESULT_VERSION}",
       ${LOCATE_RESULT_DATA}
-    ]
   ]
 }
