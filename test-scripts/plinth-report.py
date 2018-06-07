@@ -810,21 +810,24 @@ def generate_email_locate_report(distro, module_dict, jenkins_build_url):
                     suite_url='/'.join(str)
                     str.pop(-1)
                     result_url='/'.join(str)
-                    print suite_url
+                    print result_url
                      
                     if testsuite['result'] == 'fail':
                        wfp.write("[\"%s\", " % key)
-                       wfp.write("[\"%s\", " % testsuite['name'])
-                       wfp.write("[\"%s\", " % maintainer)
-                       wfp.write("[\"%s\", " % locate_list[testsuite['name']])
-
+                       wfp.write("\"%s\", " % testsuite['name'])
+                       wfp.write("\"%s\", " % maintainer)
+                       wfp.write("{\"data\": \"%s\", \"color\": \"%s\", \"link\": \"%s\"}, " %
+                             (locate_list[testsuite['name']] , FAIL_COLOR,"http://120.31.149.194:180" + result_url))
+                       #wfp.write("\"%s\", " % locate_list[testsuite['name']])
+                       wfp.write("],\n")
                     print wfp
     if os.path.getsize(summary_file) == 0:
         with open(summary_file, 'w') as wfp:
                wfp.write("[\"%s\", " % "None")
-               wfp.write("[\"%s\", " % "None")
-               wfp.write("[\"%s\", " % "None")
-               wfp.write("[\"%s\", " % "None")
+               wfp.write("\"%s\", " % "None")
+               wfp.write("\"%s\", " % "None")
+               wfp.write("\"%s\", " % "None")
+               wfp.write("],\n")
     print "--------------now end get testjob issue locate --------------------------"
 def generate_email_test_report(distro, module_dict, jenkins_build_url):
     print "--------------now begin get testjob: result ------------------------------"
