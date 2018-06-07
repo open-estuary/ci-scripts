@@ -210,6 +210,7 @@ function run_and_move_result() {
 
     [ ! -d ${dest_dir} ] && mkdir -p ${dest_dir}
 
+    [ -e ${LOCATE_SUM} ] && mv ${LOCATE_SUM} ${dest_dir}/
     [ -e ${WHOLE_SUM} ] && mv ${WHOLE_SUM} ${dest_dir}/
     [ -e ${DETAILS_SUM} ] && mv ${DETAILS_SUM} ${dest_dir}/
 
