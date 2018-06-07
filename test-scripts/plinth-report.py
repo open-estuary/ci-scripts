@@ -766,7 +766,7 @@ def generate_email_locate_report(distro, module_dict, jenkins_build_url):
                 else:
                     test_total += 1
 
-    with open("/home/luojiaxing/result.txt", 'r') as resultf:
+    with open("/fileserver/plinth/%s/result.txt"%job_id, 'r') as resultf:
         for line in resultf.readlines():
             #linestr = line.strip()
             linestrlist = line.split("\t")
@@ -775,7 +775,7 @@ def generate_email_locate_report(distro, module_dict, jenkins_build_url):
             linelist=map(str,linestrlist)
             locate_list[linelist[0]]=linelist[1].strip("\n")
             print "New issue locate item with key %s , locate info is %s" %( linelist[0] , locate_list[linelist[0]] )
-    #os.rmdir(r'/fileserver/plinth/job_id')
+    #os.rmdir(r"/fileserver/plinth/%s"%job_id)
     with open(summary_file, 'w') as wfp:
         #cycle show the result of each test
         for key in sorted(case_dict.keys()):
