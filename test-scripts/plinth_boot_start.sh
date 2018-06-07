@@ -606,6 +606,7 @@ function generate_success_mail(){
         LOCATE_RESULT_DATA=$(< mail/${DISTRO}/$LOCATE_SUM)
     done
     #print LOCATE_RESULT_DATA
+    
     LOCATE_RESULT_DATA=${LOCATE_RESULT_DATA%?}
     LOCATE_RESULT_DATA=${LOCATE_RESULT_DATA%?}
     export_vars LOCATE_RESULT_VERSION LOCATE_RESULT_DATA
