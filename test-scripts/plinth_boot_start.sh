@@ -650,6 +650,10 @@ function generate_success_mail(){
   
   cp ${WORKSPACE}/MAIL_CONTENT.txt ${WORKSPACE}/html/DailyReport.html
   
+  if [ -d /fileserver/plinth/${JOB_ID} ];then
+     rm -rf /fileserver/plinth/${JOB_ID}
+  fi
+  
   rm -rf mail
   echo "######################################## generate mail success ########################################"
 }
