@@ -606,9 +606,8 @@ function generate_success_mail(){
         LOCATE_RESULT_DATA=$(< mail/${DISTRO}/$LOCATE_SUM)
     done
     #print LOCATE_RESULT_DATA
-    
     LOCATE_RESULT_DATA=${LOCATE_RESULT_DATA%?}
-    LOCATE_RESULT_DATA=${LOCATE_RESULT_DATA%?}
+    #LOCATE_RESULT_DATA=${LOCATE_RESULT_DATA%?}
     export_vars LOCATE_RESULT_VERSION LOCATE_RESULT_DATA
     envsubst < ./html/6-issue-locate-table.json > ./html/6-issue-locate-table.json.tmp
     python ./html/html-table.py -f ./html/6-issue-locate-table.json.tmp >> mail/MAIL_CONTENT.txt
