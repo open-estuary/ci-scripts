@@ -39,6 +39,7 @@ BLOCK_COLOR = "orange"
 
 # for test report
 WHOLE_SUMMARY_NAME = 'whole_summary.txt'
+LOCATE_SUMMARY_NAME = 'locate_summary.txt'
 DETAILS_SUMMARY_NAME = 'details_summary.txt'
 
 # TODO: add scope data pass result
@@ -700,7 +701,122 @@ def boot_report(config):
                              result['job_name'],
                              result['result']))
 
+def generate_email_locate_report(distro, module_dict, jenkins_build_url):
+    print "--------------now begin get testjob: result ------------------------------"
 
+    suite_list = []  #all test suite list
+    locate_list = []
+    case_dict = {}  #testcast dict value like 'smoke-test':[test-case1,test-case2,test-case3]
+    boot_total = 0
+    boot_success = 0
+    boot_fail = 0
+    test_total = 0
+    test_success = 0
+    test_fail = 0
+    suite_total = 0
+    suite_success = 0
+    suite_fail = 0
+    suite_count = 0
+    #get all the test suite list from get_testjob_results_yaml
+    for job_id in job_result_dict.keys():
+        print job_id
+        for item in job_result_dict[job_id]:
+            print item
+            if suite_list.count(item['suite']) == 0:
+                suite_count += 1
+                suite_list.append(item['suite'])
+
+    #inital a no value dict
+    for suite in suite_list:
+        case_dict[suite] = []
+    commit_id=''
+    #set all the value in dict
+    for job_id in job_result_dict.keys():
+        for item in job_result_dict[job_id]:
+            case_dict[item['suite']].append(item)
+            if item['suite'] == "0_Begin-test":
+               commit_id = item['unit']
+    #try to write summary file
+    summary_dir = os.getcwd()
+    summary_file = os.path.join(summary_dir, LOCATE_SUMMARY_NAME)
+    if os.path.exists(summary_file):
+        os.remove(summary_file)
+    
+    for key in sorted(case_dict.keys()):
+        if key == 'lava':
+            for item in case_dict[key]:
+                if item['result'] == 'pass':
+                    boot_total += 1
+                    boot_success += 1
+                elif item['result'] == 'fail':
+                    boot_total += 1
+                    boot_fail += 1
+                else:
+                    boot_total += 1
+        else:
+            for item in case_dict[key]:
+                if item['result'] == 'pass':
+                    test_total += 1
+                    test_success += 1
+                elif item['result'] == 'fail':
+                    test_total += 1
+                    test_fail += 1
+                else:
+                    test_total += 1
+    with open(/fileserver/plinth/job_id/result.txt, 'r') as resultf:
+        for line in resultf.readlines():
+            #linestr = line.strip()
+            linestrlist = linestr.splint("\t")
+            linestrlist[0]=linestrlist[0].strip()
+            linelist=map(str,linestrlist)
+            locate_list[linelist[0]]=linelist[1]
+            print "New issue locate item with key %s , locate info is %s" %{ linelist[0] , locate_list[linelist[0]] }
+
+    with open(summary_file, 'w') as wfp:
+        #cycle show the result of each test
+        for key in sorted(case_dict.keys()):
+            if key == 'lava':
+                print "No add LAVA result at mial result txt!"
+            else:
+                suite_count -= 1
+                suite_total = 0
+                suite_success = 0
+                suite_fail = 0
+                for testsuite in case_dict[key]:
+                    #get the result count in each testsuit
+                    if testsuite['result'] == 'pass':
+                       suite_total += 1
+                       suite_success += 1
+                    elif testsuite['result'] == 'fail':
+                       suite_total += 1
+                       suite_fail += 1
+                    else:
+                       suite_total += 1
+                    if testsuite['suite'] == "0_Begin-test":
+                       maintainer="Luojiaxing"
+                    else:
+                       maintainer=testsuite['unit']
+                    
+                
+                    #get the url of test suite
+                    str=testsuite['url'].split('/')
+                    print str
+                    str.pop(-1)
+                    print str
+                    suite_url='/'.join(str)
+                    str.pop(-1)
+                    result_url='/'.join(str)
+                    print suite_url
+                     
+                    if testsuite['result'] == 'fail':
+                       wfp.write("[\"%s\", " % key)
+                       wfp.write("[\"%s\", " % testsuite['name'])
+                       wfp.write("[\"%s\", " % maintainer)
+                       wfp.write("[\"%s\", " % locate_list[testsuite['name']])
+
+                    print wfp
+
+    print "--------------now end get testjob issue locate --------------------------"
 def generate_email_test_report(distro, module_dict, jenkins_build_url):
     print "--------------now begin get testjob: result ------------------------------"
 
@@ -1117,6 +1233,7 @@ def main(args):
         generate_scope_test_report(TEST_CASE_DEFINITION_DIR, module_dict, jenkins_build_url, distro)
         generate_current_test_report()
         generate_email_test_report(distro, module_dict, jenkins_build_url)
+        generate_email_locate_report(distro, module_dict, jenkins_build_url)
         generate_history_test_report()
 
     exit(0)
