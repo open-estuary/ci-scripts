@@ -812,7 +812,7 @@ def generate_email_locate_report(distro, module_dict, jenkins_build_url):
                     result_url='/'.join(str)
                     print result_url
                      
-                    if testsuite['result'] == 'fail':
+                    if testsuite['result'] == 'pass':
                        wfp.write("[\"%s\", " % key)
                        wfp.write("\"%s\", " % testsuite['name'])
                        wfp.write("\"%s\", " % maintainer)
@@ -828,6 +828,7 @@ def generate_email_locate_report(distro, module_dict, jenkins_build_url):
                wfp.write("\"%s\", " % "None")
                wfp.write("\"%s\", " % "None")
                wfp.write("],\n")
+               print wfp
     print "--------------now end get testjob issue locate --------------------------"
 def generate_email_test_report(distro, module_dict, jenkins_build_url):
     print "--------------now begin get testjob: result ------------------------------"
@@ -848,7 +849,7 @@ def generate_email_test_report(distro, module_dict, jenkins_build_url):
     for job_id in job_result_dict.keys():
         print job_id
         for item in job_result_dict[job_id]:
-            print item
+            #print item
             if suite_list.count(item['suite']) == 0:
                 suite_count += 1
                 suite_list.append(item['suite'])
@@ -929,11 +930,14 @@ def generate_email_test_report(distro, module_dict, jenkins_build_url):
         wfp.write("{\"data\": \"%s\", \"color\": \"%s\"}" %
                   (repr(test_total - test_success - test_fail), BLOCK_COLOR))
         wfp.write("],\n")
+        print wfp
+        print case_dict
         #cycle show the result of each test
         for key in sorted(case_dict.keys()):
             if key == 'lava':
                 print "No add LAVA result at mial result txt!"
             else:
+                print "begin to get the testcase txt!"
                 suite_count -= 1
                 suite_total = 0
                 suite_success = 0
