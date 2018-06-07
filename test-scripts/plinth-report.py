@@ -814,13 +814,13 @@ def generate_email_locate_report(distro, module_dict, jenkins_build_url):
                      
                     for locate_key in sorted(locate_list.keys()):
                        if testsuite['name'] == locate_key:
-                           wfp.write("\"%s\", " % key)
+                           wfp.write("[\"%s\", " % key)
                            wfp.write("\"%s\", " % testsuite['name'])
                            wfp.write("\"%s\", " % maintainer)
-                           wfp.write("{\"data\": \"%s\", \"color\": \"%s\", \"link\": \"%s\"}, " %
+                           wfp.write("{\"data\": \"%s\", \"color\": \"%s\", \"link\": \"%s\"} " %
                                 (locate_list[testsuite['name']] , FAIL_COLOR,"http://120.31.149.194:180" + result_url))
                            #wfp.write("\"%s\", " % locate_list[testsuite['name']])
-                           wfp.write(",\n")
+                           wfp.write("],\n")
                            print wfp
     if os.path.getsize(summary_file) == 0:
         with open(summary_file, 'w') as wfp:
