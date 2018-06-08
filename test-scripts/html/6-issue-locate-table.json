@@ -1,11 +1,10 @@
 {
   "Column":[
-    "项目",[
-       "Test",
-       "Case",
-       "Maintainer",
-       "Issue locate"
-    ]
+    "项目",
+    "Test",
+    "Case",
+    "Maintainer",
+    "Issue locate"
   ],
   "Row":[
     "${LOCATE_RESULT_VERSION}",[
