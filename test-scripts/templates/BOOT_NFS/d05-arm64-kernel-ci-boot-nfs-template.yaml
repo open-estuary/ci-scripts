@@ -18,9 +18,9 @@ metadata:
 
 timeouts:
   job:
-    minutes: 140
+    minutes: 360
   action:
-    minutes: 70
+    minutes: 100
   connection:
     minutes: 10
 actions:
@@ -36,7 +36,7 @@ actions:
       os: {distro}
 - boot:
     timeout:
-      minutes: 15
+      minutes: 20
     method: grub
     commands: nfs
     auto_login:
@@ -50,6 +50,6 @@ actions:
     - 'root@debian:~#'
 - test:
     timeout:
-      minutes: 140
+      minutes: 360
     definitions:
 {test_definitions}
