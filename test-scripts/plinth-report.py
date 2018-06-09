@@ -827,7 +827,7 @@ def generate_email_locate_report(distro, module_dict, jenkins_build_url):
                wfp.write("[\"%s\", " % "None")
                wfp.write("\"%s\", " % "None")
                wfp.write("\"%s\", " % "None")
-               wfp.write("\"%s\", " % "None")
+               wfp.write("\"%s\" " % "None")
                wfp.write("],\n")
                print wfp
     print "--------------now end get testjob issue locate --------------------------"
@@ -851,7 +851,7 @@ def generate_email_test_report(distro, module_dict, jenkins_build_url):
     for job_id in job_result_dict.keys():
         print job_id
         for item in job_result_dict[job_id]:
-
+            #print item
             if suite_list.count(item['suite']) == 0:
                 suite_count += 1
                 suite_list.append(item['suite'])
@@ -942,9 +942,7 @@ def generate_email_test_report(distro, module_dict, jenkins_build_url):
             if key == 'lava':
                 print "No add LAVA result at mial result txt!"
             else:
-
                 print "begin to get the testcase txt!"
-
                 suite_count -= 1
                 suite_total = 0
                 suite_success = 0
