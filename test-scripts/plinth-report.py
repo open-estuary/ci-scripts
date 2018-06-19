@@ -719,6 +719,7 @@ def generate_email_locate_report(distro, module_dict, jenkins_build_url):
     suite_success = 0
     suite_fail = 0
     suite_count = 0
+ 
     #get all the test suite list from get_testjob_results_yaml
     for job_id in job_result_dict.keys():
         print job_id
@@ -810,6 +811,7 @@ def generate_email_locate_report(distro, module_dict, jenkins_build_url):
                     suite_url='/'.join(str)
                     str.pop(-1)
                     result_url='/'.join(str)
+                    url_job_id=str.pop(-1)
                     print result_url
                      
                     for locate_key in sorted(locate_list.keys()):
@@ -818,7 +820,7 @@ def generate_email_locate_report(distro, module_dict, jenkins_build_url):
                            wfp.write("\"%s\", " % testsuite['name'])
                            wfp.write("\"%s\", " % maintainer)
                            wfp.write("{\"data\": \"%s\", \"color\": \"%s\", \"link\": \"%s\"} " %
-                                (locate_list[testsuite['name']] , FAIL_COLOR,"http://120.31.149.194:180" + result_url))
+                                (locate_list[testsuite['name']] , FAIL_COLOR,"http://120.31.149.194:180/scheduler/job/" + url_job_id))
                            #wfp.write("\"%s\", " % locate_list[testsuite['name']])
                            wfp.write("],\n")
                            print wfp
