@@ -111,7 +111,9 @@ envok=0
 
 #get the name of git,the name is used to find the dir
 #tmp=`echo ${KERNEL_GITADDR} | awk -F'.' '{print $2}' | awk -F'/' '{print $NF}'`
-tmp=`echo ${KERNEL_GITADDR} | awk -F'.' '{print $2}' | awk -F'/' '{print $NF}'`
+tmp=`echo ${KERNEL_GITADDR%.*}`
+tmp=`echo ${tmp} | awk -F'/' '{print $NF}'`
+#tmp=`echo ${KERNEL_GITADDR} | awk -F'.' '{print $2}' | awk -F'/' '{print $NF}'`
 echo "The name of kernel repo is "$tmp
 
 #checkout if build repo is exit or not!
@@ -161,7 +163,6 @@ cd ${BUILD_DIR}/${tmp}
 
 #cp ${BUILD_DIR}/fetchbranch.sh .
 
-#./fetchbranch.sh
 o="url = https://github.com/hisilicon/kernel-dev.git"
 #a="url = https://Luojiaxing1991:ljxfyjh1321@github.com/hisilicon/kernel-dev.git"
 tmp_url=`cat .git/config | grep 'github.com/'`
