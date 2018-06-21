@@ -815,6 +815,8 @@ def generate_email_locate_report(distro, module_dict, jenkins_build_url):
                     print result_url
                      
                     for locate_key in sorted(locate_list.keys()):
+                       print testsuite['name']
+                       print locate_key
                        if testsuite['name'] == locate_key:
                            wfp.write("[\"%s\", " % key)
                            wfp.write("\"%s\", " % testsuite['name'])
