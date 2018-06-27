@@ -168,7 +168,7 @@ cd ${BUILD_DIR}/${tmp}
 o="url = https://github.com/hisilicon/kernel-dev.git"
 #a="url = https://Luojiaxing1991:ljxfyjh1321@github.com/hisilicon/kernel-dev.git"
 tmp_url=`cat .git/config | grep '.git'`
-if [ x"${tmp_url}" == x"${o}" ];then
+if [[ "${tmp_url}" =~ "${o}" ]];then
 	sed -i 's/github.com/Luojiaxing1991:ljxfyjh1321@github.com/g' .git/config
 fi
 
