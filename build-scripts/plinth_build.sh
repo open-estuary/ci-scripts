@@ -50,6 +50,7 @@ function parse_params() {
 }
 
 function generate_failed_mail(){
+    mkdir -p /home/luojiaxing/mail
     echo "${FAILED_MAIL_LIST}" > /home/luojiaxing/mail/MAIL_LIST.txt
     echo "${FAILED_MAIL_CC_LIST}" > /home/luojiaxing/mail/MAIL_CC_LIST.txt
     echo "Estuary CI Build - ${GIT_DESCRIBE} - Failed" > /home/luojiaxing/mail/MAIL_SUBJECT.txt
@@ -70,6 +71,7 @@ EOF
 
 
 function generate_success_mail(){
+    mkdir -p /home/luojiaxing/mail
     echo "${SUCCESS_MAIL_LIST}" > /home/luojiaxing/mail/MAIL_LIST.txt
     echo "${SUCCESS_MAIL_CC_LIST}" > /home/luojiaxing/mail/MAIL_CC_LIST.txt
     echo "Estuary CI - ${GIT_DESCRIBE} - Result" > /home/luojiaxing/mail/MAIL_SUBJECT.txt
