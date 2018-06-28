@@ -618,9 +618,9 @@ function generate_success_mail(){
     echo "<br><br>" >> mail/MAIL_CONTENT.txt
 
   # generate distro html
-  for DISTRO in $SHELL_DISTRO; do
-      detail_html_generate "${GIT_DESCRIBE}/${RESULTS_DIR}/${DETAILS_SUM}" "${WORKSPACE}/html/TestReport" "${DISTRO}"
-  done
+  #for DISTRO in $SHELL_DISTRO; do
+  #    detail_html_generate "${GIT_DESCRIBE}/${RESULTS_DIR}/${DETAILS_SUM}" "${WORKSPACE}/html/TestReport" "${DISTRO}"
+  #done
 
   echo "<br><br>" >> mail/MAIL_CONTENT.txt
 
