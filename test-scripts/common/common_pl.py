@@ -11,21 +11,21 @@ PLAN_DIR_BASE_NAME = "auto-test"
 
 def find_all_test_case_by_search(testDir):
     test_case_yaml_file_list = []
-   # for root, dirs, files in os.walk(testDir):
+   for root, dirs, files in os.walk(testDir):
         # exclude dirs
-   #     dirs[:] = [os.path.join(root, d) for d in dirs]
-   #     dirs[:] = [d for d in dirs if not re.match('.*\.git$', d)]
+        dirs[:] = [os.path.join(root, d) for d in dirs]
+        dirs[:] = [d for d in dirs if not re.match('.*\.git$', d)]
 
         # exclude/include files
-   #     files = [os.path.join(root, f) for f in files]
-   #     print files
-   #     files = [f for f in files if not re.match('(.*\.sh$)|(.*\.bash$)', f)]
-   #     print files
-   #     files = [f for f in files if re.match('(.*' + 'begin' + '\.yaml$)|(.*' + 'begin' + '\.yml$)', f)]
-   #     print files
-   #     for fname in files:
-   #         print "Begin to add Yaml file: %s to list !" % fname
-   #         test_case_yaml_file_list.append(fname)
+        files = [os.path.join(root, f) for f in files]
+        print files
+        files = [f for f in files if not re.match('(.*\.sh$)|(.*\.bash$)', f)]
+        print files
+        files = [f for f in files if re.match('(.*' + 'begin' + '\.yaml$)|(.*' + 'begin' + '\.yml$)', f)]
+        print files
+        for fname in files:
+            print "Begin to add Yaml file: %s to list !" % fname
+            test_case_yaml_file_list.append(fname)
 
 
     for root, dirs, files in os.walk(testDir):
