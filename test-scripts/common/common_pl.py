@@ -11,7 +11,7 @@ PLAN_DIR_BASE_NAME = "auto-test"
 
 def find_all_test_case_by_search(testDir):
     test_case_yaml_file_list = []
-   for root, dirs, files in os.walk(testDir):
+    for root, dirs, files in os.walk(testDir):
         # exclude dirs
         dirs[:] = [os.path.join(root, d) for d in dirs]
         dirs[:] = [d for d in dirs if not re.match('.*\.git$', d)]
