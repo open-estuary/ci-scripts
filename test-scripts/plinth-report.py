@@ -701,6 +701,12 @@ def boot_report(config):
                              result['job_name'],
                              result['result']))
 
+#*************************#
+#author: luojiaxing l00437090
+#date:   2018/07/03
+#func:   used to generate the issue report mail txt base on
+#        each fail testcase
+#*************************
 def generate_email_locate_report(distro, module_dict, jenkins_build_url):
     print "--------------now begin get testjob: result ------------------------------"
 
@@ -744,7 +750,10 @@ def generate_email_locate_report(distro, module_dict, jenkins_build_url):
     summary_file = os.path.join(summary_dir, LOCATE_SUMMARY_NAME)
     if os.path.exists(summary_file):
         os.remove(summary_file)
+   
+    #generate a file to save record of daily test
     
+
     for key in sorted(case_dict.keys()):
         if key == 'lava':
             for item in case_dict[key]:

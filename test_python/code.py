@@ -3,6 +3,8 @@
 import os
 import yaml
 
+import datetime
+
 linestrlist = []
 linelist = []
 locate_list = {}
@@ -12,6 +14,131 @@ LOCATE_SUMMARY_NAME="locate_sum.txt"
 PASS_COLOR = 'green'
 FAIL_COLOR = 'red'
 BLOCK_COLOR = 'yellow'
+
+def CIrecord():
+    
+    all_dict = {'total':'','lastdate':'','nextdate':'','stable':''}
+
+    #read the old record txt
+    with open("old.txt") as f:
+        print "begin to analyse old.txt!"
+        listofold = f.readlines()
+        for line in listofold:  
+            for key in sorted(all_dict.keys()):
+                if cmp(key,line.split(':')[0]) == 0:
+                    all_dict[key] = line.split(':')[1]
+    print "total:%s;stable:%s;lastdate:%s;nextdate:%s"%(all_dict['total'],all_dict['stable'],all_dict['lastdate'],all_dict['nextdate'])
+    print "lastdate record is %s"%all_dict['lastdate']
+    print "nextdate record is %s"%all_dict['nextdate']
+    nowdate = datetime.datetime.now().strftime('%Y%m%d')
+    print "today is %s"%nowdate
+    tomorrow = datetime.date.today() + datetime.timedelta(days=1)
+    tomorrow = tomorrow.strftime('%Y%m%d')
+
+    print "tomorrow is %s"%tomorrow
+
+    if nowdate in all_dict['lastdate']:
+        print "Today have record for date for date ,jump the date record!"
+    else:
+
+        all_dict['lastdate'] = nowdate
+
+#if cmp(nowdate,all_dict['nextdate']) == 0:
+#    if ( nowdate is all_dict['nextdate'] ):
+        if nowdate in all_dict['nextdate'] :
+            print "Today is stable day"
+            print all_dict['stable']
+            tmp1 = long(all_dict['stable'])
+            tmp1 = tmp1 + 1
+            print "tmp1:%s"%tmp1
+            all_dict['stable'] = str(tmp1)
+            #all_dict['stable'] = all_dict['stable'] + 1
+            print all_dict['stable']
+        else:
+            print "Today is not stable day"
+            all_dict['stable'] = '0'
+
+        tmp1 = long(all_dict['total'])
+        tmp1 = tmp1 + 1
+        all_dict['total']=str(tmp1)
+
+        all_dict['nextdate'] = tomorrow
+        print all_dict['nextdate']
+        #os.mknod("all.txt")
+  
+    print "total:%s;stable:%s;lastdate:%s;nextdate:%s"%(all_dict['total'],all_dict['stable'],all_dict['lastdate'],all_dict['nextdate'])
+   
+    if os.path.exists('all.txt'):
+        os.remove('all.txt')
+
+    os.mknod('all.txt')
+
+
+    version = 'devm-4.16.2'
+    title = 'ping_vlan'
+    message = 'fail for ping'
+
+    if os.path.exists('version'):
+        print "Version dir is copy into current path!"
+    
+    ver_file_path = 'version'+'/'+version
+
+    ver_list = {}
+    if os.path.exists(ver_file_path):
+        print "Have record it for some days.so need to update it!"
+        with open(ver_file_path) as f:
+            listofold = f.readlines()
+            tmplist=[]
+            for line in listofold:  
+                #tmplist.extend([])
+                ver_list[line.split('|')[0]] = [ line.split('|')[1],line.split('|')[2]]
+                print ver_list[line.split('|')[0]][0]
+                if cmp(title,line.split('|')[0]) == 0:
+                    print "Update the fail exist!..."
+                    tmp = long(ver_list[line.split('|')[0]][1])
+                    tmp = tmp + 1
+                    ver_list[line.split('|')[1]] = str(tmp)
+                    print "increase count to %s"%ver_list[line.split('|')[1]]
+                    title=''
+
+        if len(ver_list) == 0:
+            print "Empty record fiel have copy into local.Bug ..."
+            os.remove(ver_file_path)
+            return 0
+
+        if cmp(title,'') == 0:
+            print "Fail have been update..."
+        else:
+            ver_list[title] = [message,'1']
+            print "Add new fail!"
+        #print ver_list[title]
+        print "Now get the infor from version file"
+        print "update the date "
+
+        ver_list['lastdate'][0] = nowdate
+        ver_list['lastdate'][1] = datetime.datetime.now().strftime('%H%M%S')
+        print "Get the hms of tody is %s"%ver_list['lastdate'][1]
+    else:
+        print "first time for record this version...."
+        #os.mknod(ver_file_path)
+        ver_list['lastdate'] = [ nowdate,datetime.datetime.now().strftime('%H%M%S')]
+        ver_list[title] = [ message,'1']
+
+    if os.path.exists(ver_file_path):
+        os.remove(ver_file_path)
+
+    os.mknod(ver_file_path)
+
+
+    with open(ver_file_path,'w') as f:
+        for tmpkey in ver_list.keys():
+            print tmpkey
+            print ver_list[tmpkey][0]
+            print ver_list[tmpkey][1]
+
+            str1 = "%s|%s|%s\n"%(tmpkey,ver_list[tmpkey][0],ver_list[tmpkey][1])
+            f.write(str1)
+
 
 def generate_test_report(job_id):
     # print testsuite_results
