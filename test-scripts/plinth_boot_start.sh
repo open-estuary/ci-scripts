@@ -627,6 +627,7 @@ function generate_success_mail(){
 
 
   ##  编译结果
+  mkdir -p ${WORKSPACE}/html
   touch ${WORKSPACE}/html/BuildReport.html
   # TODO : add build result into the build.html
   #cd -
