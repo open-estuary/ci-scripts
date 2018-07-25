@@ -585,7 +585,7 @@ echo "Finish the kernel build!"
 
 generate_success_mail
 
-cd ${CUR_TOP_DIR}
+#cd ${CUR_TOP_DIR}
 
 #********
 #****END : Clone kernel repo and build it
