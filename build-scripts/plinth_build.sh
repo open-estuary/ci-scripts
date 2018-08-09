@@ -53,7 +53,7 @@ function generate_failed_mail(){
     mkdir -p /home/luojiaxing/mail
     echo "${FAILED_MAIL_LIST}" > /home/luojiaxing/mail/MAIL_LIST.txt
     echo "${FAILED_MAIL_CC_LIST}" > /home/luojiaxing/mail/MAIL_CC_LIST.txt
-    echo "Estuary CI Build - ${GIT_DESCRIBE} - Failed" > /home/luojiaxing/mail/MAIL_SUBJECT.txt
+    echo "Plinth CI Build - ${GIT_DESCRIBE} - Failed" > /home/luojiaxing/mail/MAIL_SUBJECT.txt
     cat > /home/luojiaxing/mail/MAIL_CONTENT.txt <<EOF
 ( This mail is send by Jenkins automatically, don't reply )<br>
 Project Name: ${TREE_NAME}<br>
