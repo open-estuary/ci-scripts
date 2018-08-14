@@ -1,0 +1,4 @@
+total:7
+lastdate:20180708
+nextdate:20180709
+stable:5
