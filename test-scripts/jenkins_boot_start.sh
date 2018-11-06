@@ -418,7 +418,7 @@ function replace_whole_sum_file() {
 function generate_distro_file() {
     #OPEN_ESTUARY_DIR=/home/jenkins/workspace/Estuary-Test/local/open-estuary
     #all build distro,better get from config.yaml
-    ALL_FILE_DISTRO="Fedora OpenSuse Debian Ubuntu CentOS"
+    ALL_FILE_DISTRO="OpenSuse Debian Ubuntu CentOS"
     pushd ${CI_SCRIPTS_DIR}/test-scripts/${GIT_DESCRIBE}/${RESULTS_DIR}
     touch whole_summary.txt
     #prepare standard whole sum file for compile distro
@@ -720,9 +720,13 @@ function generate_success_mail(){
     JOB_RESULT_VERSION="Estuary v5.1"
     JOB_RESULT_DATA=""
     #all build distro,better get from the config.yaml
-    ALL_SHELL_DISTRO='OpenSuse Fedora Debian Ubuntu CentOS'
-    for DISTRO in $ALL_SHELL_DISTRO; do
-        JOB_RESULT_DATA=$(< ${GIT_DESCRIBE}/${RESULTS_DIR}/${DISTRO}/${WHOLE_SUM})",${JOB_RESULT_DATA}"
+    #ALL_SHELL_DISTRO='OpenSuse Fedora Debian Ubuntu CentOS'
+    for DISTRO in $SHELL_DISTRO; do
+        cp /fileserver/open-estuary/${GIT_DESCRIBE}/compile_result.txt ./ #use jenkins plugin to transmit result file
+	cat ./compile_result.txt |sed -n "/${DISTRO,,}:pass/p" > ./compile_tmp.log
+	if [ -s ./compile_tmp.log ] ; then
+            JOB_RESULT_DATA=$(< ${GIT_DESCRIBE}/${RESULTS_DIR}/${DISTRO}/${WHOLE_SUM})",${JOB_RESULT_DATA}"
+	fi
     done
     JOB_RESULT_DATA="${JOB_RESULT_DATA%,}"
     export_vars JOB_RESULT_VERSION JOB_RESULT_DATA
@@ -927,7 +931,7 @@ function main() {
     print_time "time_preparing_envireonment"
 
     trigger_lava_build
-    generate_distro_file
+   # generate_distro_file
     collect_result
 
     print_time "time_test_test_end"
