@@ -39,14 +39,14 @@ LAVA:
     lavaserver: http://192.168.50.122/RPC2/
     lavastream: /anonymous/admin/
     lavauser: admin
-    lavaurl: http://192.168.50.122
-    LAVA_DISPLAY_URL: http://120.31.149.194:180
+    lavaurl: http://203.160.91.226
+    LAVA_DISPLAY_URL: http://203.160.91.226:180
 
 # for lava job parameter
 Jenkins:
     url: http://192.168.50.122:8080
     Boot: BOOT_NFS
-    JENKINS_DISPLAY_URL: http://120.31.149.194:18080
+    JENKINS_DISPLAY_URL: http://203.160.91.226:18080
 
 Test:
     Plan: '*'
@@ -57,7 +57,7 @@ Test:
 # for kernelci access
 Ftpinfo:
     ftpserver: http://192.168.50.122:8083
-    FTPSERVER_DISPLAY_URL: http://120.31.149.194:18083
+    FTPSERVER_DISPLAY_URL: http://203.160.91.226:18083
     FTP_DIR : /fileserver
     STASH_DIR : /home/fileserver
 
