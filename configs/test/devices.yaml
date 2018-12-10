@@ -87,31 +87,31 @@ d05ssh06:
 # 20180209 New Device
 d05ssh07:
   type: D05
-  bmc: 192.168.2.178
+  bmc: 192.168.2.104
   ip: 192.168.50.131
-  mac: c0:a8:02:b2:00:04
+  mac: c0:a8:02:a1:00:04
   next-server: 192.168.50.122
   nfs-server: 192.168.2.49
   filename: "estuary_install/grubaa64.efi"
 
 # v500 d05编译机器
-d05ssh08:
-  type: D05
-  bmc: 192.168.2.169
-  ip: 192.168.50.201
-  mac: c0:a8:02:a9:00:04
-  next-server: 192.168.50.122
-  nfs-server: 192.168.2.49
-  filename: "estuary_install/grubaa64.efi"
+#d05ssh08:
+#  type: D05
+#  bmc: 192.168.2.169
+#  ip: 192.168.50.201
+#  mac: c0:a8:02:a9:00:04
+#  next-server: 192.168.50.122
+#  nfs-server: 192.168.2.49
+#  filename: "estuary_install/grubaa64.efi"
 
-d05ssh09:
-  type: D05
-  bmc: 192.168.2.193
-  ip: 192.168.50.121
-  mac: c0:a8:02:c1:00:04
-  next-server: 192.168.50.122
-  nfs-server: 192.168.2.49
-  filename: "estuary_install/grubaa64.efi"
+#d05ssh09:
+#  type: D05
+#  bmc: 192.168.2.193
+#  ip: 192.168.50.121
+#  mac: c0:a8:02:c1:00:04
+#  next-server: 192.168.50.122
+#  nfs-server: 192.168.2.49
+#  filename: "estuary_install/grubaa64.efi"
 
 # DUT
 d03ssh01:
