@@ -154,7 +154,7 @@ function main(){
                         python /usr/local/bin/parameter_yaml.py -f devices_os.yaml -s ${TARGET_HOSTNAME} -k fail_time -w 1
                     fi
                     fail_time=$(python /usr/local/bin/parameter_yaml.py -f devices_os.yaml -s ${TARGET_HOSTNAME} -k fail_time)
-                    if [ $fail_os = $DISTRO ] && [ $fail_version = $DISTRO_VERSION ] && [ "$fail_time" = "2" ];then
+                    if [ $fail_os = $DISTRO ] && [ $fail_version = $DISTRO_VERSION ] && [ "$fail_time" -ge "2" ];then
                         python /usr/local/bin/cancel_job.py --dut ${TARGET_HOSTNAME}
                     fi 
                     #python /usr/local/bin/cancel_job.py --dut ${TARGET_HOSTNAME}
